@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn {
+  @apply bg-orange-400 px-3 py-2 text-white text-center text-sm font-semibold transition-bg duration-500 hover:opacity-80 focus:outline-none;
+}
