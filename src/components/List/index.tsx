@@ -6,22 +6,14 @@ import { Pagination } from "./Pagination"
 import { ListImportProvider } from "./Provider"
 import { Table } from "./Table"
 
-import { useSettings } from "#components/SettingsProvider"
+type Props = {
+  accessToken: string
+  organization: string
+}
 
-export const List: FC = () => {
-  const { settings } = useSettings()
-
-  if (!settings) {
-    return <div>Loading</div>
-  }
-
+export const List: FC<Props> = ({ accessToken, organization }) => {
   return (
-    <ListImportProvider
-      accessToken={settings.accessToken}
-      organization={settings.organization}
-      pageSize={25}
-      polling={false}
-    >
+    <ListImportProvider accessToken={accessToken} organization={organization} pageSize={25} polling={false}>
       {({ state }) => {
         const { isLoading, currentPage, list } = state
 

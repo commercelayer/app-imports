@@ -7,4 +7,5 @@ const accessTokenQuery = `?accessToken=${getAccessTokenFromUrl()}`
 export const appRoutes = {
   list: () => `/${accessTokenQuery}`,
   new: (resourceType: AllowedResourceType) => `/new/${resourceType}${accessTokenQuery}`,
+  details: (importId: string) => `/details/${importId}/${accessTokenQuery}`,
 }

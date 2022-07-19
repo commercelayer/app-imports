@@ -24,7 +24,7 @@ const NewImportPage: NextPage = () => {
   }
 
   if (!isAvailableResource(resourceType)) {
-    return <div>404 - resource type non allowed</div>
+    return <div>404 - resource type non allowed or not enabled</div>
   }
 
   const cl = CommerceLayer({
@@ -49,7 +49,7 @@ const NewImportPage: NextPage = () => {
   return (
     <div>
       <div className="container px-3 py-4">
-        <h1 className="text-xl pb-2 font-bold">New upload</h1>
+        <h1 className="text-xl pb-2 font-bold">New upload {resourceType}</h1>
         <Input resourceType={resourceType} onDataReady={setImportCreateValue} />
 
         {importCreateValue?.inputs && importCreateValue.inputs.length > 0 ? (
