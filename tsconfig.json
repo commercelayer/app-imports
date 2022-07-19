@@ -19,6 +19,7 @@
     "paths": {
       "#styles/*": ["src/styles/*"],
       "#components/*": ["src/components/*"],
+      "#data/*": ["src/data/*"],
       "#utils/*": ["src/utils/*"],
       "#schemas/*": ["src/schemas/*"],
       "#specs/*": ["specs/*"]

@@ -7,11 +7,7 @@ import { useState } from "react"
 import { ImportPreviewTable } from "#components/ImportPreviewTable"
 import { Input } from "#components/Input"
 import { useSettings } from "#components/SettingsProvider"
-
-const allowedResources: Record<AllowedResourceType, boolean> = {
-  skus: true,
-  prices: true,
-}
+import { isAvailableResource } from "#data/resources"
 
 const NewImportPage: NextPage = () => {
   const {
@@ -22,13 +18,12 @@ const NewImportPage: NextPage = () => {
   const [importCreateValue, setImportCreateValue] = useState<ImportCreate | undefined>(undefined)
 
   const resourceType = query.resourceType as AllowedResourceType
-  const enabledResources = Object.keys(allowedResources).filter((r) => allowedResources[r as AllowedResourceType])
 
   if (!organization || !accessToken) {
     return null
   }
 
-  if (!enabledResources.includes(resourceType)) {
+  if (!isAvailableResource(resourceType)) {
     return <div>404 - resource type non allowed</div>
   }
 
@@ -55,7 +50,7 @@ const NewImportPage: NextPage = () => {
     <div>
       <div className="container px-3 py-4">
         <h1 className="text-xl pb-2 font-bold">New upload</h1>
-        <Input resourceType={resourceType} onCsvDataReady={setImportCreateValue} />
+        <Input resourceType={resourceType} onDataReady={setImportCreateValue} />
 
         {importCreateValue?.inputs && importCreateValue.inputs.length > 0 ? (
           <div>
