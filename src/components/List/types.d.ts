@@ -16,6 +16,7 @@ declare module "App" {
     state: ListImportContextState
     changePage: (page: number) => void
     updateFilter: (filter: UpdateFilterOptions) => void
+    deleteImport: (importId: string) => void
   }
 
   export type ListImportAllowedStatusType = "completed" | "interrupted" | "in_progress" | "pending"

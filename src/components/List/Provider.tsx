@@ -39,7 +39,7 @@ export const ListImportProvider: FC<ListImportProviderProps> = ({
   }, [])
 
   const fetchList = useCallback(
-    async (handleLoadingState: boolean) => {
+    async ({ handleLoadingState }: { handleLoadingState: boolean }) => {
       handleLoadingState && dispatch({ type: "setLoading", payload: true })
       const list = await getAllImports({ cl, state, pageSize })
       dispatch({ type: "setList", payload: list })
@@ -48,14 +48,25 @@ export const ListImportProvider: FC<ListImportProviderProps> = ({
     [state.currentPage, state.filters]
   )
 
+  const deleteImport = (importId: string) => {
+    cl.imports
+      .delete(importId)
+      .catch(() => {
+        console.log("Import not found")
+      })
+      .finally(() => {
+        fetchList({ handleLoadingState: false })
+      })
+  }
+
   useEffect(() => {
-    fetchList(true)
+    fetchList({ handleLoadingState: true })
     if (!polling) {
       return
     }
     // start polling
     intervalId.current = setInterval(() => {
-      fetchList(false)
+      fetchList({ handleLoadingState: false })
     }, 4000)
 
     return () => {
@@ -69,6 +80,7 @@ export const ListImportProvider: FC<ListImportProviderProps> = ({
     state,
     changePage,
     updateFilter,
+    deleteImport,
   }
 
   return (

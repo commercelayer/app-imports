@@ -13,6 +13,7 @@ type ImportRow = Pick<
 export const Table: FC = () => {
   const {
     state: { list },
+    deleteImport,
   } = useListContext()
 
   if (!list) {
@@ -38,7 +39,15 @@ export const Table: FC = () => {
             <td>
               <div className="flex gap-2">
                 <Link href={appRoutes.details(item.id)}>View</Link>
-                <button>delete</button>
+                <button
+                  onClick={() => {
+                    if (confirm(`Are youre sure?`)) {
+                      deleteImport(item.id)
+                    }
+                  }}
+                >
+                  delete
+                </button>
               </div>
             </td>
           </tr>
