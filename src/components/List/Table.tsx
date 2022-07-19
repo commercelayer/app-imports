@@ -14,6 +14,7 @@ export const Table: FC = () => {
   const {
     state: { list },
     deleteImport,
+    deleteQueue,
   } = useListContext()
 
   if (!list) {
@@ -40,13 +41,14 @@ export const Table: FC = () => {
               <div className="flex gap-2">
                 <Link href={appRoutes.details(item.id)}>View</Link>
                 <button
+                  disabled={deleteQueue.has(item.id)}
                   onClick={() => {
                     if (confirm(`Are youre sure?`)) {
                       deleteImport(item.id)
                     }
                   }}
                 >
-                  delete
+                  {deleteQueue.has(item.id) ? "Deleting" : "Delete"}
                 </button>
               </div>
             </td>

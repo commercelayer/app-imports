@@ -1,6 +1,6 @@
 import CommerceLayer, { CommerceLayerClient } from "@commercelayer/sdk"
 import { ListImportContextValue, UpdateFilterOptions, ListImportContextState } from "App"
-import { createContext, FC, ReactNode, useCallback, useEffect, useReducer, useContext, useRef } from "react"
+import { createContext, FC, ReactNode, useCallback, useEffect, useReducer, useContext, useRef, useState } from "react"
 
 import { initialValues, initialState } from "./data"
 import { reducer } from "./reducer"
@@ -32,6 +32,16 @@ export const ListImportProvider: FC<ListImportProviderProps> = ({
     accessToken,
   })
 
+  const [deleteQueue, _setDeleteQueue] = useState<Set<string>>(new Set())
+  const addToDeleteQueue = useCallback(
+    (importId: string) => {
+      const newSet = new Set(deleteQueue)
+      newSet.add(importId)
+      _setDeleteQueue(newSet)
+    },
+    [deleteQueue]
+  )
+
   const changePage = useCallback((page: number) => dispatch({ type: "changePage", payload: page }), [])
 
   const updateFilter = useCallback((filter: UpdateFilterOptions) => {
@@ -49,6 +59,7 @@ export const ListImportProvider: FC<ListImportProviderProps> = ({
   )
 
   const deleteImport = (importId: string) => {
+    addToDeleteQueue(importId)
     cl.imports
       .delete(importId)
       .catch(() => {
@@ -81,6 +92,7 @@ export const ListImportProvider: FC<ListImportProviderProps> = ({
     changePage,
     updateFilter,
     deleteImport,
+    deleteQueue,
   }
 
   return (
@@ -112,4 +124,18 @@ const getAllImports = ({
     sort: state.sort,
     filters,
   })
+}
+
+const updateSet = ({
+  state,
+  importId,
+  updateFn,
+}: {
+  state: Set<string>
+  importId: string
+  updateFn: (set: Set<string>) => void
+}) => {
+  const newSet = new Set(state)
+  newSet.add(importId)
+  updateFn(newSet)
 }
