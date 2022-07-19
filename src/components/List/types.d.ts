@@ -9,7 +9,7 @@ declare module "App" {
       }
     | {
         type: "filterResourceType"
-        payload: ListImportAllowedFilterType | "all"
+        payload: AllowedResourceType | "all"
       }
 
   export type ListImportContextValue = {
@@ -18,7 +18,6 @@ declare module "App" {
     updateFilter: (filter: UpdateFilterOptions) => void
   }
 
-  export type ListImportAllowedFilterType = "skus" | "bundles" | "sku_options"
   export type ListImportAllowedStatusType = "completed" | "interrupted" | "in_progress" | "pending"
 
   export type ListImportContextState = {
@@ -29,7 +28,7 @@ declare module "App" {
       created_at: "asc" | "desc"
     }
     filters?: {
-      resource_type_eq?: ListImportAllowedFilterType
+      resource_type_eq?: AllowedResourceType
       status_eq?: ListImportAllowedStatusType
     }
   }

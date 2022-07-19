@@ -46,7 +46,7 @@ const ListInner: FC = () => {
 
   return (
     <div className={cn("container", { "opacity-40": isRefetching })}>
-      <div>
+      <div className="flex gap-2">
         <button
           className="btn"
           onClick={() => {
@@ -63,11 +63,22 @@ const ListInner: FC = () => {
           onClick={() => {
             updateFilter({
               type: "filterStatus",
+              payload: "in_progress",
+            })
+          }}
+        >
+          view pending only
+        </button>
+        <button
+          className="btn"
+          onClick={() => {
+            updateFilter({
+              type: "filterStatus",
               payload: "all",
             })
           }}
         >
-          view all
+          view all statuses
         </button>
         <button
           className="btn"
@@ -85,11 +96,22 @@ const ListInner: FC = () => {
           onClick={() => {
             updateFilter({
               type: "filterResourceType",
+              payload: "prices",
+            })
+          }}
+        >
+          view prices resource only
+        </button>
+        <button
+          className="btn"
+          onClick={() => {
+            updateFilter({
+              type: "filterResourceType",
               payload: "all",
             })
           }}
         >
-          view all resource
+          view all resource types
         </button>
       </div>
       {list.map((item) => (

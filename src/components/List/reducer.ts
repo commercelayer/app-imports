@@ -1,6 +1,6 @@
 import { Import } from "@commercelayer/sdk"
 import { ListResponse } from "@commercelayer/sdk/lib/cjs/resource"
-import { ListImportContextState, ListImportAllowedStatusType, ListImportAllowedFilterType } from "App"
+import { ListImportContextState, ListImportAllowedStatusType, AllowedResourceType } from "App"
 
 type Action =
   | { type: "setLoading"; payload: boolean }
@@ -8,7 +8,7 @@ type Action =
   | { type: "changePage"; payload: number }
   | { type: "sort"; payload: "asc" | "desc" }
   | { type: "filterStatus"; payload: ListImportAllowedStatusType | "all" }
-  | { type: "filterResourceType"; payload: ListImportAllowedFilterType | "all" }
+  | { type: "filterResourceType"; payload: AllowedResourceType | "all" }
 
 export const reducer = (state: ListImportContextState, action: Action): ListImportContextState => {
   switch (action.type) {

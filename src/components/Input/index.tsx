@@ -7,11 +7,11 @@ import { adapters } from "./adapters"
 import { parsers } from "./schemas"
 
 type Props = {
-  onCsvDataReady: (inputs?: ImportCreate) => void
+  onDataReady: (inputs?: ImportCreate) => void
   resourceType: AllowedResourceType
 }
 
-export const Input: FC<Props> = ({ onCsvDataReady, resourceType }) => {
+export const Input: FC<Props> = ({ onDataReady, resourceType }) => {
   const [isParsing, setIsParsing] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
   const [file, setFile] = useState<File | null>(null)
@@ -38,7 +38,7 @@ export const Input: FC<Props> = ({ onCsvDataReady, resourceType }) => {
           setIsParsing(false)
           return
         }
-        onCsvDataReady(adapters[resourceType](parsedResources.data))
+        onDataReady(adapters[resourceType](parsedResources.data))
         setIsParsing(false)
       },
     })
@@ -49,7 +49,8 @@ export const Input: FC<Props> = ({ onCsvDataReady, resourceType }) => {
     setErrorMessage("")
     try {
       const json = JSON.parse(await file.text())
-      // TODO: validate json schema againt openapi?
+      // TODO: validate json schema against openapi?
+      onDataReady(json as ImportCreate)
     } catch {
       setErrorMessage("Invalid json file")
     } finally {
