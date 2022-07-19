@@ -33,7 +33,7 @@ export const NewImport: FC<Props> = ({ cl, resourceType }) => {
   return (
     <div className="container px-3 py-4">
       <h1 className="text-xl pb-2 font-bold">New upload</h1>
-      <Input resourceType={resourceType} onCsvDataReady={setImportCreateValue} />
+      <Input resourceType={resourceType} onDataReady={setImportCreateValue} />
 
       {importCreateValue?.inputs && importCreateValue.inputs.length > 0 ? (
         <div>
