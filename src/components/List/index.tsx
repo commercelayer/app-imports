@@ -1,7 +1,10 @@
 import cn from "classnames"
 import { FC } from "react"
 
-import { ListImportProvider, useListContext } from "./Provider"
+import { Filters } from "./Filters"
+import { Pagination } from "./Pagination"
+import { ListImportProvider } from "./Provider"
+import { Table } from "./Table"
 
 import { useSettings } from "#components/SettingsProvider"
 
@@ -19,119 +22,26 @@ export const List: FC = () => {
       pageSize={25}
       polling={false}
     >
-      <ListInner />
+      {({ state }) => {
+        const { isLoading, currentPage, list } = state
+
+        if (isLoading && !list) {
+          return <div>Loading list...</div>
+        }
+
+        if (!list) {
+          return null
+        }
+
+        const isRefetching = list.meta && currentPage !== list.meta.currentPage
+        return (
+          <div className={cn("container", { "opacity-40": isRefetching })}>
+            <Filters />
+            <Table />
+            <Pagination />
+          </div>
+        )
+      }}
     </ListImportProvider>
-  )
-}
-
-const ListInner: FC = () => {
-  const {
-    state: { isLoading, currentPage, list },
-    changePage,
-    updateFilter,
-  } = useListContext()
-
-  const onPrevClick = () => changePage(currentPage - 1)
-  const onNextClick = () => changePage(currentPage + 1)
-
-  const isRefetching = list?.meta && currentPage !== list.meta.currentPage
-
-  if (isLoading && !list) {
-    return <div>Loading list...</div>
-  }
-
-  if (!list) {
-    return null
-  }
-
-  return (
-    <div className={cn("container", { "opacity-40": isRefetching })}>
-      <div className="flex gap-2">
-        <button
-          className="btn"
-          onClick={() => {
-            updateFilter({
-              type: "filterStatus",
-              payload: "completed",
-            })
-          }}
-        >
-          view completed only
-        </button>
-        <button
-          className="btn"
-          onClick={() => {
-            updateFilter({
-              type: "filterStatus",
-              payload: "in_progress",
-            })
-          }}
-        >
-          view pending only
-        </button>
-        <button
-          className="btn"
-          onClick={() => {
-            updateFilter({
-              type: "filterStatus",
-              payload: "all",
-            })
-          }}
-        >
-          view all statuses
-        </button>
-        <button
-          className="btn"
-          onClick={() => {
-            updateFilter({
-              type: "filterResourceType",
-              payload: "skus",
-            })
-          }}
-        >
-          view skus resource only
-        </button>
-        <button
-          className="btn"
-          onClick={() => {
-            updateFilter({
-              type: "filterResourceType",
-              payload: "prices",
-            })
-          }}
-        >
-          view prices resource only
-        </button>
-        <button
-          className="btn"
-          onClick={() => {
-            updateFilter({
-              type: "filterResourceType",
-              payload: "all",
-            })
-          }}
-        >
-          view all resource types
-        </button>
-      </div>
-      {list.map((item) => (
-        <div key={item.id}>
-          {item.id} - {item.status} - {item.resource_type}
-        </div>
-      ))}
-      <div className="py-4">page: {list.meta.currentPage}</div>
-      <div className="flex gap-2">
-        {currentPage > 1 ? (
-          <button className="btn" onClick={onPrevClick}>
-            prev
-          </button>
-        ) : null}
-        {currentPage < list.meta.pageCount ? (
-          <button className="btn" onClick={onNextClick}>
-            Next
-          </button>
-        ) : null}
-      </div>
-    </div>
   )
 }
