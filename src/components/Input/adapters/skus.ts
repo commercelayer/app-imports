@@ -2,15 +2,11 @@ import { ImportCreate } from "@commercelayer/sdk"
 
 import { CsvSkuItemSchema } from "#components/Input/schemas/skusSchema"
 
-export const fromCsvSchemaToImportInputCreateSkus = (csvSkus: CsvSkuItemSchema[]): ImportCreate => {
+export const fromCsvSchemaToImportInputCreateSkus = (csv: CsvSkuItemSchema[]): ImportCreate => {
   return {
     resource_type: "skus",
-    inputs: csvSkus.map(({ ...input }) => ({
+    inputs: csv.map(({ ...input }) => ({
       ...input,
-      // shipping_category: {
-      //   type: "shipping_categories",
-      //   id: shipping_category_id,
-      // },
     })),
   }
 }

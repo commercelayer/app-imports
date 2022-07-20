@@ -1,10 +1,10 @@
 import { ImportCreate } from "@commercelayer/sdk"
 
-import { CsvSkuItemSchema } from "#components/Input/schemas/skusSchema"
+import { CsvPriceItemSchema } from "#components/Input/schemas/pricesSchema"
 
-export const fromCsvSchemaToImportInputCreatePrices = (csvSkus: CsvSkuItemSchema[]): ImportCreate => {
+export const fromCsvSchemaToImportInputCreatePrices = (csv: CsvPriceItemSchema[]): ImportCreate => {
   return {
     resource_type: "prices",
-    inputs: csvSkus,
+    inputs: csv,
   }
 }

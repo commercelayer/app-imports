@@ -3,6 +3,7 @@ import { AllowedResourceType } from "App"
 const resources: Record<AllowedResourceType, boolean> = {
   skus: true,
   prices: true,
+  coupons: true,
 }
 
 const allResources = Object.keys(resources) as AllowedResourceType[]

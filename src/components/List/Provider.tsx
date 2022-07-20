@@ -125,17 +125,3 @@ const getAllImports = ({
     filters,
   })
 }
-
-const updateSet = ({
-  state,
-  importId,
-  updateFn,
-}: {
-  state: Set<string>
-  importId: string
-  updateFn: (set: Set<string>) => void
-}) => {
-  const newSet = new Set(state)
-  newSet.add(importId)
-  updateFn(newSet)
-}

@@ -27,9 +27,9 @@ type FlatCreateSkuItem = Pick<
   shipping_category_id: string
 }
 
-export type CsvSkuItemSchema = z.infer<typeof csvSkuItemSchema>
+export type CsvSkuItemSchema = z.infer<typeof schema>
 
-const csvSkuItemSchema = z.object({
+const schema = z.object({
   code: z.string().min(1),
   name: z.string().min(1),
   shipping_category_id: z.string().min(1),
@@ -45,4 +45,4 @@ const csvSkuItemSchema = z.object({
   reference_origin: z.optional(z.string()),
 })
 
-export const csvSkusSchema: z.ZodType<FlatCreateSkuItem[]> = z.array(csvSkuItemSchema)
+export const csvSkusSchema: z.ZodType<FlatCreateSkuItem[]> = z.array(schema)

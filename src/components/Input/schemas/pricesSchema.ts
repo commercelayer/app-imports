@@ -10,9 +10,9 @@ type FlatCreatePriceItem = Pick<
   price_list_id: string
 }
 
-export type CsvSkuItemSchema = z.infer<typeof csvPriceItemSchema>
+export type CsvPriceItemSchema = z.infer<typeof schema>
 
-const csvPriceItemSchema = z.object({
+const schema = z.object({
   amount_cents: zodEnforceInt,
   compare_at_amount_cents: zodEnforceInt,
   price_list_id: z.string().min(1),
@@ -21,4 +21,4 @@ const csvPriceItemSchema = z.object({
   reference_origin: z.optional(z.string()),
 })
 
-export const csvPricesSchema: z.ZodType<FlatCreatePriceItem[]> = z.array(csvPriceItemSchema)
+export const csvPricesSchema: z.ZodType<FlatCreatePriceItem[]> = z.array(schema)
