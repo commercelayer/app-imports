@@ -1,22 +1,32 @@
-import { z } from "zod"
+import { z, ZodError } from "zod"
 
 import { zodEnforceBoolean, zodEnforceInt, zodEnforceFloat } from "./zodUtils"
 
 describe("check zodEnforceBoolean", () => {
   test("should parse true string text as boolean `true`", () => {
-    expect(zodEnforceBoolean.parse("true")).toBe(true)
+    expect(zodEnforceBoolean(true).parse("true")).toBe(true)
   })
 
   test("should parse false string text as boolean `false`", () => {
-    expect(zodEnforceBoolean.parse("false")).toBe(false)
+    expect(zodEnforceBoolean(true).parse("false")).toBe(false)
   })
 
   test("should allow undefined", () => {
-    expect(z.optional(zodEnforceBoolean).parse(undefined)).toBe(undefined)
+    expect(zodEnforceBoolean(true).parse(undefined)).toBe(undefined)
   })
 
   test("should parse empty string as undefined", () => {
-    expect(z.optional(zodEnforceBoolean).parse("")).toBe(undefined)
+    expect(zodEnforceBoolean(true).parse("")).toBe(undefined)
+  })
+
+  test("should return ZodError when is not optional and empty string is passed", () => {
+    try {
+      zodEnforceBoolean().parse("")
+    } catch (err) {
+      if (err instanceof ZodError) {
+        expect(err).toBeInstanceOf(ZodError)
+      }
+    }
   })
 })
 

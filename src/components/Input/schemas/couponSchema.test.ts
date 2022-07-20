@@ -5,12 +5,12 @@ describe("Validate csvCouponsSchema", () => {
     expect(
       csvCouponsSchema.parse([
         {
-          code: "XXXX123",
+          code: "XXXX123123",
           promotion_rule_id: "XXXX123",
           usage_limit: 100,
         },
         {
-          code: "XXXX123",
+          code: "AAA123333223",
           promotion_rule_id: "XXXX123",
           usage_limit: "100",
           customer_single_use: true,
@@ -18,12 +18,12 @@ describe("Validate csvCouponsSchema", () => {
       ])
     ).toStrictEqual([
       {
-        code: "XXXX123",
+        code: "XXXX123123",
         promotion_rule_id: "XXXX123",
         usage_limit: 100,
       },
       {
-        code: "XXXX123",
+        code: "AAA123333223",
         promotion_rule_id: "XXXX123",
         usage_limit: 100,
         customer_single_use: true,

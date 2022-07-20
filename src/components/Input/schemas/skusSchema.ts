@@ -39,8 +39,8 @@ const schema = z.object({
   weight: z.optional(zodEnforceFloat),
   unit_of_weight: z.optional(z.nativeEnum(AllowedUnitOfWeightEnum)),
   hs_tariff_number: z.optional(z.string()),
-  do_not_ship: z.optional(zodEnforceBoolean),
-  do_not_track: z.optional(zodEnforceBoolean),
+  do_not_ship: zodEnforceBoolean(true),
+  do_not_track: zodEnforceBoolean(true),
   reference: z.optional(z.string()),
   reference_origin: z.optional(z.string()),
 })
