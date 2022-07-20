@@ -34,6 +34,7 @@ export const Input: FC<Props> = ({ onDataReady, resourceType }) => {
         const parsedResources = parsers[resourceType].safeParse(data.slice(0, 2000))
         if (!parsedResources.success) {
           // TODO: show errors from ZodError obj
+          console.log(parsedResources.error)
           setErrorMessage("Invalid format")
           setIsParsing(false)
           return
@@ -69,30 +70,32 @@ export const Input: FC<Props> = ({ onDataReady, resourceType }) => {
           }
         }}
       />
-      <button
-        className="btn"
-        disabled={!file || isParsing}
-        onClick={() => {
-          if (!file) {
-            return
-          }
-
-          switch (file.type) {
-            case "text/csv":
-              loadAndParseCSV(file)
+      {file ? (
+        <button
+          className="btn"
+          disabled={!file || isParsing}
+          onClick={() => {
+            if (!file) {
               return
+            }
 
-            case "application/json":
-              loadAndParseJson(file)
-              return
+            switch (file.type) {
+              case "text/csv":
+                loadAndParseCSV(file)
+                return
 
-            default:
-              setErrorMessage("Invalid format")
-          }
-        }}
-      >
-        {isParsing ? "loading" : "load file"}
-      </button>
+              case "application/json":
+                loadAndParseJson(file)
+                return
+
+              default:
+                setErrorMessage("Invalid format")
+            }
+          }}
+        >
+          {isParsing ? "loading" : "load file"}
+        </button>
+      ) : null}
       {errorMessage && <div className="text-red-500">{errorMessage}</div>}
     </div>
   )

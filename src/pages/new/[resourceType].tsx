@@ -8,6 +8,7 @@ import { ImportPreviewTable } from "#components/ImportPreviewTable"
 import { Input } from "#components/Input"
 import { useSettings } from "#components/SettingsProvider"
 import { isAvailableResource } from "#data/resources"
+import { appRoutes } from "#data/routes"
 
 const NewImportPage: NextPage = () => {
   const {
@@ -40,7 +41,7 @@ const NewImportPage: NextPage = () => {
     setIsLoading(true)
     try {
       await cl.imports.create(importCreateValue)
-      push("/")
+      push(appRoutes.list())
     } catch {
       setIsLoading(false)
     }
