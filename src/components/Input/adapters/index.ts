@@ -1,13 +1,16 @@
 import { ImportCreate } from "@commercelayer/sdk"
 import { AllowedResourceType, AllowedResourceCsvSchema } from "App"
-
-import { fromCsvSchemaToImportInputCreateCoupons } from "./coupons"
-
-import { fromCsvSchemaToImportInputCreatePrices } from "#components/Input/adapters/prices"
-import { fromCsvSchemaToImportInputCreateSkus } from "#components/Input/adapters/skus"
+import { ZodSchema } from "zod"
 
 export const adapters: Record<AllowedResourceType, (schema: AllowedResourceCsvSchema) => ImportCreate> = {
-  skus: fromCsvSchemaToImportInputCreateSkus,
-  prices: fromCsvSchemaToImportInputCreatePrices,
-  coupons: fromCsvSchemaToImportInputCreateCoupons,
+  skus: (parsedCsv: ZodSchema[]) => fromCsvSchemaToImportInputCreate(parsedCsv, "skus"),
+  prices: (parsedCsv: ZodSchema[]) => fromCsvSchemaToImportInputCreate(parsedCsv, "prices"),
+  coupons: (parsedCsv: ZodSchema[]) => fromCsvSchemaToImportInputCreate(parsedCsv, "coupons"),
+}
+
+const fromCsvSchemaToImportInputCreate = (parsedCsv: ZodSchema[], resourceType: AllowedResourceType): ImportCreate => {
+  return {
+    resource_type: resourceType,
+    inputs: parsedCsv,
+  }
 }
