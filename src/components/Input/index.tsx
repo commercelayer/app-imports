@@ -2,43 +2,53 @@ import { ImportCreate } from "@commercelayer/sdk"
 import { AllowedResourceType } from "App"
 import { parse } from "papaparse"
 import { FC, useState, useEffect } from "react"
+import { ZodIssue } from "zod"
 
 import { adapters } from "./adapters"
 import { parsers } from "./schemas"
 
 type Props = {
   onDataReady: (inputs?: ImportCreate) => void
+  onDataResetRequest: () => void
   resourceType: AllowedResourceType
 }
 
-export const Input: FC<Props> = ({ onDataReady, resourceType }) => {
+export const Input: FC<Props> = ({ onDataReady, onDataResetRequest, resourceType }) => {
   const [isParsing, setIsParsing] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
+  const [errorList, setErrorList] = useState<ZodIssue[]>()
   const [file, setFile] = useState<File | null>(null)
 
-  useEffect(() => {
+  const resetErrorUi = () => {
     setErrorMessage("")
+    setErrorList([])
+  }
+
+  useEffect(() => {
+    onDataResetRequest()
+    resetErrorUi()
   }, [file])
 
   const loadAndParseCSV = async (file: File) => {
     setIsParsing(true)
-    setErrorMessage("")
+    resetErrorUi()
 
     parse(file, {
       header: true,
       error: () => {
         setIsParsing(false)
-        setErrorMessage("Unable to load CSV file")
+        setErrorMessage("Unable to load CSV file, it does not match the template")
       },
       complete: async ({ data }) => {
         const parsedResources = parsers[resourceType].safeParse(data.slice(0, 2000))
         if (!parsedResources.success) {
-          // TODO: show errors from ZodError obj
-          console.log(parsedResources.error)
-          setErrorMessage("Invalid format")
+          setErrorList(parsedResources.error.errors)
+          setErrorMessage("We have found some errors for some important fields")
           setIsParsing(false)
           return
         }
+        console.log(parsedResources.data)
+
         onDataReady(adapters[resourceType](parsedResources.data))
         setIsParsing(false)
       },
@@ -97,6 +107,16 @@ export const Input: FC<Props> = ({ onDataReady, resourceType }) => {
         </button>
       ) : null}
       {errorMessage && <div className="text-red-500">{errorMessage}</div>}
+      {errorList && errorList.length ? (
+        <div className="text-red-500">
+          {errorList.slice(0, 5).map((issue, idx) => (
+            <div key={idx}>
+              Row {issue.path.join(" - ")} {issue.message}
+            </div>
+          ))}
+          {errorList.length > 5 ? "We found other errors not listed here" : null}
+        </div>
+      ) : null}
     </div>
   )
 }

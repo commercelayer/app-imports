@@ -14,7 +14,7 @@ export type CsvCouponItemSchema = z.infer<typeof schema>
 
 const schema = z.object({
   code: z.string().min(8),
-  promotion_rule_id: z.string(),
+  promotion_rule_id: z.string().min(1),
   usage_limit: zodEnforceInt,
   customer_single_use: zodEnforceBoolean(true),
   recipient_email: z.optional(z.string()),

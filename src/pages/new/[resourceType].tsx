@@ -51,7 +51,11 @@ const NewImportPage: NextPage = () => {
     <div>
       <div className="container px-3 py-4">
         <h1 className="text-xl pb-2 font-bold">New upload {resourceType}</h1>
-        <Input resourceType={resourceType} onDataReady={setImportCreateValue} />
+        <Input
+          resourceType={resourceType}
+          onDataReady={setImportCreateValue}
+          onDataResetRequest={() => setImportCreateValue(undefined)}
+        />
 
         {importCreateValue?.inputs && importCreateValue.inputs.length > 0 ? (
           <div>
