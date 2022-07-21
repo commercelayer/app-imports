@@ -10,8 +10,6 @@ type FlatCreateCouponItem = Pick<
   promotion_rule_id: string
 }
 
-export type CsvCouponItemSchema = z.infer<typeof schema>
-
 const schema = z.object({
   code: z.string().min(8),
   promotion_rule_id: z.string().min(1),

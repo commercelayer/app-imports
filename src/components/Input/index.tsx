@@ -47,8 +47,6 @@ export const Input: FC<Props> = ({ onDataReady, onDataResetRequest, resourceType
           setIsParsing(false)
           return
         }
-        console.log(parsedResources.data)
-
         onDataReady(adapters[resourceType](parsedResources.data))
         setIsParsing(false)
       },

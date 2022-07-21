@@ -27,7 +27,7 @@ type FlatCreateSkuItem = Pick<
   shipping_category_id: string
 }
 
-export type CsvSkuItemSchema = z.infer<typeof schema>
+// export type CsvSkuItemSchema = z.infer<typeof schema>
 
 const schema = z.object({
   code: z.string().min(1),
