@@ -3,7 +3,7 @@ import { z } from "zod"
 
 import { zodEnforceInt } from "./zodUtils"
 
-type FlatCreatePriceItem = Pick<
+type FlatCsvRow = Pick<
   PriceCreate,
   "sku_code" | "amount_cents" | "compare_at_amount_cents" | "reference" | "reference_origin"
 > & {
@@ -19,4 +19,4 @@ const schema = z.object({
   reference_origin: z.optional(z.string()),
 })
 
-export const csvPricesSchema: z.ZodType<FlatCreatePriceItem[]> = z.array(schema)
+export const csvPricesSchema: z.ZodType<FlatCsvRow[]> = z.array(schema)

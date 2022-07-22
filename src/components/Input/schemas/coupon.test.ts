@@ -1,4 +1,4 @@
-import { csvCouponsSchema } from "./couponSchema"
+import { csvCouponsSchema } from "./coupon"
 
 describe("Validate csvCouponsSchema", () => {
   test("received input should have a valid Coupon schema", () => {

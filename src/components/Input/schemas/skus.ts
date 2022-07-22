@@ -9,7 +9,7 @@ enum AllowedUnitOfWeightEnum {
   "oz" = "oz",
 }
 
-type FlatCreateSkuItem = Pick<
+type FlatCsvRow = Pick<
   SkuCreate,
   | "code"
   | "name"
@@ -45,4 +45,4 @@ const schema = z.object({
   reference_origin: z.optional(z.string()),
 })
 
-export const csvSkusSchema: z.ZodType<FlatCreateSkuItem[]> = z.array(schema)
+export const csvSkusSchema: z.ZodType<FlatCsvRow[]> = z.array(schema)

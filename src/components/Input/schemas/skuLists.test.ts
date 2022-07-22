@@ -1,7 +1,7 @@
-import { csvSkuListSchema } from "./skuListSchema"
+import { csvSkuListSchema } from "./skuLists"
 
 describe("Validate csvSkuListSchema", () => {
-  test("received input should have a valid Price List schema", () => {
+  test("received input should have a valid Sku Lists schema", () => {
     expect(
       csvSkuListSchema.parse([
         {

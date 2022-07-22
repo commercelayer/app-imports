@@ -3,7 +3,7 @@ import { z } from "zod"
 
 import { zodEnforceBoolean } from "./zodUtils"
 
-type FlatSkuListsRow = Pick<
+type FlatCsvRow = Pick<
   SkuListCreate,
   "name" | "description" | "image_url" | "manual" | "sku_code_regex" | "reference" | "reference_origin"
 >
@@ -28,4 +28,4 @@ const schema = z
     }
   })
 
-export const csvSkuListSchema: z.ZodType<FlatSkuListsRow[]> = z.array(schema)
+export const csvSkuListSchema: z.ZodType<FlatCsvRow[]> = z.array(schema)

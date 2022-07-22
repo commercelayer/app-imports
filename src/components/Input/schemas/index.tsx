@@ -1,10 +1,10 @@
 import { AllowedResourceType } from "App"
 import { ZodSchema } from "zod"
 
-import { csvCouponsSchema } from "./couponSchema"
-import { csvPricesSchema } from "./pricesSchema"
-import { csvSkuListSchema } from "./skuListSchema"
-import { csvSkusSchema } from "./skusSchema"
+import { csvCouponsSchema } from "./coupon"
+import { csvPricesSchema } from "./prices"
+import { csvSkuListSchema } from "./skuLists"
+import { csvSkusSchema } from "./skus"
 
 export const parsers: Record<AllowedResourceType, ZodSchema> = {
   skus: csvSkusSchema,

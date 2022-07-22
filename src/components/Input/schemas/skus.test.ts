@@ -1,4 +1,4 @@
-import { csvSkusSchema } from "./skusSchema"
+import { csvSkusSchema } from "./skus"
 
 describe("Validate skusSchema", () => {
   test("received input should have a valid SKUs schema", () => {

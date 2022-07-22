@@ -1,4 +1,4 @@
-import { csvPricesSchema } from "./pricesSchema"
+import { csvPricesSchema } from "./prices"
 
 describe("Validate csvPricesSchema", () => {
   test("received input should have a valid Price List schema", () => {

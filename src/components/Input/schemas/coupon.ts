@@ -3,7 +3,7 @@ import { z } from "zod"
 
 import { zodEnforceInt, zodEnforceBoolean } from "./zodUtils"
 
-type FlatCreateCouponItem = Pick<
+type FlatCsvRow = Pick<
   CouponCreate,
   "code" | "customer_single_use" | "usage_limit" | "recipient_email" | "reference" | "reference_origin"
 > & {
@@ -20,4 +20,4 @@ const schema = z.object({
   reference_origin: z.optional(z.string()),
 })
 
-export const csvCouponsSchema: z.ZodType<FlatCreateCouponItem[]> = z.array(schema)
+export const csvCouponsSchema: z.ZodType<FlatCsvRow[]> = z.array(schema)
