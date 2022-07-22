@@ -34,7 +34,7 @@ const schema = z.object({
   name: z.string().min(1),
   shipping_category_id: z.string().min(1),
   description: z.optional(z.string()),
-  image_url: z.optional(z.string()),
+  image_url: z.optional(z.string().url()),
   pieces_per_pack: z.optional(zodEnforceInt),
   weight: z.optional(zodEnforceFloat),
   unit_of_weight: z.optional(z.nativeEnum(AllowedUnitOfWeightEnum)),

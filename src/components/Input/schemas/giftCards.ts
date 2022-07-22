@@ -36,7 +36,7 @@ const schema = z.object({
   balance_max_cents: z.optional(z.string()),
   single_use: zodEnforceBoolean(true),
   rechargeable: zodEnforceBoolean(true),
-  image_url: z.optional(z.string()),
+  image_url: z.optional(z.string().url()),
   expires_at: z.optional(enforceDateString), // 2018-01-02T12:00:00.000Z
   recipient_email: z.optional(z.string()),
   reference: z.optional(z.string()),

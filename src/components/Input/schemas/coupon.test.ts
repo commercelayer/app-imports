@@ -1,7 +1,7 @@
 import { csvCouponsSchema } from "./coupon"
 
 describe("Validate csvCouponsSchema", () => {
-  test("received input should have a valid Coupon schema", () => {
+  test("received input should have a valid schema", () => {
     expect(
       csvCouponsSchema.parse([
         {

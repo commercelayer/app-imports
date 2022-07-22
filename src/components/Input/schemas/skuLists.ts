@@ -12,7 +12,7 @@ const schema = z
   .object({
     name: z.string().min(1),
     description: z.optional(z.string()),
-    image_url: z.optional(z.string()),
+    image_url: z.optional(z.string().url()),
     manual: zodEnforceBoolean(true),
     sku_code_regex: z.optional(z.string()),
     reference: z.optional(z.string()),

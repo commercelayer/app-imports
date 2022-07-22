@@ -27,6 +27,7 @@ describe("Validate skusSchema", () => {
           pieces_per_pack: "1",
           weight: "32.60",
           do_not_ship: "true",
+          image_url: "https://url.com/image.jpg",
         },
       ])
     ).toStrictEqual([
@@ -53,6 +54,7 @@ describe("Validate skusSchema", () => {
         weight: 32.6,
         pieces_per_pack: 1,
         do_not_ship: true,
+        image_url: "https://url.com/image.jpg",
       },
     ])
   })
