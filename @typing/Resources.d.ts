@@ -7,4 +7,5 @@ declare module "App" {
     | "gift_cards"
     | "customers"
     | "customer_subscriptions"
+    | "tax_categories"
 }
