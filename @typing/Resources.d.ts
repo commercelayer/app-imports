@@ -8,4 +8,5 @@ declare module "App" {
     | "customers"
     | "customer_subscriptions"
     | "tax_categories"
+    | "stock_items"
 }

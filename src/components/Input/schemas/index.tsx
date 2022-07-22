@@ -8,6 +8,7 @@ import { csvGiftCardsSchema } from "./giftCards"
 import { csvPricesSchema } from "./prices"
 import { csvSkuListSchema } from "./skuLists"
 import { csvSkusSchema } from "./skus"
+import { csvStockItemsSchema } from "./stockItems"
 import { csvTaxCategoriesSchema } from "./taxCategories"
 
 export const parsers: Record<AllowedResourceType, ZodSchema> = {
@@ -19,4 +20,5 @@ export const parsers: Record<AllowedResourceType, ZodSchema> = {
   customers: csvCustomersSchema,
   customer_subscriptions: csvCustomerSubscriptionsSchema,
   tax_categories: csvTaxCategoriesSchema,
+  stock_items: csvStockItemsSchema,
 }
