@@ -5,6 +5,11 @@ const resources: Record<AllowedResourceType, boolean> = {
   prices: true,
   coupons: true,
   sku_lists: true,
+  customer_subscriptions: true,
+  customers: true,
+  gift_cards: true,
+  stock_items: true,
+  tax_categories: true,
 }
 
 const allResources = Object.keys(resources) as AllowedResourceType[]

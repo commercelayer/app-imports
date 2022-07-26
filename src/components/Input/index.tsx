@@ -5,19 +5,28 @@ import { FC, useState, useEffect } from "react"
 import { ZodIssue } from "zod"
 
 import { adapters } from "./adapters"
-import { parsers } from "./schemas"
+import { parsers, isMakeSchemaFn } from "./schemas"
 
 type Props = {
+  parentResourceId?: string
+  cleanupRecords?: boolean
   onDataReady: (inputs?: ImportCreate) => void
   onDataResetRequest: () => void
   resourceType: AllowedResourceType
 }
 
-export const Input: FC<Props> = ({ onDataReady, onDataResetRequest, resourceType }) => {
+export const Input: FC<Props> = ({
+  onDataReady,
+  onDataResetRequest,
+  resourceType,
+  parentResourceId,
+  cleanupRecords,
+}) => {
   const [isParsing, setIsParsing] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
   const [errorList, setErrorList] = useState<ZodIssue[]>()
   const [file, setFile] = useState<File | null>(null)
+  const hasParentResource = Boolean(parentResourceId)
 
   const resetErrorUi = () => {
     setErrorMessage("")
@@ -35,19 +44,33 @@ export const Input: FC<Props> = ({ onDataReady, onDataResetRequest, resourceType
 
     parse(file, {
       header: true,
+      skipEmptyLines: true,
+      transform: (value) => {
+        return value || undefined
+      },
       error: () => {
         setIsParsing(false)
         setErrorMessage("Unable to load CSV file, it does not match the template")
       },
       complete: async ({ data }) => {
-        const parsedResources = parsers[resourceType].safeParse(data.slice(0, 2000))
+        const parser = parsers[resourceType]
+        const csvRows = data.slice(0, 2000)
+        const parsedResources = isMakeSchemaFn(parser)
+          ? parser({ hasParentResource }).safeParse(csvRows)
+          : parser.safeParse(csvRows)
+
         if (!parsedResources.success) {
           setErrorList(parsedResources.error.errors)
           setErrorMessage("We have found some errors for some important fields")
           setIsParsing(false)
           return
         }
-        onDataReady(adapters[resourceType](parsedResources.data))
+        onDataReady(
+          adapters[resourceType](parsedResources.data, {
+            parentResourceId,
+            cleanup: cleanupRecords,
+          })
+        )
         setIsParsing(false)
       },
     })

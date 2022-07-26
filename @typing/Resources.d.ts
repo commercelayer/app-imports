@@ -9,4 +9,9 @@ declare module "App" {
     | "customer_subscriptions"
     | "tax_categories"
     | "stock_items"
+  // TODO:
+  // | "orders"
+  // | "sku_list_items"
+  // | "bundles"
+  // | "sku_options"
 }

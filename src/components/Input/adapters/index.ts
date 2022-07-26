@@ -2,22 +2,32 @@ import { ImportCreate } from "@commercelayer/sdk"
 import { AllowedResourceType } from "App"
 import { ZodSchema } from "zod"
 
-export const adapters: Record<AllowedResourceType, (schema: ZodSchema[]) => ImportCreate> = {
-  skus: (parsedCsv: ZodSchema[]) => fromCsvSchemaToImportInputCreate(parsedCsv, "skus"),
-  sku_lists: (parsedCsv: ZodSchema[]) => fromCsvSchemaToImportInputCreate(parsedCsv, "sku_lists"),
-  prices: (parsedCsv: ZodSchema[]) => fromCsvSchemaToImportInputCreate(parsedCsv, "prices"),
-  coupons: (parsedCsv: ZodSchema[]) => fromCsvSchemaToImportInputCreate(parsedCsv, "coupons"),
-  gift_cards: (parsedCsv: ZodSchema[]) => fromCsvSchemaToImportInputCreate(parsedCsv, "gift_cards"),
-  customers: (parsedCsv: ZodSchema[]) => fromCsvSchemaToImportInputCreate(parsedCsv, "customers"),
-  customer_subscriptions: (parsedCsv: ZodSchema[]) =>
-    fromCsvSchemaToImportInputCreate(parsedCsv, "customer_subscriptions"),
-  tax_categories: (parsedCsv: ZodSchema[]) => fromCsvSchemaToImportInputCreate(parsedCsv, "tax_categories"),
-  stock_items: (parsedCsv: ZodSchema[]) => fromCsvSchemaToImportInputCreate(parsedCsv, "stock_items"),
+type AdapterOptions = {
+  parentResourceId?: string
+  cleanup?: boolean
 }
 
-const fromCsvSchemaToImportInputCreate = (parsedCsv: ZodSchema[], resourceType: AllowedResourceType): ImportCreate => {
+export const adapters: Record<AllowedResourceType, (schema: ZodSchema[], options: AdapterOptions) => ImportCreate> = {
+  skus: (...args) => fromCsvSchemaToImportInputCreate(...args, "skus"),
+  sku_lists: (...args) => fromCsvSchemaToImportInputCreate(...args, "sku_lists"),
+  prices: (...args) => fromCsvSchemaToImportInputCreate(...args, "prices"),
+  coupons: (...args) => fromCsvSchemaToImportInputCreate(...args, "coupons"),
+  gift_cards: (...args) => fromCsvSchemaToImportInputCreate(...args, "gift_cards"),
+  customers: (...args) => fromCsvSchemaToImportInputCreate(...args, "customers"),
+  customer_subscriptions: (...args) => fromCsvSchemaToImportInputCreate(...args, "customer_subscriptions"),
+  tax_categories: (...args) => fromCsvSchemaToImportInputCreate(...args, "tax_categories"),
+  stock_items: (...args) => fromCsvSchemaToImportInputCreate(...args, "stock_items"),
+}
+
+const fromCsvSchemaToImportInputCreate = (
+  parsedCsv: ZodSchema[],
+  options: AdapterOptions,
+  resourceType: AllowedResourceType
+): ImportCreate => {
   return {
     resource_type: resourceType,
+    parent_resource_id: options.parentResourceId,
+    cleanup_records: options.cleanup,
     inputs: parsedCsv,
   }
 }

@@ -11,9 +11,16 @@ import { csvSkusSchema } from "./skus"
 import { csvStockItemsSchema } from "./stockItems"
 import { csvTaxCategoriesSchema } from "./taxCategories"
 
-export const parsers: Record<AllowedResourceType, ZodSchema> = {
+type MakeSchemaFn = ({ hasParentResource }: { hasParentResource: boolean }) => ZodSchema
+type SchemaOrMakeSchemaFn = ZodSchema | MakeSchemaFn
+
+export const isMakeSchemaFn = (parser: any): parser is MakeSchemaFn => {
+  return typeof parser.safeParse === "undefined"
+}
+
+export const parsers: Record<AllowedResourceType, SchemaOrMakeSchemaFn> = {
   skus: csvSkusSchema,
-  prices: csvPricesSchema,
+  prices: (options) => csvPricesSchema(options),
   coupons: csvCouponsSchema,
   sku_lists: csvSkuListSchema,
   gift_cards: csvGiftCardsSchema,
