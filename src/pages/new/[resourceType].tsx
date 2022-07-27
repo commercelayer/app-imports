@@ -16,7 +16,9 @@ const NewImportPage: NextPage = () => {
   } = useSettings()
   const { query, push } = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-  const [importCreateValue, setImportCreateValue] = useState<ImportCreate | undefined>(undefined)
+  const [cleanupRecords, setCleanupRecords] = useState(false)
+  const [parentResourceId, setParentResourceId] = useState<string | undefined>()
+  const [importCreateValue, setImportCreateValue] = useState<ImportCreate["inputs"] | undefined>(undefined)
 
   const resourceType = query.resourceType as AllowedResourceType
 
@@ -40,7 +42,12 @@ const NewImportPage: NextPage = () => {
 
     setIsLoading(true)
     try {
-      await cl.imports.create(importCreateValue)
+      await cl.imports.create({
+        resource_type: resourceType,
+        cleanup_records: cleanupRecords,
+        parent_resource_id: parentResourceId,
+        inputs: importCreateValue,
+      })
       push(appRoutes.list())
     } catch {
       setIsLoading(false)
@@ -57,9 +64,9 @@ const NewImportPage: NextPage = () => {
           onDataResetRequest={() => setImportCreateValue(undefined)}
         />
 
-        {importCreateValue?.inputs && importCreateValue.inputs.length > 0 ? (
+        {importCreateValue && importCreateValue.length > 0 ? (
           <div>
-            <ImportPreviewTable rows={importCreateValue.inputs as []} />
+            <ImportPreviewTable rows={importCreateValue as []} />
             <button className="btn" onClick={createImport} disabled={isLoading}>
               {isLoading ? "Loading..." : "Create import task"}
             </button>

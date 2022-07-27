@@ -8,25 +8,17 @@ import { adapters } from "./adapters"
 import { parsers, isMakeSchemaFn } from "./schemas"
 
 type Props = {
-  parentResourceId?: string
-  cleanupRecords?: boolean
-  onDataReady: (inputs?: ImportCreate) => void
+  hasParentResource?: boolean
+  onDataReady: (inputs?: ImportCreate["inputs"]) => void
   onDataResetRequest: () => void
   resourceType: AllowedResourceType
 }
 
-export const Input: FC<Props> = ({
-  onDataReady,
-  onDataResetRequest,
-  resourceType,
-  parentResourceId,
-  cleanupRecords,
-}) => {
+export const Input: FC<Props> = ({ onDataReady, onDataResetRequest, resourceType, hasParentResource = false }) => {
   const [isParsing, setIsParsing] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
   const [errorList, setErrorList] = useState<ZodIssue[]>()
   const [file, setFile] = useState<File | null>(null)
-  const hasParentResource = Boolean(parentResourceId)
 
   const resetErrorUi = () => {
     setErrorMessage("")
@@ -65,12 +57,7 @@ export const Input: FC<Props> = ({
           setIsParsing(false)
           return
         }
-        onDataReady(
-          adapters[resourceType](parsedResources.data, {
-            parentResourceId,
-            cleanup: cleanupRecords,
-          })
-        )
+        onDataReady(adapters[resourceType](parsedResources.data))
         setIsParsing(false)
       },
     })
@@ -82,7 +69,7 @@ export const Input: FC<Props> = ({
     try {
       const json = JSON.parse(await file.text())
       // TODO: validate json schema against openapi?
-      onDataReady(json as ImportCreate)
+      onDataReady(json as ImportCreate["inputs"])
     } catch {
       setErrorMessage("Invalid json file")
     } finally {
