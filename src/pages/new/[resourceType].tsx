@@ -6,6 +6,8 @@ import { useState } from "react"
 
 import { ImportPreviewTable } from "#components/ImportPreviewTable"
 import { Input } from "#components/Input"
+import { ParentResourceSelector } from "#components/ResourceSelector"
+import { ResourceSelectorProvider } from "#components/ResourceSelector/Provider"
 import { useSettings } from "#components/SettingsProvider"
 import { isAvailableResource } from "#data/resources"
 import { appRoutes } from "#data/routes"
@@ -17,7 +19,7 @@ const NewImportPage: NextPage = () => {
   const { query, push } = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [cleanupRecords, setCleanupRecords] = useState(false)
-  const [parentResourceId, setParentResourceId] = useState<string | undefined>()
+  const [skipParentResource, setSkipParentResource] = useState(false)
   const [importCreateValue, setImportCreateValue] = useState<ImportCreate["inputs"] | undefined>(undefined)
 
   const resourceType = query.resourceType as AllowedResourceType
@@ -35,7 +37,7 @@ const NewImportPage: NextPage = () => {
     accessToken,
   })
 
-  const createImport = async () => {
+  const createImport = async (parentResourceId?: string) => {
     if (!importCreateValue) {
       return
     }
@@ -55,25 +57,46 @@ const NewImportPage: NextPage = () => {
   }
 
   return (
-    <div>
-      <div className="container px-3 py-4">
-        <h1 className="text-xl pb-2 font-bold">New upload {resourceType}</h1>
-        <Input
-          resourceType={resourceType}
-          onDataReady={setImportCreateValue}
-          onDataResetRequest={() => setImportCreateValue(undefined)}
-        />
-
-        {importCreateValue && importCreateValue.length > 0 ? (
+    <ResourceSelectorProvider accessToken={accessToken} organization={organization}>
+      {(resourceSelectorCtx) => {
+        const selectedParentResource = resourceSelectorCtx.state.selectedResource
+        const showUploadInput = selectedParentResource || skipParentResource
+        return (
           <div>
-            <ImportPreviewTable rows={importCreateValue as []} />
-            <button className="btn" onClick={createImport} disabled={isLoading}>
-              {isLoading ? "Loading..." : "Create import task"}
-            </button>
+            <div className="container px-3 py-4">
+              <h1 className="text-xl pb-2 font-bold">New upload {resourceType}</h1>
+
+              <ParentResourceSelector resourceType={resourceType} />
+
+              {showUploadInput ? (
+                <Input
+                  resourceType={resourceType}
+                  onDataReady={setImportCreateValue}
+                  onDataResetRequest={() => setImportCreateValue(undefined)}
+                  hasParentResource={Boolean(selectedParentResource?.id)}
+                />
+              ) : null}
+
+              {importCreateValue && importCreateValue.length > 0 ? (
+                <ImportPreviewTable rows={importCreateValue as []} />
+              ) : null}
+
+              {importCreateValue && importCreateValue.length > 0 ? (
+                <button
+                  className="btn"
+                  onClick={() => {
+                    createImport(selectedParentResource?.id)
+                  }}
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Loading..." : "Create import task"}
+                </button>
+              ) : null}
+            </div>
           </div>
-        ) : null}
-      </div>
-    </div>
+        )
+      }}
+    </ResourceSelectorProvider>
   )
 }
 

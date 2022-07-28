@@ -14,4 +14,23 @@ declare module "App" {
   // | "sku_list_items"
   // | "bundles"
   // | "sku_options"
+
+  export type ParentResourceByResourceType = {
+    bundles: "market"
+    coupons: "promotion_rules"
+    gift_cards: "market"
+    orders: "market"
+    prices: "price_list"
+    sku_list_items: "sku_list"
+    sku_options: "market"
+    stock_items: "stock_location"
+    tax_categories: "tax_calculator"
+  }
+
+  export type AllowedParentResource =
+    | "markets"
+    | "promotion_rules"
+    | "price_lists"
+    | "stock_locations"
+    | "tax_calculators"
 }
