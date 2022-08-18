@@ -6,31 +6,19 @@ import { initialValues, initialState } from "./data"
 import { reducer } from "./reducer"
 
 type ListImportProviderProps = {
-  organization: string
-  accessToken: string
   pageSize: number
   polling: boolean
   children: ((props: ListImportContextValue) => ReactNode) | ReactNode
+  sdkClient: CommerceLayerClient
 }
 
 const Context = createContext<ListImportContextValue>(initialValues)
 
 export const useListContext = (): ListImportContextValue => useContext(Context)
 
-export const ListImportProvider: FC<ListImportProviderProps> = ({
-  organization,
-  accessToken,
-  children,
-  pageSize,
-  polling,
-}) => {
+export const ListImportProvider: FC<ListImportProviderProps> = ({ children, pageSize, polling, sdkClient }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
   const intervalId = useRef<NodeJS.Timer | null>(null)
-
-  const cl = CommerceLayer({
-    organization,
-    accessToken,
-  })
 
   const [deleteQueue, _setDeleteQueue] = useState<Set<string>>(new Set())
   const addToDeleteQueue = useCallback(
@@ -51,7 +39,7 @@ export const ListImportProvider: FC<ListImportProviderProps> = ({
   const fetchList = useCallback(
     async ({ handleLoadingState }: { handleLoadingState: boolean }) => {
       handleLoadingState && dispatch({ type: "setLoading", payload: true })
-      const list = await getAllImports({ cl, state, pageSize })
+      const list = await getAllImports({ cl: sdkClient, state, pageSize })
       dispatch({ type: "setList", payload: list })
       handleLoadingState && dispatch({ type: "setLoading", payload: false })
     },
@@ -60,7 +48,7 @@ export const ListImportProvider: FC<ListImportProviderProps> = ({
 
   const deleteImport = (importId: string) => {
     addToDeleteQueue(importId)
-    cl.imports
+    sdkClient.imports
       .delete(importId)
       .catch(() => {
         console.log("Import not found")

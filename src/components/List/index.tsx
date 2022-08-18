@@ -1,3 +1,4 @@
+import { CommerceLayerClient } from "@commercelayer/sdk"
 import cn from "classnames"
 import { FC } from "react"
 
@@ -7,13 +8,12 @@ import { ListImportProvider } from "./Provider"
 import { Table } from "./Table"
 
 type Props = {
-  accessToken: string
-  organization: string
+  sdkClient: CommerceLayerClient
 }
 
-export const List: FC<Props> = ({ accessToken, organization }) => {
+export const List: FC<Props> = ({ sdkClient }) => {
   return (
-    <ListImportProvider accessToken={accessToken} organization={organization} pageSize={25} polling={false}>
+    <ListImportProvider sdkClient={sdkClient} pageSize={25} polling={false}>
       {({ state }) => {
         const { isLoading, currentPage, list } = state
 

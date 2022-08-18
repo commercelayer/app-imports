@@ -4,15 +4,15 @@ import { List } from "#components/List"
 import { useSettings } from "#components/SettingsProvider"
 
 const Home: NextPage = () => {
-  const { settings } = useSettings()
+  const { sdkClient, settings } = useSettings()
 
-  if (!settings) {
+  if (!settings || !sdkClient) {
     return <div>Loading</div>
   }
 
   return (
     <div>
-      <List accessToken={settings.accessToken} organization={settings.organization} />
+      <List sdkClient={sdkClient} />
     </div>
   )
 }

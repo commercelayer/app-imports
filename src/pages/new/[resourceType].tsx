@@ -1,4 +1,4 @@
-import CommerceLayer, { ImportCreate } from "@commercelayer/sdk"
+import { ImportCreate } from "@commercelayer/sdk"
 import { AllowedResourceType } from "App"
 import type { NextPage } from "next"
 import { useRouter } from "next/router"
@@ -15,6 +15,7 @@ import { appRoutes } from "#data/routes"
 const NewImportPage: NextPage = () => {
   const {
     settings: { organization, accessToken },
+    sdkClient,
   } = useSettings()
   const { query, push } = useRouter()
   const [isLoading, setIsLoading] = useState(false)
@@ -24,7 +25,7 @@ const NewImportPage: NextPage = () => {
 
   const resourceType = query.resourceType as AllowedResourceType
 
-  if (!organization || !accessToken) {
+  if (!organization || !accessToken || !sdkClient) {
     return null
   }
 
@@ -32,19 +33,14 @@ const NewImportPage: NextPage = () => {
     return <div>404 - resource type non allowed or not enabled</div>
   }
 
-  const cl = CommerceLayer({
-    organization,
-    accessToken,
-  })
-
-  const createImport = async (parentResourceId?: string) => {
+  const createImportTask = async (parentResourceId?: string) => {
     if (!importCreateValue) {
       return
     }
 
     setIsLoading(true)
     try {
-      await cl.imports.create({
+      await sdkClient.imports.create({
         resource_type: resourceType,
         cleanup_records: cleanupRecords,
         parent_resource_id: parentResourceId,
@@ -85,7 +81,7 @@ const NewImportPage: NextPage = () => {
                 <button
                   className="btn"
                   onClick={() => {
-                    createImport(selectedParentResource?.id)
+                    createImportTask(selectedParentResource?.id)
                   }}
                   disabled={isLoading}
                 >
