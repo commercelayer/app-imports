@@ -1,4 +1,4 @@
-import CommerceLayer, { CommerceLayerClient } from "@commercelayer/sdk"
+import { CommerceLayerClient } from "@commercelayer/sdk"
 import { ListImportContextValue, UpdateFilterOptions, ListImportContextState } from "App"
 import { createContext, FC, ReactNode, useCallback, useEffect, useReducer, useContext, useRef, useState } from "react"
 

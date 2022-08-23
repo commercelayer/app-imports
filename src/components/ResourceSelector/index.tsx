@@ -1,11 +1,12 @@
 import { AllowedParentResource, AllowedResourceType } from "App"
-import { FC } from "react"
+import { FC, useEffect } from "react"
 
 import SearchInput from "./SearchInput"
 import SearchResults from "./SearchResults"
 
 type Props = {
   resourceType: AllowedResourceType
+  onNotNeeded: () => void
 }
 
 const parentResourceByResourceType: Record<string, AllowedParentResource> = {
@@ -24,8 +25,14 @@ const parentResourceByResourceType: Record<string, AllowedParentResource> = {
   // skus: null,
 }
 
-export const ParentResourceSelector: FC<Props> = ({ resourceType }) => {
+export const ParentResourceSelector: FC<Props> = ({ resourceType, onNotNeeded }) => {
   const parentResource = parentResourceByResourceType[resourceType]
+
+  useEffect(() => {
+    if (!parentResource && onNotNeeded) {
+      onNotNeeded()
+    }
+  }, [parentResource, onNotNeeded])
 
   if (!parentResource) {
     return <div>No parent resource for {resourceType}</div>

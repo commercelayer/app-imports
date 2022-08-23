@@ -53,16 +53,21 @@ const NewImportPage: NextPage = () => {
   }
 
   return (
-    <ResourceSelectorProvider accessToken={accessToken} organization={organization}>
+    <ResourceSelectorProvider sdkClient={sdkClient}>
       {(resourceSelectorCtx) => {
-        const selectedParentResource = resourceSelectorCtx.state.selectedResource
+        const selectedParentResource = skipParentResource ? undefined : resourceSelectorCtx.state.selectedResource
         const showUploadInput = selectedParentResource || skipParentResource
+
         return (
           <div>
             <div className="container px-3 py-4">
               <h1 className="text-xl pb-2 font-bold">New upload {resourceType}</h1>
 
-              <ParentResourceSelector resourceType={resourceType} />
+              <button onClick={() => setSkipParentResource((s) => !s)}>Toggle skip parent resource</button>
+
+              {skipParentResource ? null : (
+                <ParentResourceSelector resourceType={resourceType} onNotNeeded={() => setSkipParentResource(true)} />
+              )}
 
               {showUploadInput ? (
                 <Input

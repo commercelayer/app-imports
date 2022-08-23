@@ -1,4 +1,4 @@
-import CommerceLayer from "@commercelayer/sdk"
+import CommerceLayer, { CommerceLayerClient } from "@commercelayer/sdk"
 import { ResourceSelectorContextValue, AllowedParentResource, ResourceSelectorResource } from "App"
 import { createContext, FC, ReactNode, useCallback, useReducer, useContext } from "react"
 
@@ -6,8 +6,7 @@ import { initialValues, initialState } from "./data"
 import { reducer } from "./reducer"
 
 type ResourceSelectorProviderProps = {
-  organization: string
-  accessToken: string
+  sdkClient: CommerceLayerClient
   children: ((props: ResourceSelectorContextValue) => ReactNode) | ReactNode
 }
 
@@ -15,20 +14,11 @@ const Context = createContext<ResourceSelectorContextValue>(initialValues)
 
 export const useResourceSelectorContext = (): ResourceSelectorContextValue => useContext(Context)
 
-export const ResourceSelectorProvider: FC<ResourceSelectorProviderProps> = ({
-  organization,
-  accessToken,
-  children,
-}) => {
+export const ResourceSelectorProvider: FC<ResourceSelectorProviderProps> = ({ sdkClient, children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  const cl = CommerceLayer({
-    organization,
-    accessToken,
-  })
-
   const search = useCallback(async (hint: string, resourceType: AllowedParentResource) => {
-    const fetchedResources = await cl[resourceType].list({
+    const fetchedResources = await sdkClient[resourceType].list({
       fields: ["name", "id"],
       filters: {
         name_cont: hint,
