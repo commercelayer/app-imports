@@ -1,54 +1,54 @@
-import { Import } from "@commercelayer/sdk"
-import { ListResponse } from "@commercelayer/sdk/lib/cjs/resource"
-import { ListImportContextState, ListImportAllowedStatusType, AllowedResourceType } from "App"
+import { Import } from '@commercelayer/sdk'
+import { ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
+import { ListImportContextState, ListImportAllowedStatusType, AllowedResourceType } from 'App'
 
 type Action =
-  | { type: "setLoading"; payload: boolean }
-  | { type: "setList"; payload: ListResponse<Import> }
-  | { type: "changePage"; payload: number }
-  | { type: "sort"; payload: "asc" | "desc" }
-  | { type: "filterStatus"; payload: ListImportAllowedStatusType | "all" }
-  | { type: "filterResourceType"; payload: AllowedResourceType | "all" }
+  | { type: 'setLoading', payload: boolean }
+  | { type: 'setList', payload: ListResponse<Import> }
+  | { type: 'changePage', payload: number }
+  | { type: 'sort', payload: 'asc' | 'desc' }
+  | { type: 'filterStatus', payload: ListImportAllowedStatusType | 'all' }
+  | { type: 'filterResourceType', payload: AllowedResourceType | 'all' }
 
 export const reducer = (state: ListImportContextState, action: Action): ListImportContextState => {
   switch (action.type) {
-    case "setLoading":
+    case 'setLoading':
       return {
         ...state,
-        isLoading: action.payload,
+        isLoading: action.payload
       }
-    case "setList":
+    case 'setList':
       return {
         ...state,
-        list: action.payload,
+        list: action.payload
       }
-    case "changePage":
+    case 'changePage':
       return {
         ...state,
-        currentPage: action.payload,
+        currentPage: action.payload
       }
-    case "sort":
+    case 'sort':
       return {
         ...state,
         sort: {
-          created_at: action.payload,
-        },
+          created_at: action.payload
+        }
       }
-    case "filterStatus":
+    case 'filterStatus':
       return {
         ...state,
         filters: {
           ...state.filters,
-          status_eq: action.payload === "all" ? undefined : action.payload,
-        },
+          status_eq: action.payload === 'all' ? undefined : action.payload
+        }
       }
-    case "filterResourceType":
+    case 'filterResourceType':
       return {
         ...state,
         filters: {
           ...state.filters,
-          resource_type_eq: action.payload === "all" ? undefined : action.payload,
-        },
+          resource_type_eq: action.payload === 'all' ? undefined : action.payload
+        }
       }
     default:
       return state

@@ -1,12 +1,12 @@
-declare module "App" {
-  export type ResourceSelectorResource = { id: string; name: string }
+declare module 'App' {
+  export interface ResourceSelectorResource { id: string, name: string }
 
-  export type ResourceSelectorContextState = {
+  export interface ResourceSelectorContextState {
     resources: ResourceSelectorResource[]
     selectedResource?: ResourceSelectorResource
   }
 
-  export type ResourceSelectorContextValue = {
+  export interface ResourceSelectorContextValue {
     state: ResourceSelectorContextState
     search: (hint: string, resourceType: AllowedParentResource) => void
     select: (resource: ResourceSelectorResource) => void

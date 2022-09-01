@@ -1,31 +1,35 @@
-import { getAccessTokenFromUrl } from "./getAccessTokenFromUrl"
+import { getAccessTokenFromUrl } from './getAccessTokenFromUrl'
 
-describe("Read JWT from URL", () => {
+/**
+ * @vitest-environment jsdom
+ */
+
+describe('Read JWT from URL', () => {
   const { location } = window
-  beforeAll(function clearLocation() {
+  beforeAll(function clearLocation () {
     delete (window as any).location
     ;(window as any).location = {
       ...location,
-      href: "http://domain.com",
-      search: "",
+      href: 'http://domain.com',
+      search: ''
     }
   })
-  afterAll(function resetLocation() {
+  afterAll(function resetLocation () {
     window.location = location
   })
 
-  test("accessToken is in URL query string", () => {
-    window.location.search = "?accessToken=eyJhbGciOiJIUzUxMiJ9"
-    expect(getAccessTokenFromUrl()).toBe("eyJhbGciOiJIUzUxMiJ9")
+  test('accessToken is in URL query string', () => {
+    window.location.search = '?accessToken=eyJhbGciOiJIUzUxMiJ9'
+    expect(getAccessTokenFromUrl()).toBe('eyJhbGciOiJIUzUxMiJ9')
   })
 
-  test("accessToken is not part of URL query string", () => {
-    window.location.search = "?someOtherParam=foobar"
+  test('accessToken is not part of URL query string', () => {
+    window.location.search = '?someOtherParam=foobar'
     expect(getAccessTokenFromUrl()).toBe(null)
   })
 
-  test("Query string is empty", () => {
-    window.location.search = ""
+  test('Query string is empty', () => {
+    window.location.search = ''
     expect(getAccessTokenFromUrl()).toBe(null)
   })
 })

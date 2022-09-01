@@ -1,13 +1,13 @@
-import { CommerceLayerClient } from "@commercelayer/sdk"
-import cn from "classnames"
-import { FC } from "react"
+import { CommerceLayerClient } from '@commercelayer/sdk'
+import cn from 'classnames'
+import { FC } from 'react'
 
-import { Filters } from "./Filters"
-import { Pagination } from "./Pagination"
-import { ListImportProvider } from "./Provider"
-import { Table } from "./Table"
+import { Filters } from './Filters'
+import { Pagination } from './Pagination'
+import { ListImportProvider } from './Provider'
+import { Table } from './Table'
 
-type Props = {
+interface Props {
   sdkClient: CommerceLayerClient
 }
 
@@ -17,17 +17,17 @@ export const List: FC<Props> = ({ sdkClient }) => {
       {({ state }) => {
         const { isLoading, currentPage, list } = state
 
-        if (isLoading && !list) {
+        if (isLoading && (list == null)) {
           return <div>Loading list...</div>
         }
 
-        if (!list) {
+        if (list == null) {
           return null
         }
 
-        const isRefetching = list.meta && currentPage !== list.meta.currentPage
+        const isRefetching = currentPage !== list.meta.currentPage
         return (
-          <div className={cn("container", { "opacity-40": isRefetching })}>
+          <div className={cn('container', { 'opacity-40': isRefetching })}>
             <Filters />
             <Table />
             <Pagination />

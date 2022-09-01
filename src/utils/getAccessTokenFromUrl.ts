@@ -1,6 +1,15 @@
-export const getAccessTokenFromUrl = () => {
-  if (typeof window !== "undefined") {
+import { isFalsy } from './isFalsy'
+
+export const getAccessTokenFromUrl = (): string | null => {
+  if (typeof window !== 'undefined') {
     const params = new URLSearchParams(window.location.search)
-    return params.get("accessToken")
+    const value = params.get('accessToken')
+    if (isFalsy(value)) {
+      return null
+    }
+
+    return value
   }
+
+  return null
 }

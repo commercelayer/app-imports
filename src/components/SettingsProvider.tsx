@@ -1,26 +1,27 @@
-import CommerceLayer, { CommerceLayerClient } from "@commercelayer/sdk"
-import { Settings } from "App"
-import { createContext, FC, ReactNode, useContext, useEffect, useState } from "react"
+import CommerceLayer, { CommerceLayerClient } from '@commercelayer/sdk'
+import { Settings } from 'App'
+import { createContext, FC, ReactNode, useContext, useEffect, useState } from 'react'
 
-import { getAccessTokenFromUrl } from "#utils/getAccessTokenFromUrl"
-import { getInfoFromJwt } from "#utils/getInfoFromJwt"
+import { getAccessTokenFromUrl } from '#utils/getAccessTokenFromUrl'
+import { getInfoFromJwt } from '#utils/getInfoFromJwt'
+import { isFalsy } from '#utils/isFalsy'
 
-type SettingsProviderValue = {
+interface SettingsProviderValue {
   settings: Settings
   isLoading: boolean
   sdkClient?: CommerceLayerClient
 }
 
-type SettingsProviderProps = {
+interface SettingsProviderProps {
   children: ((props: SettingsProviderValue) => ReactNode) | ReactNode
 }
 
 const initialValues: SettingsProviderValue = {
   settings: {
-    accessToken: "",
-    organization: "",
+    accessToken: '',
+    organization: ''
   },
-  isLoading: true,
+  isLoading: true
 }
 
 export const SettingsContext = createContext<SettingsProviderValue>(initialValues)
@@ -30,7 +31,7 @@ export const useSettings = (): SettingsProviderValue => {
   return {
     settings: ctx.settings,
     isLoading: !!ctx.isLoading,
-    sdkClient: ctx.sdkClient,
+    sdkClient: ctx.sdkClient
   }
 }
 
@@ -41,14 +42,14 @@ export const SettingsProvider: FC<SettingsProviderProps> = ({ children }) => {
   const accessToken = getAccessTokenFromUrl()
 
   useEffect(() => {
-    if (!accessToken) {
+    if (accessToken == null) {
       return
     }
     const { slug } = getInfoFromJwt(accessToken)
-    if (slug) {
+    if (slug != null) {
       setSettings({
         accessToken,
-        organization: slug,
+        organization: slug
       })
     }
 
@@ -56,26 +57,28 @@ export const SettingsProvider: FC<SettingsProviderProps> = ({ children }) => {
   }, [accessToken])
 
   useEffect(() => {
-    if (settings?.accessToken && settings?.organization) {
-      setSdkClient(
-        CommerceLayer({
-          accessToken: settings?.accessToken,
-          organization: settings?.organization,
-          domain: process.env.NEXT_PUBLIC_DOMAIN,
-        })
-      )
+    if (isFalsy(settings) || isFalsy(settings.accessToken) || isFalsy(settings.organization)) {
+      return
     }
+
+    setSdkClient(
+      CommerceLayer({
+        accessToken: settings?.accessToken,
+        organization: settings?.organization,
+        domain: import.meta.env.PUBLIC_DOMAIN
+      })
+    )
   }, [settings])
 
   const value = {
     settings,
     isLoading,
-    sdkClient,
+    sdkClient
   }
 
   return (
     <SettingsContext.Provider value={value}>
-      {typeof children === "function" ? children(value) : children}
+      {typeof children === 'function' ? children(value) : children}
     </SettingsContext.Provider>
   )
 }

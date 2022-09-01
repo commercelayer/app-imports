@@ -1,4 +1,4 @@
-import jwtDecode from "jwt-decode"
+import jwtDecode from 'jwt-decode'
 
 interface JWTProps {
   organization: {
@@ -11,13 +11,17 @@ interface JWTProps {
   test: boolean
 }
 
-export const getInfoFromJwt = (accessToken: string) => {
+export const getInfoFromJwt = (accessToken: string): {
+  slug?: string
+  kind?: string
+  isTest?: boolean
+} => {
   try {
     const {
       organization: { slug },
       application: { kind },
-      test,
-    } = jwtDecode(accessToken) as JWTProps
+      test
+    } = jwtDecode<JWTProps>(accessToken)
 
     return { slug, kind, isTest: test }
   } catch (e) {

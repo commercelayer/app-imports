@@ -1,11 +1,12 @@
-import { CommerceLayerClient } from "@commercelayer/sdk"
-import { ListImportContextValue, UpdateFilterOptions, ListImportContextState } from "App"
-import { createContext, FC, ReactNode, useCallback, useEffect, useReducer, useContext, useRef, useState } from "react"
+import { CommerceLayerClient, Import } from '@commercelayer/sdk'
+import { ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
+import { ListImportContextValue, UpdateFilterOptions, ListImportContextState } from 'App'
+import { createContext, FC, ReactNode, useCallback, useEffect, useReducer, useContext, useRef, useState } from 'react'
 
-import { initialValues, initialState } from "./data"
-import { reducer } from "./reducer"
+import { initialValues, initialState } from './data'
+import { reducer } from './reducer'
 
-type ListImportProviderProps = {
+interface ListImportProviderProps {
   pageSize: number
   polling: boolean
   children: ((props: ListImportContextValue) => ReactNode) | ReactNode
@@ -30,7 +31,7 @@ export const ListImportProvider: FC<ListImportProviderProps> = ({ children, page
     [deleteQueue]
   )
 
-  const changePage = useCallback((page: number) => dispatch({ type: "changePage", payload: page }), [])
+  const changePage = useCallback((page: number) => dispatch({ type: 'changePage', payload: page }), [])
 
   const updateFilter = useCallback((filter: UpdateFilterOptions) => {
     dispatch(filter)
@@ -38,38 +39,38 @@ export const ListImportProvider: FC<ListImportProviderProps> = ({ children, page
 
   const fetchList = useCallback(
     async ({ handleLoadingState }: { handleLoadingState: boolean }) => {
-      handleLoadingState && dispatch({ type: "setLoading", payload: true })
+      handleLoadingState && dispatch({ type: 'setLoading', payload: true })
       const list = await getAllImports({ cl: sdkClient, state, pageSize })
-      dispatch({ type: "setList", payload: list })
-      handleLoadingState && dispatch({ type: "setLoading", payload: false })
+      dispatch({ type: 'setList', payload: list })
+      handleLoadingState && dispatch({ type: 'setLoading', payload: false })
     },
     [state.currentPage, state.filters]
   )
 
-  const deleteImport = (importId: string) => {
+  const deleteImport = (importId: string): void => {
     addToDeleteQueue(importId)
     sdkClient.imports
       .delete(importId)
       .catch(() => {
-        console.log("Import not found")
+        console.log('Import not found')
       })
       .finally(() => {
-        fetchList({ handleLoadingState: false })
+        void fetchList({ handleLoadingState: false })
       })
   }
 
   useEffect(() => {
-    fetchList({ handleLoadingState: true })
+    void fetchList({ handleLoadingState: true })
     if (!polling) {
       return
     }
     // start polling
     intervalId.current = setInterval(() => {
-      fetchList({ handleLoadingState: false })
+      void fetchList({ handleLoadingState: false })
     }, 4000)
 
     return () => {
-      if (intervalId.current) {
+      if (intervalId.current != null) {
         clearInterval(intervalId.current)
       }
     }
@@ -80,36 +81,37 @@ export const ListImportProvider: FC<ListImportProviderProps> = ({ children, page
     changePage,
     updateFilter,
     deleteImport,
-    deleteQueue,
+    deleteQueue
   }
 
   return (
-    <Context.Provider value={value}>{typeof children === "function" ? children(value) : children}</Context.Provider>
+    <Context.Provider value={value}>{typeof children === 'function' ? children(value) : children}</Context.Provider>
   )
 }
 
-const getAllImports = ({
+const getAllImports = async ({
   cl,
   state,
-  pageSize,
+  pageSize
 }: {
   cl: CommerceLayerClient
   state: ListImportContextState
   pageSize: number
-}) => {
+}): Promise<ListResponse<Import>> => {
   // we need to remove undefined properties from filters, since SDK won't ignore them
   const filters = { ...state.filters }
-  const filtersKey = Object.keys(filters) as (keyof typeof filters)[]
+  const filtersKey = Object.keys(filters) as Array<keyof typeof filters>
   filtersKey.forEach((f) => {
     if (filters[f] === undefined) {
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
       delete filters[f]
     }
   })
 
-  return cl.imports.list({
+  return await cl.imports.list({
     pageNumber: state.currentPage,
     pageSize,
     sort: state.sort,
-    filters,
+    filters
   })
 }

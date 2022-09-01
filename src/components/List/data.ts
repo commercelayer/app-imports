@@ -1,11 +1,11 @@
-import { ListImportContextValue, ListImportContextState } from "App"
+import { ListImportContextValue, ListImportContextState } from 'App'
 
 export const initialState: ListImportContextState = {
   isLoading: true,
   currentPage: 1,
   sort: {
-    created_at: "desc",
-  },
+    created_at: 'desc'
+  }
 }
 
 export const initialValues: ListImportContextValue = {
@@ -13,5 +13,5 @@ export const initialValues: ListImportContextValue = {
   changePage: () => undefined,
   updateFilter: () => undefined,
   deleteImport: () => undefined,
-  deleteQueue: new Set(),
+  deleteQueue: new Set()
 }

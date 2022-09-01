@@ -1,73 +1,73 @@
-import { FC } from "react"
+import { FC } from 'react'
 
-import { useListContext } from "#components/List/Provider"
+import { useListContext } from '#components/List/Provider'
 
 export const Filters: FC = () => {
   const { updateFilter } = useListContext()
 
   return (
-    <div className="flex gap-2">
+    <div className='flex gap-2'>
       <button
-        className="btn"
+        className='btn'
         onClick={() => {
           updateFilter({
-            type: "filterStatus",
-            payload: "completed",
+            type: 'filterStatus',
+            payload: 'completed'
           })
         }}
       >
         view completed only
       </button>
       <button
-        className="btn"
+        className='btn'
         onClick={() => {
           updateFilter({
-            type: "filterStatus",
-            payload: "in_progress",
+            type: 'filterStatus',
+            payload: 'in_progress'
           })
         }}
       >
         view pending only
       </button>
       <button
-        className="btn"
+        className='btn'
         onClick={() => {
           updateFilter({
-            type: "filterStatus",
-            payload: "all",
+            type: 'filterStatus',
+            payload: 'all'
           })
         }}
       >
         view all statuses
       </button>
       <button
-        className="btn"
+        className='btn'
         onClick={() => {
           updateFilter({
-            type: "filterResourceType",
-            payload: "skus",
+            type: 'filterResourceType',
+            payload: 'skus'
           })
         }}
       >
         view skus resource only
       </button>
       <button
-        className="btn"
+        className='btn'
         onClick={() => {
           updateFilter({
-            type: "filterResourceType",
-            payload: "prices",
+            type: 'filterResourceType',
+            payload: 'prices'
           })
         }}
       >
         view prices resource only
       </button>
       <button
-        className="btn"
+        className='btn'
         onClick={() => {
           updateFilter({
-            type: "filterResourceType",
-            payload: "all",
+            type: 'filterResourceType',
+            payload: 'all'
           })
         }}
       >

@@ -1,5 +1,5 @@
-declare module "App" {
-  export type Settings = {
+declare module 'App' {
+  export interface Settings {
     accessToken: string
     organization: string
   }

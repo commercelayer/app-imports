@@ -1,27 +1,28 @@
-import { ImportCreate } from "@commercelayer/sdk"
-import { AllowedResourceType } from "App"
-import { parse } from "papaparse"
-import { FC, useState, useEffect } from "react"
-import { ZodIssue } from "zod"
+import { isFalsy } from '#utils/isFalsy'
+import { ImportCreate } from '@commercelayer/sdk'
+import { AllowedResourceType } from 'App'
+import { parse } from 'papaparse'
+import { FC, useState, useEffect } from 'react'
+import { ZodIssue } from 'zod'
 
-import { adapters } from "./adapters"
-import { parsers, isMakeSchemaFn } from "./schemas"
+import { adapters } from './adapters'
+import { parsers, isMakeSchemaFn } from './schemas'
 
-type Props = {
+interface Props {
   hasParentResource?: boolean
-  onDataReady: (inputs?: ImportCreate["inputs"]) => void
+  onDataReady: (inputs?: ImportCreate['inputs']) => void
   onDataResetRequest: () => void
   resourceType: AllowedResourceType
 }
 
 export const Input: FC<Props> = ({ onDataReady, onDataResetRequest, resourceType, hasParentResource = false }) => {
   const [isParsing, setIsParsing] = useState(false)
-  const [errorMessage, setErrorMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState('')
   const [errorList, setErrorList] = useState<ZodIssue[]>()
   const [file, setFile] = useState<File | null>(null)
 
-  const resetErrorUi = () => {
-    setErrorMessage("")
+  const resetErrorUi = (): void => {
+    setErrorMessage('')
     setErrorList([])
   }
 
@@ -30,7 +31,7 @@ export const Input: FC<Props> = ({ onDataReady, onDataResetRequest, resourceType
     resetErrorUi()
   }, [file])
 
-  const loadAndParseCSV = async (file: File) => {
+  const loadAndParseCSV = async (file: File): Promise<void> => {
     setIsParsing(true)
     resetErrorUi()
 
@@ -38,11 +39,11 @@ export const Input: FC<Props> = ({ onDataReady, onDataResetRequest, resourceType
       header: true,
       skipEmptyLines: true,
       transform: (value) => {
-        return value || undefined
+        return isFalsy(value) ? undefined : value
       },
       error: () => {
         setIsParsing(false)
-        setErrorMessage("Unable to load CSV file, it does not match the template")
+        setErrorMessage('Unable to load CSV file, it does not match the template')
       },
       complete: async ({ data }) => {
         const parser = parsers[resourceType]
@@ -53,25 +54,24 @@ export const Input: FC<Props> = ({ onDataReady, onDataResetRequest, resourceType
 
         if (!parsedResources.success) {
           setErrorList(parsedResources.error.errors)
-          setErrorMessage("We have found some errors for some important fields")
+          setErrorMessage('We have found some errors for some important fields')
           setIsParsing(false)
           return
         }
         onDataReady(adapters[resourceType](parsedResources.data))
         setIsParsing(false)
-      },
+      }
     })
   }
 
-  const loadAndParseJson = async (file: File) => {
+  const loadAndParseJson = async (file: File): Promise<void> => {
     setIsParsing(true)
-    setErrorMessage("")
+    setErrorMessage('')
     try {
       const json = JSON.parse(await file.text())
-      // TODO: validate json schema against openapi?
-      onDataReady(json as ImportCreate["inputs"])
+      onDataReady(json as ImportCreate['inputs'])
     } catch {
-      setErrorMessage("Invalid json file")
+      setErrorMessage('Invalid json file')
     } finally {
       setIsParsing(false)
     }
@@ -80,51 +80,55 @@ export const Input: FC<Props> = ({ onDataReady, onDataResetRequest, resourceType
   return (
     <div>
       <input
-        type="file"
+        type='file'
         disabled={isParsing}
         onChange={(e) => {
-          if (e.target.files && !isParsing) {
+          if ((e.target.files != null) && !isParsing) {
             setFile(e.target.files[0])
           }
         }}
       />
-      {file ? (
-        <button
-          className="btn"
-          disabled={!file || isParsing}
-          onClick={() => {
-            if (!file) {
-              return
-            }
-
-            switch (file.type) {
-              case "text/csv":
-                loadAndParseCSV(file)
+      {(file != null)
+        ? (
+          <button
+            className='btn'
+            disabled={isFalsy(file) || isParsing}
+            onClick={() => {
+              if (isFalsy(file)) {
                 return
+              }
 
-              case "application/json":
-                loadAndParseJson(file)
-                return
+              switch (file.type) {
+                case 'text/csv':
+                  void loadAndParseCSV(file)
+                  return
 
-              default:
-                setErrorMessage("Invalid format")
-            }
-          }}
-        >
-          {isParsing ? "loading" : "load file"}
-        </button>
-      ) : null}
-      {errorMessage && <div className="text-red-500">{errorMessage}</div>}
-      {errorList && errorList.length ? (
-        <div className="text-red-500">
-          {errorList.slice(0, 5).map((issue, idx) => (
-            <div key={idx}>
-              Row {issue.path.join(" - ")} {issue.message}
-            </div>
-          ))}
-          {errorList.length > 5 ? "We found other errors not listed here" : null}
-        </div>
-      ) : null}
+                case 'application/json':
+                  void loadAndParseJson(file)
+                  return
+
+                default:
+                  setErrorMessage('Invalid format')
+              }
+            }}
+          >
+            {isParsing ? 'loading' : 'load file'}
+          </button>
+          )
+        : null}
+      {typeof errorMessage === 'string' && <div className='text-red-500'>{errorMessage}</div>}
+      {(errorList != null) && (errorList.length > 0)
+        ? (
+          <div className='text-red-500'>
+            {errorList.slice(0, 5).map((issue, idx) => (
+              <div key={idx}>
+                Row {issue.path.join(' - ')} {issue.message}
+              </div>
+            ))}
+            {errorList.length > 5 ? 'We found other errors not listed here' : null}
+          </div>
+          )
+        : null}
     </div>
   )
 }

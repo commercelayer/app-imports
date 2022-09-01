@@ -1,32 +1,63 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "typeRoots": ["./node_modules/@types", "./@typing"],
-    "downlevelIteration": true,
-    "allowJs": true,
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "types": [
+      "vitest/globals"
+    ],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./@typing"
+    ],
+    "allowJs": false,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
     "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "esModuleInterop": false,
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "baseUrl": "./",
     "paths": {
-      "#styles/*": ["src/styles/*"],
-      "#components/*": ["src/components/*"],
-      "#data/*": ["src/data/*"],
-      "#utils/*": ["src/utils/*"],
-      "#schemas/*": ["src/schemas/*"],
-      "#specs/*": ["specs/*"]
+      "#styles/*": [
+        "src/styles/*"
+      ],
+      "#components/*": [
+        "src/components/*"
+      ],
+      "#data/*": [
+        "src/data/*"
+      ],
+      "#utils/*": [
+        "src/utils/*"
+      ],
+      "#schemas/*": [
+        "src/schemas/*"
+      ],
+      "#specs/*": [
+        "specs/*"
+      ]
     },
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "*.config.js"],
-  "exclude": ["node_modules", "public", ".next"],
+  "include": [
+    "src",
+    "*.config.ts",
+    "@typing/**/*.d.ts"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
   "compileOnSave": false
 }

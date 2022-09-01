@@ -1,4 +1,4 @@
-import { AllowedResourceType } from "App"
+import { AllowedResourceType } from 'App'
 
 const resources: Record<AllowedResourceType, boolean> = {
   skus: true,
@@ -9,12 +9,12 @@ const resources: Record<AllowedResourceType, boolean> = {
   customers: true,
   gift_cards: true,
   stock_items: true,
-  tax_categories: true,
+  tax_categories: true
 }
 
 const allResources = Object.keys(resources) as AllowedResourceType[]
 
 export const availableResources = allResources.filter((r) => resources[r])
 
-export const isAvailableResource = (resourceType: string) =>
+export const isAvailableResource = (resourceType: string): boolean =>
   availableResources.includes(resourceType as AllowedResourceType)
