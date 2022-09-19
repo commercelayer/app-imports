@@ -6,17 +6,14 @@ import { ImportPreviewTable } from '#components/ImportPreviewTable'
 import { Input } from '#components/Input'
 import { ParentResourceSelector } from '#components/ResourceSelector'
 import { ResourceSelectorProvider } from '#components/ResourceSelector/Provider'
-import { useSettings } from '#components/SettingsProvider'
 import { isAvailableResource } from '#data/resources'
 import { appRoutes } from '#data/routes'
 import { useLocation, useRoute } from 'wouter'
-import { isFalsy } from '#utils/isFalsy'
+import { useAuthProvider } from '#components/AuthProvider'
 
 function NewImportPage (): JSX.Element {
-  const {
-    settings: { organization, accessToken },
-    sdkClient
-  } = useSettings()
+  const { sdkClient } = useAuthProvider()
+
   const params = useRoute('/new/:resourceType')[1]
   const setLocation = useLocation()[1]
 
@@ -25,8 +22,8 @@ function NewImportPage (): JSX.Element {
   const [skipParentResource, setSkipParentResource] = useState(false)
   const [importCreateValue, setImportCreateValue] = useState<ImportCreate['inputs'] | undefined>(undefined)
 
-  if (isFalsy(organization) || isFalsy(accessToken) || (sdkClient == null)) {
-    return <div>No settings</div>
+  if (sdkClient == null) {
+    return <div>Waiting for sdk client</div>
   }
 
   const resourceType = params == null ? null : params.resourceType as AllowedResourceType

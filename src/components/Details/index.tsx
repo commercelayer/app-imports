@@ -1,29 +1,23 @@
 import { isFalsy } from '#utils/isFalsy'
-import CommerceLayer, { Import } from '@commercelayer/sdk'
+import { Import, CommerceLayerClient } from '@commercelayer/sdk'
 import { FC, useEffect, useState } from 'react'
 
 interface Props {
-  accessToken: string
-  organization: string
+  sdkClient: CommerceLayerClient
   importId: string
 }
 
-export const Details: FC<Props> = ({ accessToken, organization, importId }) => {
+export const Details: FC<Props> = ({ sdkClient, importId }) => {
   const [importDetails, setImportDetails] = useState<Import | undefined | false>(undefined)
 
-  const cl = CommerceLayer({
-    organization,
-    accessToken
-  })
-
   useEffect(() => {
-    if (typeof importId === 'string' && importId.length > 0) {
-      cl.imports
+    if (typeof importId === 'string' && importId.length > 0 && sdkClient != null) {
+      sdkClient.imports
         .retrieve(importId)
         .then(setImportDetails)
         .catch(() => setImportDetails(false))
     }
-  }, [importId])
+  }, [importId, sdkClient])
 
   if (importDetails === false) {
     return <div>not found</div>
