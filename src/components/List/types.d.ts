@@ -4,13 +4,13 @@ import { ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
 declare module 'App' {
   export type UpdateFilterOptions =
     | {
-      type: 'filterStatus'
-      payload: ListImportAllowedStatusType | 'all'
-    }
+        type: 'filterStatus'
+        payload: ListImportAllowedStatusType | 'all'
+      }
     | {
-      type: 'filterResourceType'
-      payload: AllowedResourceType | 'all'
-    }
+        type: 'filterResourceType'
+        payload: AllowedResourceType | 'all'
+      }
 
   export interface ListImportContextValue {
     state: ListImportContextState
@@ -20,7 +20,11 @@ declare module 'App' {
     deleteQueue: Set<string>
   }
 
-  export type ListImportAllowedStatusType = 'completed' | 'interrupted' | 'in_progress' | 'pending'
+  export type ListImportAllowedStatusType =
+    | 'completed'
+    | 'interrupted'
+    | 'in_progress'
+    | 'pending'
 
   export interface ListImportContextState {
     list?: ListResponse<Import>

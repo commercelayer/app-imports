@@ -1,16 +1,23 @@
 import { Import } from '@commercelayer/sdk'
 import { ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
-import { ListImportContextState, ListImportAllowedStatusType, AllowedResourceType } from 'App'
+import {
+  ListImportContextState,
+  ListImportAllowedStatusType,
+  AllowedResourceType
+} from 'App'
 
 type Action =
-  | { type: 'setLoading', payload: boolean }
-  | { type: 'setList', payload: ListResponse<Import> }
-  | { type: 'changePage', payload: number }
-  | { type: 'sort', payload: 'asc' | 'desc' }
-  | { type: 'filterStatus', payload: ListImportAllowedStatusType | 'all' }
-  | { type: 'filterResourceType', payload: AllowedResourceType | 'all' }
+  | { type: 'setLoading'; payload: boolean }
+  | { type: 'setList'; payload: ListResponse<Import> }
+  | { type: 'changePage'; payload: number }
+  | { type: 'sort'; payload: 'asc' | 'desc' }
+  | { type: 'filterStatus'; payload: ListImportAllowedStatusType | 'all' }
+  | { type: 'filterResourceType'; payload: AllowedResourceType | 'all' }
 
-export const reducer = (state: ListImportContextState, action: Action): ListImportContextState => {
+export const reducer = (
+  state: ListImportContextState,
+  action: Action
+): ListImportContextState => {
   switch (action.type) {
     case 'setLoading':
       return {
@@ -47,7 +54,8 @@ export const reducer = (state: ListImportContextState, action: Action): ListImpo
         ...state,
         filters: {
           ...state.filters,
-          resource_type_eq: action.payload === 'all' ? undefined : action.payload
+          resource_type_eq:
+            action.payload === 'all' ? undefined : action.payload
         }
       }
     default:

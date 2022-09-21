@@ -17,7 +17,7 @@ export const List: FC<Props> = ({ sdkClient }) => {
       {({ state }) => {
         const { isLoading, currentPage, list } = state
 
-        if (isLoading && (list == null)) {
+        if (isLoading && list == null) {
           return <div>Loading list...</div>
         }
 

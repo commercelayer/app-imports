@@ -4,7 +4,10 @@ import { ZodSchema } from 'zod'
 
 type ImportInputs = ImportCreate['inputs']
 
-export const adapters: Record<AllowedResourceType, (csvSchema: ZodSchema[]) => ImportInputs> = {
+export const adapters: Record<
+  AllowedResourceType,
+  (csvSchema: ZodSchema[]) => ImportInputs
+> = {
   skus: (...args) => fromCsvSchemaToImportInputs(...args),
   sku_lists: (...args) => fromCsvSchemaToImportInputs(...args),
   prices: (...args) => fromCsvSchemaToImportInputs(...args),
@@ -16,4 +19,5 @@ export const adapters: Record<AllowedResourceType, (csvSchema: ZodSchema[]) => I
   stock_items: (...args) => fromCsvSchemaToImportInputs(...args)
 }
 
-const fromCsvSchemaToImportInputs = (csvSchema: ZodSchema[]): ImportInputs => csvSchema
+const fromCsvSchemaToImportInputs = (csvSchema: ZodSchema[]): ImportInputs =>
+  csvSchema

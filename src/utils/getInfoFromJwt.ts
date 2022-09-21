@@ -12,18 +12,16 @@ interface JWTProps {
   test: boolean
 }
 
-export const getInfoFromJwt = (accessToken: string): {
+export const getInfoFromJwt = (
+  accessToken: string
+): {
   slug?: string
   kind?: string
   exp?: number
   appSlug?: string
 } => {
   try {
-    const {
-      organization,
-      application,
-      exp
-    } = jwtDecode<JWTProps>(accessToken)
+    const { organization, application, exp } = jwtDecode<JWTProps>(accessToken)
 
     return {
       slug: organization.slug,

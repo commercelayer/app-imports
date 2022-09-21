@@ -1,7 +1,18 @@
 import { isFalsy } from '#utils/isFalsy'
 import { CommerceLayerClient } from '@commercelayer/sdk'
-import { ResourceSelectorContextValue, AllowedParentResource, ResourceSelectorResource } from 'App'
-import { createContext, FC, ReactNode, useCallback, useReducer, useContext } from 'react'
+import {
+  ResourceSelectorContextValue,
+  AllowedParentResource,
+  ResourceSelectorResource
+} from 'App'
+import {
+  createContext,
+  FC,
+  ReactNode,
+  useCallback,
+  useReducer,
+  useContext
+} from 'react'
 
 import { initialValues, initialState } from './data'
 import { reducer } from './reducer'
@@ -13,33 +24,41 @@ interface ResourceSelectorProviderProps {
 
 const Context = createContext<ResourceSelectorContextValue>(initialValues)
 
-export const useResourceSelectorContext = (): ResourceSelectorContextValue => useContext(Context)
+export const useResourceSelectorContext = (): ResourceSelectorContextValue =>
+  useContext(Context)
 
-export const ResourceSelectorProvider: FC<ResourceSelectorProviderProps> = ({ sdkClient, children }) => {
+export const ResourceSelectorProvider: FC<ResourceSelectorProviderProps> = ({
+  sdkClient,
+  children
+}) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  const search = useCallback(async (hint: string, resourceType: AllowedParentResource) => {
-    const fetchedResources = await sdkClient[resourceType].list({
-      fields: ['name', 'id'],
-      filters: {
-        name_cont: hint
-      },
-      pageSize: 5
-    })
-    dispatch({
-      type: 'setFetchedResources',
-      payload: fetchedResources.map((r) => {
-        const name = (r as any).name
-        return {
-          id: r.id,
-          name: isFalsy(name) ? resourceType : name
-        }
+  const search = useCallback(
+    async (hint: string, resourceType: AllowedParentResource) => {
+      const fetchedResources = await sdkClient[resourceType].list({
+        fields: ['name', 'id'],
+        filters: {
+          name_cont: hint
+        },
+        pageSize: 5
       })
-    })
-  }, [])
+      dispatch({
+        type: 'setFetchedResources',
+        payload: fetchedResources.map((r) => {
+          const name = (r as any).name
+          return {
+            id: r.id,
+            name: isFalsy(name) ? resourceType : name
+          }
+        })
+      })
+    },
+    []
+  )
 
   const select = useCallback(
-    (resource: ResourceSelectorResource) => dispatch({ type: 'setSelectedResource', payload: resource }),
+    (resource: ResourceSelectorResource) =>
+      dispatch({ type: 'setSelectedResource', payload: resource }),
     []
   )
 
@@ -56,6 +75,8 @@ export const ResourceSelectorProvider: FC<ResourceSelectorProviderProps> = ({ sd
   }
 
   return (
-    <Context.Provider value={value}>{typeof children === 'function' ? children(value) : children}</Context.Provider>
+    <Context.Provider value={value}>
+      {typeof children === 'function' ? children(value) : children}
+    </Context.Provider>
   )
 }

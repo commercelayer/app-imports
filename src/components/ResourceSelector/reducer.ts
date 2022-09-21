@@ -1,12 +1,18 @@
 import { ResourceSelectorContextState } from 'App'
 
 type Action =
-  | { type: 'setFetchedResources', payload: Array<{ id: string, name: string }> }
+  | {
+      type: 'setFetchedResources'
+      payload: Array<{ id: string; name: string }>
+    }
   | { type: 'unsetFetchedResources' }
-  | { type: 'setSelectedResource', payload: { id: string, name: string } }
+  | { type: 'setSelectedResource'; payload: { id: string; name: string } }
   | { type: 'unsetSelectedResource' }
 
-export const reducer = (state: ResourceSelectorContextState, action: Action): ResourceSelectorContextState => {
+export const reducer = (
+  state: ResourceSelectorContextState,
+  action: Action
+): ResourceSelectorContextState => {
   switch (action.type) {
     case 'setFetchedResources':
       return {

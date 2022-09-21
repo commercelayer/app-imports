@@ -26,7 +26,10 @@ const parentResourceByResourceType: Record<string, AllowedParentResource> = {
   // skus: null,
 }
 
-export const ParentResourceSelector: FC<Props> = ({ resourceType, onNotNeeded }) => {
+export const ParentResourceSelector: FC<Props> = ({
+  resourceType,
+  onNotNeeded
+}) => {
   const parentResource = parentResourceByResourceType[resourceType]
 
   useEffect(() => {

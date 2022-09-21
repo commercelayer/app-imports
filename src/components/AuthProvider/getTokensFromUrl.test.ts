@@ -2,7 +2,7 @@ import { getTokensFromUrl } from './getTokensFromUrl'
 
 describe('Read JWT from URL', () => {
   const { location } = window
-  beforeAll(function clearLocation () {
+  beforeAll(function clearLocation() {
     delete (window as any).location
     ;(window as any).location = {
       ...location,
@@ -10,12 +10,13 @@ describe('Read JWT from URL', () => {
       search: ''
     }
   })
-  afterAll(function resetLocation () {
+  afterAll(function resetLocation() {
     window.location = location
   })
 
   test('accessToken, refreshToken and clientId are in URL query string', () => {
-    window.location.search = '?accessToken=eyJhbGciOiJIUzUxMiJ9&refreshToken=eyJhabc134&clientId=zxcVBnMASd'
+    window.location.search =
+      '?accessToken=eyJhbGciOiJIUzUxMiJ9&refreshToken=eyJhabc134&clientId=zxcVBnMASd'
     const { accessToken, refreshToken, clientId } = getTokensFromUrl()
     expect(accessToken).toBe('eyJhbGciOiJIUzUxMiJ9')
     expect(refreshToken).toBe('eyJhabc134')

@@ -1,7 +1,21 @@
 import { CommerceLayerClient, Import } from '@commercelayer/sdk'
 import { ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
-import { ListImportContextValue, UpdateFilterOptions, ListImportContextState } from 'App'
-import { createContext, FC, ReactNode, useCallback, useEffect, useReducer, useContext, useRef, useState } from 'react'
+import {
+  ListImportContextValue,
+  UpdateFilterOptions,
+  ListImportContextState
+} from 'App'
+import {
+  createContext,
+  FC,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useReducer,
+  useContext,
+  useRef,
+  useState
+} from 'react'
 
 import { initialValues, initialState } from './data'
 import { reducer } from './reducer'
@@ -17,7 +31,12 @@ const Context = createContext<ListImportContextValue>(initialValues)
 
 export const useListContext = (): ListImportContextValue => useContext(Context)
 
-export const ListImportProvider: FC<ListImportProviderProps> = ({ children, pageSize, polling, sdkClient }) => {
+export const ListImportProvider: FC<ListImportProviderProps> = ({
+  children,
+  pageSize,
+  polling,
+  sdkClient
+}) => {
   const [state, dispatch] = useReducer(reducer, initialState)
   const intervalId = useRef<NodeJS.Timer | null>(null)
 
@@ -31,7 +50,10 @@ export const ListImportProvider: FC<ListImportProviderProps> = ({ children, page
     [deleteQueue]
   )
 
-  const changePage = useCallback((page: number) => dispatch({ type: 'changePage', payload: page }), [])
+  const changePage = useCallback(
+    (page: number) => dispatch({ type: 'changePage', payload: page }),
+    []
+  )
 
   const updateFilter = useCallback((filter: UpdateFilterOptions) => {
     dispatch(filter)
@@ -85,7 +107,9 @@ export const ListImportProvider: FC<ListImportProviderProps> = ({ children, page
   }
 
   return (
-    <Context.Provider value={value}>{typeof children === 'function' ? children(value) : children}</Context.Provider>
+    <Context.Provider value={value}>
+      {typeof children === 'function' ? children(value) : children}
+    </Context.Provider>
   )
 }
 

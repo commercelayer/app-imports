@@ -1,12 +1,12 @@
 interface ApiAuthResponse {
-  'access_token': string
-  'token_type': string
-  'expires_in': number
-  'refresh_token': string
-  'scope': string
-  'created_at': number
-  'owner_id': string
-  'owner_type': string
+  access_token: string
+  token_type: string
+  expires_in: number
+  refresh_token: string
+  scope: string
+  created_at: number
+  owner_id: string
+  owner_type: string
 }
 
 interface RefreshedAuthTokens {
@@ -14,7 +14,7 @@ interface RefreshedAuthTokens {
   accessToken: string
 }
 
-export async function getFreshAuthToken ({
+export async function getFreshAuthToken({
   refreshToken,
   clientId,
   slug
@@ -37,7 +37,7 @@ export async function getFreshAuthToken ({
       })
     })
 
-    const { data } = await auth.json() as { data: ApiAuthResponse}
+    const { data } = (await auth.json()) as { data: ApiAuthResponse }
 
     return {
       accessToken: data.access_token,

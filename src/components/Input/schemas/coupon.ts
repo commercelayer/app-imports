@@ -4,8 +4,13 @@ import { z } from 'zod'
 import { zodEnforceInt, zodEnforceBoolean } from './zodUtils'
 
 type FlatCsvRow = Pick<
-CouponCreate,
-'code' | 'customer_single_use' | 'usage_limit' | 'recipient_email' | 'reference' | 'reference_origin'
+  CouponCreate,
+  | 'code'
+  | 'customer_single_use'
+  | 'usage_limit'
+  | 'recipient_email'
+  | 'reference'
+  | 'reference_origin'
 > & {
   promotion_rule_id: string
 }

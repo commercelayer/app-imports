@@ -1,16 +1,30 @@
 import { CurrentApp } from './index'
 import { getOrgSlugFromCurrentUrl } from './slug'
 
-type PersistentItem = 'clientId'| 'refreshToken'
+type PersistentItem = 'clientId' | 'refreshToken'
 
-export function makeStorageKey ({ currentApp, item }: {currentApp: CurrentApp, item: PersistentItem}): string {
+export function makeStorageKey({
+  currentApp,
+  item
+}: {
+  currentApp: CurrentApp
+  item: PersistentItem
+}): string {
   return `${currentApp}:${getOrgSlugFromCurrentUrl()}:${item}`
 }
 
-export function getPersistentRefreshInfo ({ currentApp }: {currentApp: CurrentApp}): {clientId: string, refreshToken: string} | null {
+export function getPersistentRefreshInfo({
+  currentApp
+}: {
+  currentApp: CurrentApp
+}): { clientId: string; refreshToken: string } | null {
   try {
-    const storedClientId = window.localStorage.getItem(makeStorageKey({ currentApp, item: 'clientId' }))
-    const storedRefreshToken = window.localStorage.getItem(makeStorageKey({ currentApp, item: 'refreshToken' }))
+    const storedClientId = window.localStorage.getItem(
+      makeStorageKey({ currentApp, item: 'clientId' })
+    )
+    const storedRefreshToken = window.localStorage.getItem(
+      makeStorageKey({ currentApp, item: 'refreshToken' })
+    )
 
     if (storedClientId == null || storedRefreshToken == null) {
       return null
@@ -22,9 +36,23 @@ export function getPersistentRefreshInfo ({ currentApp }: {currentApp: CurrentAp
   }
 }
 
-export function savePersistentRefreshInfo ({ currentApp, clientId, refreshToken }: {currentApp: CurrentApp, clientId: string, refreshToken: string}): void {
-  window.localStorage.setItem(makeStorageKey({ currentApp, item: 'refreshToken' }), refreshToken)
+export function savePersistentRefreshInfo({
+  currentApp,
+  clientId,
+  refreshToken
+}: {
+  currentApp: CurrentApp
+  clientId: string
+  refreshToken: string
+}): void {
+  window.localStorage.setItem(
+    makeStorageKey({ currentApp, item: 'refreshToken' }),
+    refreshToken
+  )
   if (clientId != null) {
-    window.localStorage.setItem(makeStorageKey({ currentApp, item: 'clientId' }), clientId)
+    window.localStorage.setItem(
+      makeStorageKey({ currentApp, item: 'clientId' }),
+      clientId
+    )
   }
 }

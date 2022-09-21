@@ -2,7 +2,10 @@ import { isFalsy } from '#utils/isFalsy'
 import { TaxCategoryCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 
-type FlatCsvRow = Pick<TaxCategoryCreate, 'sku_code' | 'reference' | 'reference_origin'> & {
+type FlatCsvRow = Pick<
+  TaxCategoryCreate,
+  'sku_code' | 'reference' | 'reference_origin'
+> & {
   sku_id?: string
   tax_calculator_id: string
 }

@@ -11,7 +11,11 @@ import { csvSkusSchema } from './skus'
 import { csvStockItemsSchema } from './stockItems'
 import { csvTaxCategoriesSchema } from './taxCategories'
 
-type MakeSchemaFn = ({ hasParentResource }: { hasParentResource: boolean }) => ZodSchema
+type MakeSchemaFn = ({
+  hasParentResource
+}: {
+  hasParentResource: boolean
+}) => ZodSchema
 type SchemaOrMakeSchemaFn = ZodSchema | MakeSchemaFn
 
 export const isMakeSchemaFn = (parser: any): parser is MakeSchemaFn => {

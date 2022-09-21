@@ -2,7 +2,7 @@ import { useAuthProvider } from '#components/AuthProvider'
 import { List } from '#components/List'
 import { useEffect } from 'react'
 
-function ListPage (): JSX.Element {
+function ListPage(): JSX.Element {
   const { sdkClient } = useAuthProvider()
 
   useEffect(() => {

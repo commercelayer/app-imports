@@ -15,7 +15,12 @@ interface Props {
   resourceType: AllowedResourceType
 }
 
-export const Input: FC<Props> = ({ onDataReady, onDataResetRequest, resourceType, hasParentResource = false }) => {
+export const Input: FC<Props> = ({
+  onDataReady,
+  onDataResetRequest,
+  resourceType,
+  hasParentResource = false
+}) => {
   const [isParsing, setIsParsing] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [errorList, setErrorList] = useState<ZodIssue[]>()
@@ -43,8 +48,11 @@ export const Input: FC<Props> = ({ onDataReady, onDataResetRequest, resourceType
       },
       error: () => {
         setIsParsing(false)
-        setErrorMessage('Unable to load CSV file, it does not match the template')
+        setErrorMessage(
+          'Unable to load CSV file, it does not match the template'
+        )
       },
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       complete: async ({ data }) => {
         const parser = parsers[resourceType]
         const csvRows = data.slice(0, 2000)
@@ -83,52 +91,52 @@ export const Input: FC<Props> = ({ onDataReady, onDataResetRequest, resourceType
         type='file'
         disabled={isParsing}
         onChange={(e) => {
-          if ((e.target.files != null) && !isParsing) {
+          if (e.target.files != null && !isParsing) {
             setFile(e.target.files[0])
           }
         }}
       />
-      {(file != null)
-        ? (
-          <button
-            className='btn'
-            disabled={isFalsy(file) || isParsing}
-            onClick={() => {
-              if (isFalsy(file)) {
+      {file != null ? (
+        <button
+          className='btn'
+          disabled={isFalsy(file) || isParsing}
+          onClick={() => {
+            if (isFalsy(file)) {
+              return
+            }
+
+            switch (file.type) {
+              case 'text/csv':
+                void loadAndParseCSV(file)
                 return
-              }
 
-              switch (file.type) {
-                case 'text/csv':
-                  void loadAndParseCSV(file)
-                  return
+              case 'application/json':
+                void loadAndParseJson(file)
+                return
 
-                case 'application/json':
-                  void loadAndParseJson(file)
-                  return
-
-                default:
-                  setErrorMessage('Invalid format')
-              }
-            }}
-          >
-            {isParsing ? 'loading' : 'load file'}
-          </button>
-          )
-        : null}
-      {typeof errorMessage === 'string' && <div className='text-red-500'>{errorMessage}</div>}
-      {(errorList != null) && (errorList.length > 0)
-        ? (
-          <div className='text-red-500'>
-            {errorList.slice(0, 5).map((issue, idx) => (
-              <div key={idx}>
-                Row {issue.path.join(' - ')} {issue.message}
-              </div>
-            ))}
-            {errorList.length > 5 ? 'We found other errors not listed here' : null}
-          </div>
-          )
-        : null}
+              default:
+                setErrorMessage('Invalid format')
+            }
+          }}
+        >
+          {isParsing ? 'loading' : 'load file'}
+        </button>
+      ) : null}
+      {typeof errorMessage === 'string' && (
+        <div className='text-red-500'>{errorMessage}</div>
+      )}
+      {errorList != null && errorList.length > 0 ? (
+        <div className='text-red-500'>
+          {errorList.slice(0, 5).map((issue, idx) => (
+            <div key={idx}>
+              Row {issue.path.join(' - ')} {issue.message}
+            </div>
+          ))}
+          {errorList.length > 5
+            ? 'We found other errors not listed here'
+            : null}
+        </div>
+      ) : null}
     </div>
   )
 }

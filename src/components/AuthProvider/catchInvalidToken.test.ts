@@ -36,35 +36,47 @@ describe('catchInvalidToken', () => {
   })
 
   it('should ignore the event when reson.errors is not a CL array', () => {
-    expect(catchInvalidToken({
-      reason: {
-        errors: ['invalid']
-      }
-    } as unknown as PromiseRejectionEvent)).toBe(false)
+    expect(
+      catchInvalidToken({
+        reason: {
+          errors: ['invalid']
+        }
+      } as unknown as PromiseRejectionEvent)
+    ).toBe(false)
 
-    expect(catchInvalidToken({
-      reason: {
-        errors: true
-      }
-    } as unknown as PromiseRejectionEvent)).toBe(false)
+    expect(
+      catchInvalidToken({
+        reason: {
+          errors: true
+        }
+      } as unknown as PromiseRejectionEvent)
+    ).toBe(false)
 
-    expect(catchInvalidToken({
-      reason: {
-        errors: false
-      }
-    } as unknown as PromiseRejectionEvent)).toBe(false)
+    expect(
+      catchInvalidToken({
+        reason: {
+          errors: false
+        }
+      } as unknown as PromiseRejectionEvent)
+    ).toBe(false)
 
-    expect(catchInvalidToken({
-      reason: {}
-    } as unknown as PromiseRejectionEvent)).toBe(false)
+    expect(
+      catchInvalidToken({
+        reason: {}
+      } as unknown as PromiseRejectionEvent)
+    ).toBe(false)
 
-    expect(catchInvalidToken({
-      reason: []
-    } as unknown as PromiseRejectionEvent)).toBe(false)
+    expect(
+      catchInvalidToken({
+        reason: []
+      } as unknown as PromiseRejectionEvent)
+    ).toBe(false)
 
-    expect(catchInvalidToken({
-      reason: true
-    } as unknown as PromiseRejectionEvent)).toBe(false)
+    expect(
+      catchInvalidToken({
+        reason: true
+      } as unknown as PromiseRejectionEvent)
+    ).toBe(false)
   })
 
   it('should ignore all other errors', () => {

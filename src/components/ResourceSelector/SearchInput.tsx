@@ -9,7 +9,10 @@ interface Props {
   label: string
 }
 
-export default function SearchInput ({ parentResource, label }: Props): JSX.Element {
+export default function SearchInput({
+  parentResource,
+  label
+}: Props): JSX.Element {
   const [inputValue, setInputValue] = useState('')
   const { search, reset } = useResourceSelectorContext()
 
@@ -19,7 +22,7 @@ export default function SearchInput ({ parentResource, label }: Props): JSX.Elem
     }
     if (inputValue !== '' && inputValue.length > 3) {
       reset()
-      search(inputValue, parentResource)
+      void search(inputValue, parentResource)
     }
   }, [inputValue])
 

@@ -36,7 +36,9 @@ export const ImportPreviewTable: FC<Props> = ({ rows }) => {
         </tbody>
       </table>
       {}
-      {othersCount > 0 ? <div className='py-4 font-bold'>and others {othersCount} records</div> : null}
+      {othersCount > 0 ? (
+        <div className='py-4 font-bold'>and others {othersCount} records</div>
+      ) : null}
     </div>
   )
 }

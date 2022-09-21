@@ -52,6 +52,7 @@
   "include": [
     "src",
     "*.config.ts",
+    "*.config.js",
     "@typing/**/*.d.ts"
   ],
   "references": [

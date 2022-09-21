@@ -6,8 +6,15 @@ import { useListContext } from '#components/List/Provider'
 import { appRoutes } from '#data/routes'
 
 type ImportRow = Pick<
-Import,
-'id' | 'resource_type' | 'status' | 'created_at' | 'completed_at' | 'inputs_size' | 'processed_count' | 'errors_count'
+  Import,
+  | 'id'
+  | 'resource_type'
+  | 'status'
+  | 'created_at'
+  | 'completed_at'
+  | 'inputs_size'
+  | 'processed_count'
+  | 'errors_count'
 >
 
 export const Table: FC = () => {
@@ -72,7 +79,10 @@ const row: Record<keyof ImportRow, string> = {
 
 const rowKeys = Object.keys(row) as Array<keyof ImportRow>
 
-const formatCellData = (key: keyof ImportRow, value?: string | number): string|number => {
+const formatCellData = (
+  key: keyof ImportRow,
+  value?: string | number
+): string | number => {
   if (value == null) {
     return '-'
   }

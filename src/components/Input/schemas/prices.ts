@@ -5,8 +5,12 @@ import { zodEnforceInt } from './zodUtils'
 import { isFalsy } from '#utils/isFalsy'
 
 type FlatCsvRow = Pick<
-PriceCreate,
-'sku_code' | 'amount_cents' | 'compare_at_amount_cents' | 'reference' | 'reference_origin'
+  PriceCreate,
+  | 'sku_code'
+  | 'amount_cents'
+  | 'compare_at_amount_cents'
+  | 'reference'
+  | 'reference_origin'
 > & {
   price_list_id?: string
 }
@@ -31,5 +35,8 @@ const makeSchema = (hasParentResourceId: boolean): ZodTypeAny =>
       }
     })
 
-export const csvPricesSchema = ({ hasParentResource }: { hasParentResource: boolean }): z.ZodType<FlatCsvRow[]> =>
-  z.array(makeSchema(hasParentResource))
+export const csvPricesSchema = ({
+  hasParentResource
+}: {
+  hasParentResource: boolean
+}): z.ZodType<FlatCsvRow[]> => z.array(makeSchema(hasParentResource))

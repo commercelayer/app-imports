@@ -17,20 +17,16 @@ export const Pagination = (): JSX.Element | null => {
     <div>
       <div className='py-4'>page: {list.meta.currentPage}</div>
       <div className='flex gap-2'>
-        {currentPage > 1
-          ? (
-            <button className='btn' onClick={onPrevClick}>
-              prev
-            </button>
-            )
-          : null}
-        {currentPage < list.meta.pageCount
-          ? (
-            <button className='btn' onClick={onNextClick}>
-              Next
-            </button>
-            )
-          : null}
+        {currentPage > 1 ? (
+          <button className='btn' onClick={onPrevClick}>
+            prev
+          </button>
+        ) : null}
+        {currentPage < list.meta.pageCount ? (
+          <button className='btn' onClick={onNextClick}>
+            Next
+          </button>
+        ) : null}
       </div>
     </div>
   )

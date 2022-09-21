@@ -1,6 +1,11 @@
 import { ZodError } from 'zod'
 
-import { zodEnforceBoolean, zodEnforceInt, zodEnforceFloat, zodEnforceDateString } from './zodUtils'
+import {
+  zodEnforceBoolean,
+  zodEnforceInt,
+  zodEnforceFloat,
+  zodEnforceDateString
+} from './zodUtils'
 
 describe('check zodEnforceBoolean', () => {
   test('should parse true string text as boolean `true`', () => {
@@ -76,11 +81,15 @@ describe('check zodEnforceFloat', () => {
 
 describe('check zodEnforceDateString', () => {
   test('should accept full ISO string', () => {
-    expect(zodEnforceDateString.parse('2022-07-22T11:15:04.388Z')).toBe('2022-07-22T11:15:04.388Z')
+    expect(zodEnforceDateString.parse('2022-07-22T11:15:04.388Z')).toBe(
+      '2022-07-22T11:15:04.388Z'
+    )
   })
 
   test('should accept partial date string', () => {
-    expect(zodEnforceDateString.parse('2022-07-22')).toBe('2022-07-22T00:00:00.000Z')
+    expect(zodEnforceDateString.parse('2022-07-22')).toBe(
+      '2022-07-22T00:00:00.000Z'
+    )
   })
 
   test('should return ZodError when wrong value is passed', () => {

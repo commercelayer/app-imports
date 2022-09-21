@@ -1,4 +1,4 @@
-export function isFalsy (value: any): boolean {
+export function isFalsy(value: any): boolean {
   if (value === '') {
     return true
   }

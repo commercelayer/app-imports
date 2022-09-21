@@ -5,8 +5,14 @@ import { z } from 'zod'
 import { zodEnforceBoolean } from './zodUtils'
 
 type FlatCsvRow = Pick<
-SkuListCreate,
-'name' | 'description' | 'image_url' | 'manual' | 'sku_code_regex' | 'reference' | 'reference_origin'
+  SkuListCreate,
+  | 'name'
+  | 'description'
+  | 'image_url'
+  | 'manual'
+  | 'sku_code_regex'
+  | 'reference'
+  | 'reference_origin'
 >
 
 const schema = z

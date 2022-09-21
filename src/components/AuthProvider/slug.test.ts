@@ -2,14 +2,14 @@ import { getOrgSlugFromCurrentUrl, makeDashboardUrl } from './slug'
 
 describe('Get org slug from URL', () => {
   const { location } = window
-  beforeAll(function clearLocation () {
+  beforeAll(function clearLocation() {
     delete (window as any).location
     ;(window as any).location = {
       ...location,
       hostname: ''
     }
   })
-  afterAll(function resetLocation () {
+  afterAll(function resetLocation() {
     window.location = location
   })
 

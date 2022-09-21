@@ -11,7 +11,7 @@ import { appRoutes } from '#data/routes'
 import { useLocation, useRoute } from 'wouter'
 import { useAuthProvider } from '#components/AuthProvider'
 
-function NewImportPage (): JSX.Element {
+function NewImportPage(): JSX.Element {
   const { sdkClient } = useAuthProvider()
 
   const params = useRoute('/new/:resourceType')[1]
@@ -20,13 +20,16 @@ function NewImportPage (): JSX.Element {
   const [isLoading, setIsLoading] = useState(false)
   const [cleanupRecords] = useState(false)
   const [skipParentResource, setSkipParentResource] = useState(false)
-  const [importCreateValue, setImportCreateValue] = useState<ImportCreate['inputs'] | undefined>(undefined)
+  const [importCreateValue, setImportCreateValue] = useState<
+    ImportCreate['inputs'] | undefined
+  >(undefined)
 
   if (sdkClient == null) {
     return <div>Waiting for sdk client</div>
   }
 
-  const resourceType = params == null ? null : params.resourceType as AllowedResourceType
+  const resourceType =
+    params == null ? null : (params.resourceType as AllowedResourceType)
 
   if (resourceType == null) {
     return <div>No params</div>
@@ -58,52 +61,54 @@ function NewImportPage (): JSX.Element {
   return (
     <ResourceSelectorProvider sdkClient={sdkClient}>
       {(resourceSelectorCtx) => {
-        const selectedParentResource = skipParentResource ? undefined : resourceSelectorCtx.state.selectedResource
-        const showUploadInput = (selectedParentResource != null) || skipParentResource
+        const selectedParentResource = skipParentResource
+          ? undefined
+          : resourceSelectorCtx.state.selectedResource
+        const showUploadInput =
+          selectedParentResource != null || skipParentResource
 
         return (
           <div>
             <div className='container px-3 py-4'>
-              <h1 className='text-xl pb-2 font-bold'>New upload {resourceType}</h1>
+              <h1 className='text-xl pb-2 font-bold'>
+                New upload {resourceType}
+              </h1>
 
-              <button onClick={() => setSkipParentResource((s) => !s)}>Toggle skip parent resource</button>
+              <button onClick={() => setSkipParentResource((s) => !s)}>
+                Toggle skip parent resource
+              </button>
 
-              {skipParentResource
-                ? null
-                : (
-                  <ParentResourceSelector resourceType={resourceType} onNotNeeded={() => setSkipParentResource(true)} />
-                  )}
+              {skipParentResource ? null : (
+                <ParentResourceSelector
+                  resourceType={resourceType}
+                  onNotNeeded={() => setSkipParentResource(true)}
+                />
+              )}
 
-              {showUploadInput
-                ? (
-                  <Input
-                    resourceType={resourceType}
-                    onDataReady={setImportCreateValue}
-                    onDataResetRequest={() => setImportCreateValue(undefined)}
-                    hasParentResource={Boolean(selectedParentResource?.id)}
-                  />
-                  )
-                : null}
+              {showUploadInput ? (
+                <Input
+                  resourceType={resourceType}
+                  onDataReady={setImportCreateValue}
+                  onDataResetRequest={() => setImportCreateValue(undefined)}
+                  hasParentResource={Boolean(selectedParentResource?.id)}
+                />
+              ) : null}
 
-              {(importCreateValue != null) && importCreateValue.length > 0
-                ? (
-                  <ImportPreviewTable rows={importCreateValue as []} />
-                  )
-                : null}
+              {importCreateValue != null && importCreateValue.length > 0 ? (
+                <ImportPreviewTable rows={importCreateValue as []} />
+              ) : null}
 
-              {(importCreateValue != null) && importCreateValue.length > 0
-                ? (
-                  <button
-                    className='btn'
-                    onClick={() => {
-                      void createImportTask(selectedParentResource?.id)
-                    }}
-                    disabled={isLoading}
-                  >
-                    {isLoading ? 'Loading...' : 'Create import task'}
-                  </button>
-                  )
-                : null}
+              {importCreateValue != null && importCreateValue.length > 0 ? (
+                <button
+                  className='btn'
+                  onClick={() => {
+                    void createImportTask(selectedParentResource?.id)
+                  }}
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Loading...' : 'Create import task'}
+                </button>
+              ) : null}
             </div>
           </div>
         )

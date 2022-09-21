@@ -7,7 +7,7 @@ export const initialState: ResourceSelectorContextState = {
 
 export const initialValues: ResourceSelectorContextValue = {
   state: initialState,
-  search: () => undefined,
+  search: async () => undefined,
   select: () => undefined,
   reset: () => undefined
 }

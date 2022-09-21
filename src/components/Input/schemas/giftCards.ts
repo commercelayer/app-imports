@@ -1,20 +1,24 @@
 import { GiftCardCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 
-import { zodEnforceInt, zodEnforceBoolean, zodEnforceDateString } from './zodUtils'
+import {
+  zodEnforceInt,
+  zodEnforceBoolean,
+  zodEnforceDateString
+} from './zodUtils'
 
 type FlatCsvRow = Pick<
-GiftCardCreate,
-| 'code'
-| 'currency_code'
-| 'balance_cents'
-| 'balance_max_cents'
-| 'single_use'
-| 'rechargeable'
-| 'image_url'
-| 'recipient_email'
-| 'reference'
-| 'reference_origin'
+  GiftCardCreate,
+  | 'code'
+  | 'currency_code'
+  | 'balance_cents'
+  | 'balance_max_cents'
+  | 'single_use'
+  | 'rechargeable'
+  | 'image_url'
+  | 'recipient_email'
+  | 'reference'
+  | 'reference_origin'
 > & {
   expires_at?: string
   market_id?: string
