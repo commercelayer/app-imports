@@ -11,10 +11,12 @@ declare module 'App' {
     | 'stock_items'
     | 'addresses'
     | 'bundles'
+    | 'price_tiers'
   // TODO:
   // | "orders"
   // | "sku_list_items"
   // | "sku_options"
+  // | "shipping_categories"
 
   export interface ParentResourceByResourceType {
     bundles: 'market'
