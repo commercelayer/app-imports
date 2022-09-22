@@ -8,6 +8,8 @@ import { ZodIssue } from 'zod'
 import { adapters } from './adapters'
 import { parsers, isMakeSchemaFn } from './schemas'
 
+const importMaxSize = 10_000
+
 interface Props {
   hasParentResource?: boolean
   onDataReady: (inputs?: ImportCreate['inputs']) => void
@@ -55,7 +57,7 @@ export const Input: FC<Props> = ({
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       complete: async ({ data }) => {
         const parser = parsers[resourceType]
-        const csvRows = data.slice(0, 2000)
+        const csvRows = data.slice(0, importMaxSize)
         const parsedResources = isMakeSchemaFn(parser)
           ? parser({ hasParentResource }).safeParse(csvRows)
           : parser.safeParse(csvRows)

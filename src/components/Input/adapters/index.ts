@@ -8,6 +8,7 @@ export const adapters: Record<
   AllowedResourceType,
   (csvSchema: ZodSchema[]) => ImportInputs
 > = {
+  addresses: (...args) => fromCsvSchemaToImportInputs(...args),
   skus: (...args) => fromCsvSchemaToImportInputs(...args),
   sku_lists: (...args) => fromCsvSchemaToImportInputs(...args),
   prices: (...args) => fromCsvSchemaToImportInputs(...args),

@@ -64,6 +64,7 @@ function TokenProvider({
 
   const handleOnInvalidCallback = (): void => {
     setIsLoading(false)
+    setIsTokenError(true)
     onInvalidAuth(dashboardUrl)
   }
 
@@ -73,7 +74,6 @@ function TokenProvider({
       setIsLoading(true)
       const isInvalidToken = catchInvalidToken(event)
       if (isInvalidToken) {
-        setIsTokenError(true)
         handleOnInvalidCallback()
       }
     },
@@ -93,7 +93,7 @@ function TokenProvider({
   useEffect(() => {
     void (async (): Promise<void> => {
       if (accessToken == null) {
-        console.log('Missing clientId or refreshToken')
+        console.log('accessToken is missing')
         handleOnInvalidCallback()
         return
       }
@@ -105,12 +105,11 @@ function TokenProvider({
           compareTo: new Date()
         })
       ) {
-        console.log('isExpiredOrMissing - refreshing token')
+        console.log('accessToken is expired')
         handleOnInvalidCallback()
         return
       }
 
-      // if not expired we need to validate the token for current app
       const isTokenValid = await isValidTokenForCurrentApp({
         accessToken,
         clientKind,
@@ -121,7 +120,7 @@ function TokenProvider({
         savePersistentAccessToken({ currentApp, accessToken })
         setValidAuthToken(accessToken)
       } else {
-        console.log('Missing or invalid token', accessToken)
+        console.log('accessToken is not valid', accessToken)
         handleOnInvalidCallback()
       }
     })()

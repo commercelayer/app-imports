@@ -1,6 +1,6 @@
 import { AllowedResourceType } from 'App'
 import { ZodSchema } from 'zod'
-
+import { csvAddressSchema } from './address'
 import { csvCouponsSchema } from './coupon'
 import { csvCustomersSchema } from './customers'
 import { csvCustomerSubscriptionsSchema } from './customerSubscriptions'
@@ -23,6 +23,7 @@ export const isMakeSchemaFn = (parser: any): parser is MakeSchemaFn => {
 }
 
 export const parsers: Record<AllowedResourceType, SchemaOrMakeSchemaFn> = {
+  addresses: csvAddressSchema,
   skus: csvSkusSchema,
   prices: (options) => csvPricesSchema(options),
   coupons: csvCouponsSchema,
