@@ -10,10 +10,10 @@ declare module 'App' {
     | 'tax_categories'
     | 'stock_items'
     | 'addresses'
+    | 'bundles'
   // TODO:
   // | "orders"
   // | "sku_list_items"
-  // | "bundles"
   // | "sku_options"
 
   export interface ParentResourceByResourceType {

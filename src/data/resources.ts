@@ -2,6 +2,7 @@ import { AllowedResourceType } from 'App'
 
 const resources: Record<AllowedResourceType, boolean> = {
   addresses: true,
+  bundles: true,
   skus: true,
   prices: true,
   coupons: true,

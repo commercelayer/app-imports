@@ -4,14 +4,7 @@ import { z, ZodTypeAny } from 'zod'
 import { zodEnforceInt } from './zodUtils'
 import { isFalsy } from '#utils/isFalsy'
 
-type FlatCsvRow = Pick<
-  PriceCreate,
-  | 'sku_code'
-  | 'amount_cents'
-  | 'compare_at_amount_cents'
-  | 'reference'
-  | 'reference_origin'
-> & {
+type FlatCsvRow = PriceCreate & {
   price_list_id?: string
 }
 
