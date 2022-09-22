@@ -1,9 +1,9 @@
-import { useAuthProvider } from '#components/AuthProvider'
 import { Details } from '#components/Details'
+import { useTokenProvider } from '#components/TokenProvider'
 import { useRoute } from 'wouter'
 
 const DetailsPage = (): JSX.Element => {
-  const { sdkClient } = useAuthProvider()
+  const { sdkClient } = useTokenProvider()
 
   if (sdkClient == null) {
     return <div>Waiting for sdk client</div>

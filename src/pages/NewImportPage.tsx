@@ -9,10 +9,10 @@ import { ResourceSelectorProvider } from '#components/ResourceSelector/Provider'
 import { isAvailableResource } from '#data/resources'
 import { appRoutes } from '#data/routes'
 import { useLocation, useRoute } from 'wouter'
-import { useAuthProvider } from '#components/AuthProvider'
+import { useTokenProvider } from '#components/TokenProvider'
 
 function NewImportPage(): JSX.Element {
-  const { sdkClient } = useAuthProvider()
+  const { sdkClient } = useTokenProvider()
 
   const params = useRoute('/new/:resourceType')[1]
   const setLocation = useLocation()[1]

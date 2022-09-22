@@ -1,5 +1,5 @@
-import AuthProvider from '#components/AuthProvider'
 import { Nav } from '#components/Nav'
+import TokenProvider from '#components/TokenProvider'
 import { Route } from 'wouter'
 import DetailsPage from './pages/DetailsPage'
 import ListPage from './pages/ListPage'
@@ -7,9 +7,9 @@ import NewImportPage from './pages/NewImportPage'
 
 function App(): JSX.Element {
   return (
-    <AuthProvider
+    <TokenProvider
       currentApp='imports'
-      clientKind='webapp'
+      clientKind='integration'
       domain={import.meta.env.PUBLIC_DOMAIN}
       onInvalidAuth={() => {
         console.log('invalid!')
@@ -27,7 +27,7 @@ function App(): JSX.Element {
         </Route>
         <Nav />
       </div>
-    </AuthProvider>
+    </TokenProvider>
   )
 }
 

@@ -1,9 +1,9 @@
-import { useAuthProvider } from '#components/AuthProvider'
 import { List } from '#components/List'
+import { useTokenProvider } from '#components/TokenProvider'
 import { useEffect } from 'react'
 
 function ListPage(): JSX.Element {
-  const { sdkClient } = useAuthProvider()
+  const { sdkClient } = useTokenProvider()
 
   useEffect(() => {
     if (sdkClient == null) {
