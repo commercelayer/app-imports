@@ -1,10 +1,7 @@
 import { CustomerCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 
-type FlatCsvRow = Pick<
-  CustomerCreate,
-  'email' | 'password' | 'reference' | 'reference_origin'
-> & {
+type FlatCsvRow = Omit<CustomerCreate, 'customer_group'> & {
   customer_group_id?: string
 }
 

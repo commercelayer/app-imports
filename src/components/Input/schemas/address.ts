@@ -4,27 +4,7 @@ import { z, ZodTypeAny } from 'zod'
 import { zodEnforceBoolean } from './zodUtils'
 import { isFalsy } from '#utils/isFalsy'
 
-type FlatCsvRow = Pick<
-  AddressCreate,
-  | 'business'
-  | 'first_name'
-  | 'last_name'
-  | 'company'
-  | 'line_1'
-  | 'line_2'
-  | 'city'
-  | 'zip_code'
-  | 'state_code'
-  | 'country_code'
-  | 'phone'
-  | 'email'
-  | 'notes'
-  | 'lat'
-  | 'lng'
-  | 'billing_info'
-  | 'reference'
-  | 'reference_origin'
->
+type FlatCsvRow = AddressCreate
 
 const makeSchema = (): ZodTypeAny =>
   z

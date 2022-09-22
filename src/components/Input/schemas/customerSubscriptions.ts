@@ -1,10 +1,7 @@
 import { CustomerSubscriptionCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 
-type FlatCsvRow = Pick<
-  CustomerSubscriptionCreate,
-  'customer_email' | 'reference' | 'reference_origin'
->
+type FlatCsvRow = CustomerSubscriptionCreate
 
 const schema = z.object({
   customer_email: z.string().email(),

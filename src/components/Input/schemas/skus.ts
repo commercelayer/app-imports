@@ -9,25 +9,10 @@ enum AllowedUnitOfWeightEnum {
   'oz' = 'oz'
 }
 
-type FlatCsvRow = Pick<
-  SkuCreate,
-  | 'code'
-  | 'name'
-  | 'description'
-  | 'image_url'
-  | 'pieces_per_pack'
-  | 'weight'
-  | 'hs_tariff_number'
-  | 'do_not_ship'
-  | 'do_not_track'
-  | 'reference'
-  | 'reference_origin'
-> & {
+type FlatCsvRow = Omit<SkuCreate, 'unit_of_weight' | 'shipping_category'> & {
   unit_of_weight?: AllowedUnitOfWeightEnum
   shipping_category_id: string
 }
-
-// export type CsvSkuItemSchema = z.infer<typeof schema>
 
 const schema = z.object({
   code: z.string().min(1),

@@ -5,6 +5,7 @@ const resources: Record<AllowedResourceType, boolean> = {
   bundles: true,
   skus: true,
   prices: true,
+  price_tiers: true,
   coupons: true,
   sku_lists: true,
   customer_subscriptions: true,

@@ -4,10 +4,7 @@ import { z } from 'zod'
 
 import { zodEnforceInt } from './zodUtils'
 
-type FlatCsvRow = Pick<
-  StockItemCreate,
-  'sku_code' | 'quantity' | 'reference' | 'reference_origin'
-> & {
+type FlatCsvRow = Omit<StockItemCreate, 'sku' | 'stock_location'> & {
   stock_location_id: string
   sku_id?: string
 }

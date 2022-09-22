@@ -7,18 +7,9 @@ import {
   zodEnforceDateString
 } from './zodUtils'
 
-type FlatCsvRow = Pick<
+type FlatCsvRow = Omit<
   GiftCardCreate,
-  | 'code'
-  | 'currency_code'
-  | 'balance_cents'
-  | 'balance_max_cents'
-  | 'single_use'
-  | 'rechargeable'
-  | 'image_url'
-  | 'recipient_email'
-  | 'reference'
-  | 'reference_origin'
+  'expires_at' | 'market' | 'gift_card_recipient'
 > & {
   expires_at?: string
   market_id?: string
