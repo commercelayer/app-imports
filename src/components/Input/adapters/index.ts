@@ -13,13 +13,13 @@ export const adapters: Record<
   skus: (...args) => fromCsvSchemaToImportInputs(...args),
   sku_lists: (...args) => fromCsvSchemaToImportInputs(...args),
   prices: (...args) => fromCsvSchemaToImportInputs(...args),
-  price_tiers: (...args) => fromCsvSchemaToImportInputs(...args),
   coupons: (...args) => fromCsvSchemaToImportInputs(...args),
   gift_cards: (...args) => fromCsvSchemaToImportInputs(...args),
   customers: (...args) => fromCsvSchemaToImportInputs(...args),
   customer_subscriptions: (...args) => fromCsvSchemaToImportInputs(...args),
   tax_categories: (...args) => fromCsvSchemaToImportInputs(...args),
-  stock_items: (...args) => fromCsvSchemaToImportInputs(...args)
+  stock_items: (...args) => fromCsvSchemaToImportInputs(...args),
+  shipping_categories: (...args) => fromCsvSchemaToImportInputs(...args)
 }
 
 const fromCsvSchemaToImportInputs = (csvSchema: ZodSchema[]): ImportInputs =>

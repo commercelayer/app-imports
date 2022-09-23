@@ -7,7 +7,7 @@ import { csvCustomersSchema } from './customers'
 import { csvCustomerSubscriptionsSchema } from './customerSubscriptions'
 import { csvGiftCardsSchema } from './giftCards'
 import { csvPricesSchema } from './prices'
-import { csvPriceVolumeTierSchema } from './priceVolumeTier'
+import { csvShippingCategorySchema } from './shippingCategory'
 import { csvSkuListSchema } from './skuLists'
 import { csvSkusSchema } from './skus'
 import { csvStockItemsSchema } from './stockItems'
@@ -29,12 +29,12 @@ export const parsers: Record<AllowedResourceType, SchemaOrMakeSchemaFn> = {
   bundles: csvBundleSchema,
   skus: csvSkusSchema,
   prices: csvPricesSchema,
-  price_tiers: csvPriceVolumeTierSchema,
   coupons: csvCouponsSchema,
   sku_lists: csvSkuListSchema,
   gift_cards: csvGiftCardsSchema,
   customers: csvCustomersSchema,
   customer_subscriptions: csvCustomerSubscriptionsSchema,
   tax_categories: csvTaxCategoriesSchema,
-  stock_items: csvStockItemsSchema
+  stock_items: csvStockItemsSchema,
+  shipping_categories: csvShippingCategorySchema
 }
