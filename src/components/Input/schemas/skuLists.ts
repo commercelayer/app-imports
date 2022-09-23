@@ -4,7 +4,9 @@ import { z } from 'zod'
 
 import { zodEnforceBoolean } from './zodUtils'
 
-type FlatCsvRow = SkuListCreate
+type FlatCsvRow = SkuListCreate & {
+  'sku_list_items.sku_code'?: string
+}
 
 const schema = z
   .object({
@@ -14,7 +16,8 @@ const schema = z
     manual: zodEnforceBoolean(true),
     sku_code_regex: z.optional(z.string()),
     reference: z.optional(z.string()),
-    reference_origin: z.optional(z.string())
+    reference_origin: z.optional(z.string()),
+    'sku_list_items.sku_code': z.optional(z.string().min(1))
   })
   .superRefine((data, ctx) => {
     if (isFalsy(data.manual) && isFalsy(data.sku_code_regex)) {

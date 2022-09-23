@@ -13,7 +13,8 @@ describe('Validate csvSkuOptionSchema', () => {
           reference_origin: 'import task'
         },
         {
-          name: 'Printing'
+          name: 'Printing',
+          sku_code_regex: '^(A|B).*$'
         }
       ])
     ).toStrictEqual([
@@ -26,7 +27,8 @@ describe('Validate csvSkuOptionSchema', () => {
         reference_origin: 'import task'
       },
       {
-        name: 'Printing'
+        name: 'Printing',
+        sku_code_regex: '^(A|B).*$'
       }
     ])
   })
