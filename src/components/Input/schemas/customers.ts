@@ -5,14 +5,16 @@ type FlatCsvRow = Omit<CustomerCreate, 'customer_group'> & {
   customer_group_id?: string
 }
 
-const schema = z.object({
-  email: z.string().email(),
-  password: z.optional(
-    z.preprocess((value) => (value != null ? String(value) : ''), z.string())
-  ),
-  reference: z.optional(z.string()),
-  reference_origin: z.optional(z.string()),
-  customer_group_id: z.optional(z.string().min(1))
-})
+const schema = z
+  .object({
+    email: z.string().email(),
+    password: z.optional(
+      z.preprocess((value) => (value != null ? String(value) : ''), z.string())
+    ),
+    reference: z.optional(z.string()),
+    reference_origin: z.optional(z.string()),
+    customer_group_id: z.optional(z.string().min(1))
+  })
+  .passthrough()
 
 export const csvCustomersSchema: z.ZodType<FlatCsvRow[]> = z.array(schema)

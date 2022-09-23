@@ -27,6 +27,7 @@ const makeSchema = (hasParentResourceId: boolean): z.ZodType<FlatCsvRow> =>
       'price_tiers.up_to': z.optional(zodEnforceInt),
       'price_tiers.price_amount_cents': z.optional(zodEnforceInt)
     })
+    .passthrough()
     .superRefine((data, ctx) => {
       if (!hasParentResourceId && isFalsy(data.price_list_id)) {
         ctx.addIssue({

@@ -19,6 +19,7 @@ const schema = z
     reference_origin: z.optional(z.string()),
     'sku_list_items.sku_code': z.optional(z.string().min(1))
   })
+  .passthrough()
   .superRefine((data, ctx) => {
     if (isFalsy(data.manual) && isFalsy(data.sku_code_regex)) {
       ctx.addIssue({

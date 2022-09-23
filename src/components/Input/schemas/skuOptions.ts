@@ -24,6 +24,7 @@ const makeSchema = (hasParentResourceId: boolean): z.ZodType<FlatCsvRow> =>
       reference: z.optional(z.string()),
       reference_origin: z.optional(z.string())
     })
+    .passthrough()
     .superRefine((data, ctx) => {
       const noMarket = !hasParentResourceId && isFalsy(data.market_id)
       if (noMarket && isFalsy(data.currency_code)) {
