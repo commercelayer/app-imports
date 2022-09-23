@@ -12,7 +12,6 @@ export function isTokenExpired({
   const { exp } = getInfoFromJwt(accessToken)
 
   if (exp == null) {
-    console.log('Missing exp')
     return true
   }
 

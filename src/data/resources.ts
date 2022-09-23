@@ -9,6 +9,7 @@ const resources: Record<AllowedResourceType, VisibleInUI> = {
   prices: true,
   coupons: true,
   sku_lists: true,
+  sku_options: true,
   customer_subscriptions: true,
   customers: true,
   gift_cards: true,

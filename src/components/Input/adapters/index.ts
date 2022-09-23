@@ -12,6 +12,7 @@ export const adapters: Record<
   bundles: (...args) => fromCsvSchemaToImportInputs(...args),
   skus: (...args) => fromCsvSchemaToImportInputs(...args),
   sku_lists: (...args) => fromCsvSchemaToImportInputs(...args),
+  sku_options: (...args) => fromCsvSchemaToImportInputs(...args),
   prices: (...args) => fromCsvSchemaToImportInputs(...args),
   coupons: (...args) => fromCsvSchemaToImportInputs(...args),
   gift_cards: (...args) => fromCsvSchemaToImportInputs(...args),
