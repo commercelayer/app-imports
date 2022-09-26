@@ -1,3 +1,3 @@
 export function isProduction(): boolean {
-  return process.env.NODE_ENV === 'production'
+  return import.meta.env.NODE_ENV === 'production'
 }
