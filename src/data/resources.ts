@@ -15,7 +15,8 @@ const resources: Record<AllowedResourceType, VisibleInUI> = {
   gift_cards: true,
   stock_items: true,
   tax_categories: true,
-  shipping_categories: true
+  shipping_categories: true,
+  orders: true
 }
 
 const allResources = Object.keys(resources) as AllowedResourceType[]
