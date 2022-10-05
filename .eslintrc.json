@@ -1,39 +1,5 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true
-    },
     "extends": [
-        "standard-with-typescript",
-        "standard-jsx",
-        "prettier"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "project": "tsconfig.json",
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 12,
-        "sourceType": "module"
-    },
-    "settings": {
-        "react": {
-            "version": "detect"
-        }
-    },
-    "plugins": [
-        "prettier"
-    ],
-    "rules": {
-        "prettier/prettier": [
-            "error",
-            {
-                "semi": false,
-                "singleQuote": true,
-                "jsxSingleQuote": true,
-                "trailingComma": "none"
-            }
-        ]
-    }
+        "@commercelayer/eslint-config-ts-react"
+    ]
 }
