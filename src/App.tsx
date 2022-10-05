@@ -11,8 +11,8 @@ function App(): JSX.Element {
       currentApp='imports'
       clientKind='integration'
       domain={import.meta.env.PUBLIC_DOMAIN}
-      onInvalidAuth={() => {
-        console.log('invalid!')
+      onInvalidAuth={({ reason }) => {
+        console.log('invalid callback received: ', reason)
       }}
     >
       <div>

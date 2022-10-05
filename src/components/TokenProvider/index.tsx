@@ -1,8 +1,7 @@
-import CommerceLayer, { CommerceLayerClient } from '@commercelayer/sdk'
+import { CommerceLayerClient } from '@commercelayer/sdk'
 import {
   createContext,
   ReactNode,
-  useCallback,
   useContext,
   useEffect,
   useState
@@ -13,8 +12,8 @@ import { isEmpty } from 'lodash-es'
 import { isTokenExpired, isValidTokenForCurrentApp } from './validateToken'
 import { makeDashboardUrl } from './slug'
 import { getPersistentAccessToken, savePersistentAccessToken } from './storage'
-import { catchInvalidToken } from './catchInvalidToken'
 import { getAccessTokenFromUrl } from './getAccessTokenFromUrl'
+import { makeSdkClient } from './makeSdkClient'
 
 interface TokenProviderValue {
   dashboardUrl?: string
@@ -27,8 +26,9 @@ interface TokenProviderProps {
   clientKind: 'integration' | 'sales_channel' | 'webapp'
   currentApp: CurrentApp
   domain?: string
-  onInvalidAuth: (dashboardUrl: string) => void
-  loadingSpinner?: ReactNode
+  onInvalidAuth: (info: { dashboardUrl: string; reason: string }) => void
+  loadingElement?: ReactNode
+  errorElement?: ReactNode
   children: ((props: TokenProviderValue) => ReactNode) | ReactNode
 }
 
@@ -49,64 +49,39 @@ function TokenProvider({
   clientKind,
   domain,
   onInvalidAuth,
-  loadingSpinner,
+  loadingElement,
+  errorElement,
   children
 }: TokenProviderProps): JSX.Element {
   const [validAuthToken, setValidAuthToken] = useState<string>()
   const [sdkClient, setSdkClient] = useState<CommerceLayerClient>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [isTokenError, setIsTokenError] = useState<boolean>(false)
-
   const dashboardUrl = makeDashboardUrl()
-
   const accessToken =
     getAccessTokenFromUrl() ?? getPersistentAccessToken({ currentApp })
 
-  const handleOnInvalidCallback = (): void => {
+  const handleOnInvalidCallback = (reason: string): void => {
     setIsLoading(false)
     setIsTokenError(true)
-    onInvalidAuth(dashboardUrl)
+    onInvalidAuth({ dashboardUrl, reason })
   }
-
-  // catch 401 errors
-  const catchInvalidTokenResponse = useCallback(
-    (event: PromiseRejectionEvent) => {
-      setIsLoading(true)
-      const isInvalidToken = catchInvalidToken(event)
-      if (isInvalidToken) {
-        handleOnInvalidCallback()
-      }
-    },
-    []
-  )
-
-  useEffect(() => {
-    window.addEventListener('unhandledrejection', catchInvalidTokenResponse)
-    return () =>
-      window.removeEventListener(
-        'unhandledrejection',
-        catchInvalidTokenResponse
-      )
-  }, [sdkClient])
 
   // validate token
   useEffect(() => {
     void (async (): Promise<void> => {
       if (accessToken == null) {
-        console.log('accessToken is missing')
-        handleOnInvalidCallback()
+        handleOnInvalidCallback('accessToken is missing')
         return
       }
 
-      // get a fresh token from refreshToken if token is expired or missing
       if (
         isTokenExpired({
           accessToken,
           compareTo: new Date()
         })
       ) {
-        console.log('accessToken is expired')
-        handleOnInvalidCallback()
+        handleOnInvalidCallback('accessToken is expired')
         return
       }
 
@@ -120,8 +95,7 @@ function TokenProvider({
         savePersistentAccessToken({ currentApp, accessToken })
         setValidAuthToken(accessToken)
       } else {
-        console.log('accessToken is not valid', accessToken)
-        handleOnInvalidCallback()
+        handleOnInvalidCallback('accessToken is not valid')
       }
     })()
   }, [accessToken])
@@ -134,10 +108,12 @@ function TokenProvider({
     const decodedTokenData = getInfoFromJwt(validAuthToken)
     if (decodedTokenData.slug != null) {
       setSdkClient(
-        CommerceLayer({
+        makeSdkClient({
           accessToken: validAuthToken,
           organization: decodedTokenData.slug,
-          domain
+          domain,
+          onInvalidToken: () =>
+            handleOnInvalidCallback('catched 401 invalid token from sdk')
         })
       )
       setIsLoading(false)
@@ -150,12 +126,14 @@ function TokenProvider({
   }
 
   if (isTokenError) {
-    return <div>Invalid token</div>
+    return (
+      <>{isEmpty(errorElement) ? <div>Invalid Token</div> : errorElement}</>
+    )
   }
 
   if (isLoading) {
     return (
-      <>{isEmpty(loadingSpinner) ? <div>Loading...</div> : loadingSpinner}</>
+      <>{isEmpty(loadingElement) ? <div>Loading...</div> : loadingElement}</>
     )
   }
 
