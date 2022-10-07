@@ -43,8 +43,8 @@
       "#schemas/*": [
         "src/schemas/*"
       ],
-      "#specs/*": [
-        "specs/*"
+      "#ui/*": [
+        "src/components/ui/*"
       ]
     },
     "incremental": true
