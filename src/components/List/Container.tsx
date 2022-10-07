@@ -1,19 +1,27 @@
 import { CommerceLayerClient } from '@commercelayer/sdk'
 import cn from 'classnames'
-import { FC } from 'react'
-
-import { Filters } from './Filters'
-import { Pagination } from './Pagination'
+import { ReactNode } from 'react'
 import { ListImportProvider } from './Provider'
-import { Table } from './Table'
 
 interface Props {
   sdkClient: CommerceLayerClient
+  children: ReactNode
+  pageSize: number
+  polling: boolean
 }
 
-export const List: FC<Props> = ({ sdkClient }) => {
+export function ListContainer({
+  sdkClient,
+  pageSize,
+  polling,
+  children
+}: Props): JSX.Element {
   return (
-    <ListImportProvider sdkClient={sdkClient} pageSize={25} polling={false}>
+    <ListImportProvider
+      sdkClient={sdkClient}
+      pageSize={pageSize}
+      polling={polling}
+    >
       {({ state }) => {
         const { isLoading, currentPage, list } = state
 
@@ -27,11 +35,7 @@ export const List: FC<Props> = ({ sdkClient }) => {
 
         const isRefetching = currentPage !== list.meta.currentPage
         return (
-          <div className={cn('container', { 'opacity-40': isRefetching })}>
-            <Filters />
-            <Table />
-            <Pagination />
-          </div>
+          <div className={cn({ 'opacity-40': isRefetching })}>{children}</div>
         )
       }}
     </ListImportProvider>
