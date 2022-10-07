@@ -7,8 +7,8 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSize
 }
 
-type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'link'
-type ButtonSize = 'small' | 'regular' | 'large'
+export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'link'
+export type ButtonSize = 'small' | 'regular' | 'large'
 
 const sizeCss: Record<ButtonSize, string> = {
   small: 'px-6 py-2',
