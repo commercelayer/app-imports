@@ -1,13 +1,13 @@
 import { Check, X } from 'phosphor-react'
 import invariant from 'ts-invariant'
 
-type Status = 'success' | 'danger' | 'pending' | 'progress'
+export type StatusUI = 'success' | 'danger' | 'pending' | 'progress'
 
 export interface StatusIconProps {
   /**
    * A different icon will be displayed depending on the status. When status is `progress` we can also pass a `percentage` prop
    */
-  status: Status
+  status: StatusUI
   /**
    * Only used when `status` is progress. Accepts number from 0 to 100
    */
@@ -42,7 +42,7 @@ export function StatusIcon({
 }
 
 const statusVariant: Record<
-  Status,
+  StatusUI,
   ((p?: any) => JSX.Element) | (() => JSX.Element)
 > = {
   progress: (p) => <ProgressCircle {...p} />,

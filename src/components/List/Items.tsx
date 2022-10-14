@@ -1,10 +1,15 @@
-import { Import } from '@commercelayer/sdk'
+import { appRoutes } from '#data/routes'
+import { useLocation } from 'wouter'
+import { ItemJob } from './ItemJob'
 import { useListContext } from './Provider'
 
 export function Items(): JSX.Element | null {
   const {
-    state: { list }
+    state: { list },
+    deleteImport
   } = useListContext()
+
+  const setLocation = useLocation()[1]
 
   if (list == null) {
     return null
@@ -12,18 +17,16 @@ export function Items(): JSX.Element | null {
 
   return (
     <div>
-      {list.map((item) => (
-        <Item key={item.id} item={item} />
+      {list.map((job) => (
+        <ItemJob
+          key={job.id}
+          job={job}
+          onDeleteRequest={deleteImport}
+          onShowRequest={(id) => {
+            setLocation(appRoutes.details(id))
+          }}
+        />
       ))}
-    </div>
-  )
-}
-
-function Item({ item }: { item: Import }): JSX.Element {
-  return (
-    <div className='py-5 border-b border-gray-100'>
-      <div>{item.id}</div>
-      <div>{item.status}</div>
     </div>
   )
 }

@@ -35,11 +35,7 @@ function ListPage(): JSX.Element {
           <div className='text-gray-500'>
             All imports · <TotalCount />
           </div>
-          <Button
-            data-test-id='hello'
-            variant='link'
-            className='text-green-400'
-          >
+          <Button variant='link' className='text-primary'>
             Add new
           </Button>
         </div>

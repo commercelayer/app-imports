@@ -43,6 +43,9 @@ export const availableResources = allResources.filter((r) => resources[r])
 export const isAvailableResource = (resourceType: string): boolean =>
   availableResources.includes(resourceType as AllowedResourceType)
 
-export function showResourceNiceName(resource: AllowedResourceType): string {
-  return resourceNiceName[resource] ?? resource
+export function showResourceNiceName(resource?: string): string {
+  if (resource == null) {
+    return '-'
+  }
+  return resourceNiceName[resource as AllowedResourceType] ?? resource
 }
