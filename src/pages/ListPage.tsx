@@ -1,6 +1,7 @@
 import { ListContainer } from '#components/List/Container'
 import { Items } from '#components/List/Items'
 import { Pagination } from '#components/List/Pagination'
+import { PaginationCounter } from '#components/List/PaginationCounter'
 import { TotalCount } from '#components/List/TotalCount'
 import { PageHeading } from '#components/PageHeading'
 import { useTokenProvider } from '#components/TokenProvider'
@@ -40,6 +41,10 @@ function ListPage(): JSX.Element {
           </Button>
         </div>
         <Items />
+
+        <div className='flex items-center justify-between py-9'>
+          <PaginationCounter className='text-gray-500 font-medium' />
+        </div>
         <Pagination />
       </ListContainer>
     </div>

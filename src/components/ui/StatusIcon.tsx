@@ -35,7 +35,7 @@ export function StatusIcon({
   )
 
   return (
-    <div {...rest} className='w-9 h-9'>
+    <div {...rest} className='w-10 h-10'>
       <>{statusVariant[status]({ percentage })}</>
     </div>
   )

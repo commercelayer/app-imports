@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Import } from '@commercelayer/sdk'
-import { formatDate, getProgressPercentage, getUiStatus } from './utils'
+import {
+  formatDate,
+  getProgressPercentage,
+  getUiStatus,
+  makeCurrentPageOffsets
+} from './utils'
 
 const mockImportTask = (
   processed_count: number | string,
@@ -13,6 +18,7 @@ const mockImportTask = (
   } as Import
 }
 
+// getProgressPercentage
 describe('getProgressPercentage', () => {
   test('should return 100% when completed', () => {
     const job = mockImportTask(453, 453)
@@ -88,6 +94,7 @@ describe('getProgressPercentage', () => {
   })
 })
 
+// formatDate
 describe('formatDate', () => {
   test('Should return a nice date string', () => {
     const d = new Date(`10-14-2022`).toISOString()
@@ -114,6 +121,7 @@ describe('formatDate', () => {
   })
 })
 
+// getUiStatus
 describe('getUiStatus', () => {
   test('should return `progress` status for the `<StatusIcon>` component, when import job is `in_progress`', () => {
     expect(getUiStatus('in_progress')).toBe('progress')
@@ -135,5 +143,70 @@ describe('getUiStatus', () => {
     expect(getUiStatus('')).toBe('pending')
     expect(getUiStatus(undefined)).toBe('pending')
     expect(getUiStatus('some-not-recognized-text')).toBe('pending')
+  })
+})
+
+// makeCurrentPageOffsets
+describe('makeCurrentPageOffsets', () => {
+  const recordCount = 180
+  test('Page 1', () => {
+    const pager = makeCurrentPageOffsets({
+      recordsPerPage: 50,
+      currentPage: 1,
+      recordCount
+    })
+    expect(pager).toMatchObject({ firstOfPage: 1, lastOfPage: 50 })
+    expect(`${pager.firstOfPage}-${pager.lastOfPage} of ${recordCount}`).toBe(
+      '1-50 of 180'
+    )
+  })
+
+  test('Page 2', () => {
+    const pager = makeCurrentPageOffsets({
+      recordsPerPage: 50,
+      currentPage: 2,
+      recordCount
+    })
+    expect(pager).toMatchObject({ firstOfPage: 51, lastOfPage: 100 })
+    expect(`${pager.firstOfPage}-${pager.lastOfPage} of ${recordCount}`).toBe(
+      '51-100 of 180'
+    )
+  })
+
+  test('Page 3', () => {
+    const pager = makeCurrentPageOffsets({
+      recordsPerPage: 50,
+      currentPage: 3,
+      recordCount
+    })
+    expect(pager).toMatchObject({ firstOfPage: 101, lastOfPage: 150 })
+    expect(`${pager.firstOfPage}-${pager.lastOfPage} of ${recordCount}`).toBe(
+      '101-150 of 180'
+    )
+  })
+
+  test('Page 4', () => {
+    const pager = makeCurrentPageOffsets({
+      recordsPerPage: 50,
+      currentPage: 4,
+      recordCount
+    })
+    expect(pager).toMatchObject({ firstOfPage: 151, lastOfPage: 180 })
+    expect(`${pager.firstOfPage}-${pager.lastOfPage} of ${recordCount}`).toBe(
+      '151-180 of 180'
+    )
+  })
+
+  test('Everything visibile in one single page', () => {
+    const recordCount = 70
+    const pager = makeCurrentPageOffsets({
+      recordsPerPage: 100,
+      currentPage: 1,
+      recordCount
+    })
+    expect(pager).toMatchObject({ firstOfPage: 1, lastOfPage: 70 })
+    expect(`${pager.firstOfPage}-${pager.lastOfPage} of ${recordCount}`).toBe(
+      '1-70 of 70'
+    )
   })
 })
