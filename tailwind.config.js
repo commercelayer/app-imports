@@ -13,7 +13,7 @@ module.exports = {
     colors: {
       primary: {
         light: 'var(--primary-light)',
-        DEFAULT: 'var(--primary)',
+        DEFAULT: '#666EFF',
         dark: 'var(--primary-dark)'
       },
       contrast: 'var(--contrast)',

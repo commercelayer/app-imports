@@ -2,8 +2,17 @@ import { ReactNode } from 'react'
 import cn from 'classnames'
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /**
+   * Button content
+   */
   children: ReactNode
+  /**
+   * Render a different variant
+   */
   variant?: ButtonVariant
+  /**
+   * Set button size
+   */
   size?: ButtonSize
 }
 
