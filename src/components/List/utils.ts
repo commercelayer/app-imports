@@ -108,3 +108,48 @@ export function makeCurrentPageOffsets({
     lastOfPage: lastOffset >= recordCount ? recordCount : lastOffset
   }
 }
+
+export function makeSomeAdjacentPages({
+  currentPage,
+  pageCount,
+  adjacentPagesCount,
+  direction = 'forward',
+  excludeCurrentPage = false
+}: {
+  currentPage: number
+  pageCount: number
+  adjacentPagesCount: number
+  direction?: 'backward' | 'forward'
+  excludeCurrentPage?: boolean
+}): number[] {
+  if (
+    currentPage == null ||
+    pageCount == null ||
+    pageCount < currentPage ||
+    currentPage <= 0 ||
+    pageCount < 1
+  ) {
+    return []
+  }
+
+  const initialPage = excludeCurrentPage
+    ? direction === 'forward'
+      ? currentPage + 1
+      : currentPage - 1
+    : currentPage
+
+  const pages = Array.from({ length: adjacentPagesCount }, (_, i) => {
+    const computedIndex =
+      direction === 'forward' ? initialPage + i : initialPage - i
+
+    return computedIndex <= pageCount && computedIndex >= 1
+      ? computedIndex
+      : null
+  }).filter(notNull)
+
+  return direction === 'forward' ? pages : pages.reverse()
+}
+
+function notNull<T>(value: T | null): value is T {
+  return value != null
+}

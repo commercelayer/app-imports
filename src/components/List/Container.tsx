@@ -1,5 +1,4 @@
 import { CommerceLayerClient } from '@commercelayer/sdk'
-import cn from 'classnames'
 import { ReactNode } from 'react'
 import { ListImportProvider } from './Provider'
 
@@ -23,7 +22,7 @@ export function ListContainer({
       polling={polling}
     >
       {({ state }) => {
-        const { isLoading, currentPage, list } = state
+        const { isLoading, list } = state
 
         if (isLoading && list == null) {
           return <div>Loading list...</div>
@@ -33,10 +32,7 @@ export function ListContainer({
           return null
         }
 
-        const isRefetching = currentPage !== list.meta.currentPage
-        return (
-          <div className={cn({ 'opacity-40': isRefetching })}>{children}</div>
-        )
+        return <>{children}</>
       }}
     </ListImportProvider>
   )

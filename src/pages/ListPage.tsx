@@ -23,7 +23,7 @@ function ListPage(): JSX.Element {
   }
 
   return (
-    <div className='container mx-auto'>
+    <div className='container mx-auto min-h-screen flex flex-col'>
       <PageHeading
         title='Imports'
         onGoBack={() => {
@@ -32,20 +32,24 @@ function ListPage(): JSX.Element {
         gap
       />
       <ListContainer sdkClient={sdkClient} pageSize={25} polling={false}>
-        <div className='flex justify-between pb-4 border-b border-gray-100'>
-          <div className='text-gray-500'>
-            All imports · <TotalCount />
+        <div className='flex flex-col flex-1'>
+          <div className='flex justify-between pb-4 border-b border-gray-100'>
+            <div className='text-gray-500'>
+              All imports · <TotalCount />
+            </div>
+            <Button variant='link' className='text-primary'>
+              Add new
+            </Button>
           </div>
-          <Button variant='link' className='text-primary'>
-            Add new
-          </Button>
+          <Items />
+          <div className='flex mt-auto items-center justify-between py-9'>
+            <PaginationCounter className='text-gray-500 font-medium' />
+            <Pagination
+              className='border border-gray-500 text text-sm rounded-sm w-10 h-10 flex items-center justify-center'
+              activeClass='border-2 border-black text-black font-bold'
+            />
+          </div>
         </div>
-        <Items />
-
-        <div className='flex items-center justify-between py-9'>
-          <PaginationCounter className='text-gray-500 font-medium' />
-        </div>
-        <Pagination />
       </ListContainer>
     </div>
   )

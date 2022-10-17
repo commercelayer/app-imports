@@ -2,10 +2,11 @@ import { appRoutes } from '#data/routes'
 import { useLocation } from 'wouter'
 import { ItemJob } from './ItemJob'
 import { useListContext } from './Provider'
+import cn from 'classnames'
 
 export function Items(): JSX.Element | null {
   const {
-    state: { list },
+    state: { currentPage, list },
     deleteImport
   } = useListContext()
 
@@ -15,8 +16,14 @@ export function Items(): JSX.Element | null {
     return null
   }
 
+  const isRefetching = currentPage !== list.meta.currentPage
+
   return (
-    <div>
+    <div
+      className={cn({
+        'opacity-40 pointer-events-none touch-none': isRefetching
+      })}
+    >
       {list.map((job) => (
         <ItemJob
           key={job.id}
