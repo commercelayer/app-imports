@@ -109,6 +109,18 @@ export function makeCurrentPageOffsets({
   }
 }
 
+/**
+ * Helper function to make a list of adjacent pages.
+ * It will consider the final and first page to avoid generating not existing pages.
+ * Example: If current page is 3 and we want to generate 5 adjacents it could return
+ * [3,4,5,6,7] or [1,2,3] depending on the direction we are looking for.
+ * @param currentPage - The current active page (Int)
+ * @param pageCount - The total number of pages (Int)
+ * @param adjacentPagesCount - How many adjacent pages we need to generate (Int)
+ * @param direction - The direction we need to look for. It could be `forward` or `backward`
+ * @param excludeCurrentPage - Boolean flag, in case we don't need the current page to be in the array
+ * @returns an array of adjacent page numbers
+ */
 export function makeSomeAdjacentPages({
   currentPage,
   pageCount,
