@@ -1,4 +1,5 @@
 import TokenProvider from '#components/TokenProvider'
+import { appRoutes } from '#data/routes'
 import { Route } from 'wouter'
 import DetailsPage from './pages/DetailsPage'
 import ListPage from './pages/ListPage'
@@ -16,16 +17,16 @@ function App(): JSX.Element {
       }}
     >
       <>
-        <Route path='/'>
+        <Route path={appRoutes.list.path}>
           <ListPage />
         </Route>
-        <Route path='/new'>
+        <Route path={appRoutes.selectResource.path}>
           <ResourceSelectorPage />
         </Route>
-        <Route path='/new/:resourceType'>
+        <Route path={appRoutes.newImport.path}>
           <NewImportPage />
         </Route>
-        <Route path='/details/:importId'>
+        <Route path={appRoutes.details.path}>
           <DetailsPage />
         </Route>
       </>

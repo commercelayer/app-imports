@@ -38,7 +38,7 @@ function ListPage(): JSX.Element {
             <div className='text-gray-500'>
               All imports · <TotalCount />
             </div>
-            <Link href={appRoutes.selectResource()}>
+            <Link href={appRoutes.selectResource.makePath()}>
               <Button variant='link' className='text-primary'>
                 Add new
               </Button>

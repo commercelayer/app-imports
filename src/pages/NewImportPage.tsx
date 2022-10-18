@@ -52,7 +52,7 @@ function NewImportPage(): JSX.Element {
         parent_resource_id: parentResourceId,
         inputs: importCreateValue
       })
-      setLocation(appRoutes.list())
+      setLocation(appRoutes.list.makePath())
     } catch {
       setIsLoading(false)
     }

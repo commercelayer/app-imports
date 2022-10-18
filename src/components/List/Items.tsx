@@ -30,7 +30,7 @@ export function Items(): JSX.Element | null {
           job={job}
           onDeleteRequest={deleteImport}
           onShowRequest={(id) => {
-            setLocation(appRoutes.details(id))
+            setLocation(appRoutes.details.makePath(id))
           }}
         />
       ))}
