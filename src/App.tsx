@@ -1,9 +1,9 @@
-import { Nav } from '#components/Nav'
 import TokenProvider from '#components/TokenProvider'
 import { Route } from 'wouter'
 import DetailsPage from './pages/DetailsPage'
 import ListPage from './pages/ListPage'
 import NewImportPage from './pages/NewImportPage'
+import { ResourceSelectorPage } from './pages/ResourceSelectorPage'
 
 function App(): JSX.Element {
   return (
@@ -15,9 +15,12 @@ function App(): JSX.Element {
         console.log('invalid callback received: ', reason)
       }}
     >
-      <div>
+      <>
         <Route path='/'>
           <ListPage />
+        </Route>
+        <Route path='/new'>
+          <ResourceSelectorPage />
         </Route>
         <Route path='/new/:resourceType'>
           <NewImportPage />
@@ -25,8 +28,7 @@ function App(): JSX.Element {
         <Route path='/details/:importId'>
           <DetailsPage />
         </Route>
-        <Nav />
-      </div>
+      </>
     </TokenProvider>
   )
 }

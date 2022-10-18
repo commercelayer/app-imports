@@ -5,8 +5,10 @@ import { PaginationCounter } from '#components/List/PaginationCounter'
 import { TotalCount } from '#components/List/TotalCount'
 import { PageHeading } from '#components/PageHeading'
 import { useTokenProvider } from '#components/TokenProvider'
+import { appRoutes } from '#data/routes'
 import { Button } from '#ui/Button'
 import { useEffect } from 'react'
+import { Link } from 'wouter'
 
 function ListPage(): JSX.Element {
   const { sdkClient, dashboardUrl } = useTokenProvider()
@@ -29,7 +31,6 @@ function ListPage(): JSX.Element {
         onGoBack={() => {
           window.location.href = dashboardUrl != null ? dashboardUrl : '/'
         }}
-        gap
       />
       <ListContainer sdkClient={sdkClient} pageSize={25} polling={false}>
         <div className='flex flex-col flex-1'>
@@ -37,9 +38,11 @@ function ListPage(): JSX.Element {
             <div className='text-gray-500'>
               All imports · <TotalCount />
             </div>
-            <Button variant='link' className='text-primary'>
-              Add new
-            </Button>
+            <Link href={appRoutes.selectResource()}>
+              <Button variant='link' className='text-primary'>
+                Add new
+              </Button>
+            </Link>
           </div>
           <Items />
           <div className='flex mt-auto items-center justify-between py-9'>

@@ -1,22 +1,36 @@
 import cn from 'classnames'
 
-interface Props {
-  onGoBack?: () => void
+export interface PageHeadingProps {
+  /**
+   * Main page title
+   */
   title: string
+  /**
+   * A short text that helps to describe the page
+   */
   description?: string
-  gap?: boolean
+  /**
+   * Optional callback that will be called when "go back" button is pressed
+   * If missing, the "go back" button will not be shown
+   */
+  onGoBack?: () => void
+  /**
+   * If `true` removes element vertical paddings
+   */
+  noGap?: boolean
 }
 
 export function PageHeading({
-  gap,
+  noGap = false,
   onGoBack,
   title,
-  description
-}: Props): JSX.Element {
+  description,
+  ...rest
+}: PageHeadingProps): JSX.Element {
   return (
-    <div className={cn({ 'pt-10 pb-14': gap })}>
+    <div className={cn({ 'pt-10 pb-14': !noGap })} {...rest}>
       {onGoBack != null ? (
-        <button>
+        <button onClick={onGoBack}>
           <svg
             width='32'
             height='32'
