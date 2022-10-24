@@ -1,4 +1,8 @@
-import { AllowedResourceType } from 'App'
+import {
+  AllowedResourceType,
+  AllowedParentResource,
+  ResourceWithParent
+} from 'App'
 
 type VisibleInUI = boolean
 
@@ -71,4 +75,41 @@ export function showResourceNiceName(resource?: string): string {
     return '-'
   }
   return resourceNiceName[resource as AllowedResourceType] ?? resource
+}
+
+/**
+ * To control if a resource has a parent resource to be selected
+ */
+const resourcesWithParent: Record<ResourceWithParent, AllowedParentResource> = {
+  bundles: 'markets',
+  coupons: 'promotion_rules',
+  gift_cards: 'markets',
+  orders: 'markets',
+  prices: 'price_lists',
+  sku_options: 'markets',
+  stock_items: 'stock_locations',
+  tax_categories: 'tax_calculators'
+}
+
+/**
+ * Check if a resource accepts a parent resource or not
+ * @param resource - The resource type
+ * @returns a boolean value and when true, param will is typed as `ResourceWithParent`
+ */
+function hasParentResource(resource: string): resource is ResourceWithParent {
+  return resource in resourcesWithParent
+}
+
+/**
+ * Get the parent resource from a given resource
+ * @param resource - The resource type
+ * @returns a valid parent resource  or false in case the resource does not have any parent
+ */
+export function getParentResourceIfNeeded(
+  resource: string
+): AllowedParentResource | false {
+  if (resource == null || !hasParentResource(resource)) {
+    return false
+  }
+  return resourcesWithParent[resource]
 }

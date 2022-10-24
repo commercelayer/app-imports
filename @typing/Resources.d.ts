@@ -15,17 +15,15 @@ declare module 'App' {
     | 'sku_options'
     | 'orders'
 
-  export interface ParentResourceByResourceType {
-    bundles: 'market'
-    coupons: 'promotion_rules'
-    gift_cards: 'market'
-    orders: 'market'
-    prices: 'price_list'
-    sku_list_items: 'sku_list'
-    sku_options: 'market'
-    stock_items: 'stock_location'
-    tax_categories: 'tax_calculator'
-  }
+  export type ResourceWithParent =
+    | 'bundles'
+    | 'coupons'
+    | 'gift_cards'
+    | 'orders'
+    | 'prices'
+    | 'sku_options'
+    | 'stock_items'
+    | 'tax_categories'
 
   export type AllowedParentResource =
     | 'markets'
@@ -33,4 +31,5 @@ declare module 'App' {
     | 'price_lists'
     | 'stock_locations'
     | 'tax_calculators'
+    | 'sku_list'
 }
