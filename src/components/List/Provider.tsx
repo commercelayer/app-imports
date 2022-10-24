@@ -26,6 +26,7 @@ interface ListImportProviderProps {
   children: ((props: ListImportContextValue) => ReactNode) | ReactNode
   sdkClient: CommerceLayerClient
 }
+const POLLING_INTERVAL = 4000
 
 const Context = createContext<ListImportContextValue>(initialValues)
 
@@ -89,7 +90,7 @@ export const ListImportProvider: FC<ListImportProviderProps> = ({
     // start polling
     intervalId.current = setInterval(() => {
       void fetchList({ handleLoadingState: false })
-    }, 4000)
+    }, POLLING_INTERVAL)
 
     return () => {
       if (intervalId.current != null) {

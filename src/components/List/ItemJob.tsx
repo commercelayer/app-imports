@@ -19,11 +19,12 @@ export function ItemJob({
   const uiStatus = getUiStatus(job.status)
   const percentage = getProgressPercentage(job)
   const canDelete = job.status === 'pending' || job.status === 'in_progress'
+
   return (
     <div className='flex gap-4 px-5 py-5 border-b border-gray-100'>
       <StatusIcon
         status={uiStatus}
-        percentage={uiStatus === 'pending' ? percentage.value : undefined}
+        percentage={uiStatus === 'progress' ? percentage.value : undefined}
       />
       <div className='leading-none flex flex-col justify-between items-start'>
         <button
