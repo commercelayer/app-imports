@@ -72,7 +72,12 @@ const DescriptionLine = ({ job }: { job: Import }): JSX.Element => {
       {job.status === 'pending' ? (
         <div>Pending</div>
       ) : job.status === 'in_progress' ? (
-        percentage.formatted
+        percentage.value === 100 ? (
+          // import job remains few seconds at 100% with status in_progress
+          <span>Finalizing...</span>
+        ) : (
+          percentage.formatted
+        )
       ) : job.status === 'interrupted' ? (
         <div>
           <span className='text-red-400'>Import failed</span> on{' '}
