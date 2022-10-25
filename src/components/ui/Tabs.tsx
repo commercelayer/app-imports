@@ -2,17 +2,12 @@ import React, { ReactNode, Children, useEffect, useState } from 'react'
 import invariant from 'ts-invariant'
 import cn from 'classnames'
 
-interface TabProps {
-  name: string
-  children: ReactNode
-}
-
 interface Props {
   onTabSwitch: (tabIndex: number) => void
   children: Array<React.ReactElement<TabProps, typeof Tab>>
 }
 
-export function Tabs({ children, onTabSwitch }: Props): JSX.Element {
+export function Tabs({ children, onTabSwitch, ...rest }: Props): JSX.Element {
   const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(
@@ -43,7 +38,7 @@ export function Tabs({ children, onTabSwitch }: Props): JSX.Element {
   const allNavs = Children.map(children, (tab) => tab.props.name)
 
   return (
-    <div className='py-5'>
+    <div className='py-5' {...rest}>
       {/* Navs */}
       <nav className='flex'>
         {allNavs.map((navLabel, index) => (
@@ -54,6 +49,7 @@ export function Tabs({ children, onTabSwitch }: Props): JSX.Element {
             onClick={() => {
               setActiveIndex(index)
             }}
+            data-test-id={`tab-nav-${index}`}
           />
         ))}
       </nav>
@@ -70,6 +66,11 @@ export function Tabs({ children, onTabSwitch }: Props): JSX.Element {
       })}
     </div>
   )
+}
+
+interface TabProps {
+  name: string
+  children: ReactNode
 }
 
 export function Tab({ children }: TabProps): React.ReactElement {
@@ -105,7 +106,8 @@ function TabNav({
 
 function TabPanel({
   children,
-  isActive
+  isActive,
+  ...rest
 }: {
   isActive: boolean
   children: ReactNode
@@ -114,5 +116,9 @@ function TabPanel({
     return null
   }
 
-  return <div className='pt-4'>{children}</div>
+  return (
+    <div className='pt-4' {...rest}>
+      {children}
+    </div>
+  )
 }
