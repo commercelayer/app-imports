@@ -15,7 +15,8 @@ import { useLocation, useRoute } from 'wouter'
 import { useTokenProvider } from '#components/TokenProvider'
 import { PageHeading } from '#components/PageHeading'
 import { Button } from '#ui/Button'
-import { Container } from '#components/ui/Container'
+import { Container } from '#ui/Container'
+import { Tab, Tabs } from '#ui/Tabs'
 
 function NewImportPage(): JSX.Element {
   const { sdkClient } = useTokenProvider()
@@ -82,12 +83,23 @@ function NewImportPage(): JSX.Element {
           className='mb-14'
         />
       )}
-      <Input
-        resourceType={resourceType}
-        onDataReady={setImportCreateValue}
-        onDataResetRequest={() => setImportCreateValue(undefined)}
-        hasParentResource={Boolean(parentResource)}
-      />
+
+      <Tabs
+        onTabSwitch={() => {
+          //
+        }}
+      >
+        <Tab name='Upload file'>
+          <Input
+            resourceType={resourceType}
+            onDataReady={setImportCreateValue}
+            onDataResetRequest={() => setImportCreateValue(undefined)}
+            hasParentResource={Boolean(parentResource)}
+          />
+        </Tab>
+        <Tab name='Past code'>code</Tab>
+      </Tabs>
+
       {importCreateValue != null && importCreateValue.length > 0 ? (
         <ImportPreviewTable rows={(importCreateValue as []).slice(0, 5)} />
       ) : null}
