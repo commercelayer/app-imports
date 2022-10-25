@@ -4,22 +4,25 @@ import { useState } from 'react'
 
 import { ImportPreviewTable } from '#components/ImportPreviewTable'
 import { Input } from '#components/Input'
-import { ParentResourceSelector } from '#components/ResourceSelector'
-import { ResourceSelectorProvider } from '#components/ResourceSelector/Provider'
-import { isAvailableResource } from '#data/resources'
+import { ResourceFinder } from '#components/ResourceFinder'
+import {
+  getParentResourceIfNeeded,
+  isAvailableResource,
+  showResourceNiceName
+} from '#data/resources'
 import { appRoutes } from '#data/routes'
 import { useLocation, useRoute } from 'wouter'
 import { useTokenProvider } from '#components/TokenProvider'
+import { PageHeading } from '#components/PageHeading'
 
 function NewImportPage(): JSX.Element {
   const { sdkClient } = useTokenProvider()
 
-  const params = useRoute('/new/:resourceType')[1]
-  const setLocation = useLocation()[1]
+  const [_match, params] = useRoute('/new/:resourceType')
+  const [_location, setLocation] = useLocation()
 
   const [isLoading, setIsLoading] = useState(false)
   const [cleanupRecords] = useState(false)
-  const [skipParentResource, setSkipParentResource] = useState(false)
   const [importCreateValue, setImportCreateValue] = useState<
     ImportCreate['inputs'] | undefined
   >(undefined)
@@ -39,81 +42,67 @@ function NewImportPage(): JSX.Element {
     return <div>404 - resource type non allowed or not enabled</div>
   }
 
-  const createImportTask = async (parentResourceId?: string): Promise<void> => {
-    if (importCreateValue == null) {
-      return
-    }
+  // const createImportTask = async (parentResourceId?: string): Promise<void> => {
+  //   if (importCreateValue == null) {
+  //     return
+  //   }
 
-    setIsLoading(true)
-    try {
-      await sdkClient.imports.create({
-        resource_type: resourceType,
-        cleanup_records: cleanupRecords,
-        parent_resource_id: parentResourceId,
-        inputs: importCreateValue
-      })
-      setLocation(appRoutes.list.makePath())
-    } catch {
-      setIsLoading(false)
-    }
-  }
+  //   setIsLoading(true)
+  //   try {
+  //     await sdkClient.imports.create({
+  //       resource_type: resourceType,
+  //       cleanup_records: cleanupRecords,
+  //       parent_resource_id: parentResourceId,
+  //       inputs: importCreateValue
+  //     })
+  //     setLocation(appRoutes.list.makePath())
+  //   } catch {
+  //     setIsLoading(false)
+  //   }
+  // }
+
+  const parentResource = getParentResourceIfNeeded(resourceType)
 
   return (
-    <ResourceSelectorProvider sdkClient={sdkClient}>
-      {(resourceSelectorCtx) => {
-        const selectedParentResource = skipParentResource
-          ? undefined
-          : resourceSelectorCtx.state.selectedResource
-        const showUploadInput =
-          selectedParentResource != null || skipParentResource
+    <div className='container mx-auto min-h-screen flex flex-col'>
+      <PageHeading
+        title={`Import ${showResourceNiceName(resourceType)}`}
+        onGoBack={() => {
+          setLocation(appRoutes.selectResource.makePath())
+        }}
+      />
 
-        return (
-          <div>
-            <div className='container px-3 py-4'>
-              <h1 className='text-xl pb-2 font-bold'>
-                New upload {resourceType}
-              </h1>
+      {parentResource !== false && (
+        <ResourceFinder
+          resourceType={parentResource}
+          sdkClient={sdkClient}
+          className='mb-14'
+        />
+      )}
 
-              <button onClick={() => setSkipParentResource((s) => !s)}>
-                Toggle skip parent resource
-              </button>
+      <Input
+        resourceType={resourceType}
+        onDataReady={setImportCreateValue}
+        onDataResetRequest={() => setImportCreateValue(undefined)}
+        hasParentResource={Boolean(parentResource)}
+      />
 
-              {skipParentResource ? null : (
-                <ParentResourceSelector
-                  resourceType={resourceType}
-                  onNotNeeded={() => setSkipParentResource(true)}
-                />
-              )}
+      {importCreateValue != null && importCreateValue.length > 0 ? (
+        <ImportPreviewTable rows={(importCreateValue as []).slice(0, 5)} />
+      ) : null}
 
-              {showUploadInput ? (
-                <Input
-                  resourceType={resourceType}
-                  onDataReady={setImportCreateValue}
-                  onDataResetRequest={() => setImportCreateValue(undefined)}
-                  hasParentResource={Boolean(selectedParentResource?.id)}
-                />
-              ) : null}
-
-              {importCreateValue != null && importCreateValue.length > 0 ? (
-                <ImportPreviewTable rows={importCreateValue as []} />
-              ) : null}
-
-              {importCreateValue != null && importCreateValue.length > 0 ? (
-                <button
-                  className='btn'
-                  onClick={() => {
-                    void createImportTask(selectedParentResource?.id)
-                  }}
-                  disabled={isLoading}
-                >
-                  {isLoading ? 'Loading...' : 'Create import task'}
-                </button>
-              ) : null}
-            </div>
-          </div>
-        )
-      }}
-    </ResourceSelectorProvider>
+      {importCreateValue != null && importCreateValue.length > 0 ? (
+        <button
+          className='btn'
+          onClick={() => {
+            // void createImportTask(selectedParentResource?.id)
+          }}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Loading...' : 'Create import task'}
+        </button>
+      ) : null}
+    </div>
   )
 }
 

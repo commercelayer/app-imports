@@ -10,6 +10,7 @@ specifiers:
   '@types/node': 18.0.1
   '@types/papaparse': ^5.3.2
   '@types/react': ^18.0.17
+  '@types/react-autosuggest': ^10.1.5
   '@types/react-dom': ^18.0.6
   '@types/testing-library__jest-dom': ^5.14.5
   '@vitejs/plugin-react': ^2.0.1
@@ -27,6 +28,7 @@ specifiers:
   postcss: ^8.4.14
   prettier: ^2.7.1
   react: ^18.2.0
+  react-autosuggest: ^10.1.0
   react-dom: ^18.2.0
   rollup-plugin-node-polyfills: ^0.2.1
   stylelint: ^14.12.0
@@ -51,6 +53,7 @@ dependencies:
   papaparse: 5.3.2
   phosphor-react: 1.4.1_react@18.2.0
   react: 18.2.0
+  react-autosuggest: 10.1.0_react@18.2.0
   react-dom: 18.2.0_react@18.2.0
   rollup-plugin-node-polyfills: 0.2.1
   ts-invariant: 0.10.3
@@ -63,6 +66,7 @@ devDependencies:
   '@types/node': 18.0.1
   '@types/papaparse': 5.3.4
   '@types/react': 18.0.17
+  '@types/react-autosuggest': 10.1.5
   '@types/react-dom': 18.0.6
   '@types/testing-library__jest-dom': 5.14.5
   '@vitejs/plugin-react': 2.0.1_vite@3.0.9
@@ -735,6 +739,12 @@ packages:
 
   /@types/prop-types/15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
+    dev: true
+
+  /@types/react-autosuggest/10.1.5:
+    resolution: {integrity: sha512-qfMzrp6Is0VYRF5a97Bv/+P2F9ZtFY4YE2825yyWV4VxCpvcfvQHEqGNkDFIPme7t3B2BpQ784QBllYAxemERQ==}
+    dependencies:
+      '@types/react': 18.0.17
     dev: true
 
   /@types/react-dom/18.0.6:
@@ -1666,6 +1676,10 @@ packages:
       is-callable: 1.2.7
       is-date-object: 1.0.5
       is-symbol: 1.0.4
+
+  /es6-promise/4.2.8:
+    resolution: {integrity: sha512-HJDGx5daxeIvxdBxvG2cb9g4tEvwIk3i8+nhX0yGrYmZUzbkdg8QbDevheDB8gd0//uPj4c1EQua8Q+MViT0/w==}
+    dev: false
 
   /esbuild-android-64/0.14.54:
     resolution: {integrity: sha512-Tz2++Aqqz0rJ7kYBfz+iqyE3QMycD4vk7LBRyWaAVFgFtQ/O8EJOnVmTOiDWYZ/uYzB4kvP+bqejYdVKzE5lAQ==}
@@ -3267,6 +3281,11 @@ packages:
     resolution: {integrity: sha512-90yv+6538zuvUMnN+zCr8LuV6bPFdq50304114vJYJ8RDyK8D5O9Phpbd6SZWgI7PwzmmfN1upeOJlvybDSgCw==}
     dev: true
 
+  /object-assign/3.0.0:
+    resolution: {integrity: sha512-jHP15vXVGeVh1HuaA2wY6lxk+whK/x4KBG88VXeRma7CCun7iGD5qPc4eYykQ9sdQvg8jkwFKsSxHln2ybW3xQ==}
+    engines: {node: '>=0.10.0'}
+    dev: false
+
   /object-assign/4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
@@ -3658,6 +3677,19 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+  /react-autosuggest/10.1.0_react@18.2.0:
+    resolution: {integrity: sha512-/azBHmc6z/31s/lBf6irxPf/7eejQdR0IqnZUzjdSibtlS8+Rw/R79pgDAo6Ft5QqCUTyEQ+f0FhL+1olDQ8OA==}
+    peerDependencies:
+      react: '>=16.3.0'
+    dependencies:
+      es6-promise: 4.2.8
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-themeable: 1.1.0
+      section-iterator: 2.0.0
+      shallow-equal: 1.2.1
+    dev: false
+
   /react-dom/18.2.0_react@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
     peerDependencies:
@@ -3683,6 +3715,12 @@ packages:
     resolution: {integrity: sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /react-themeable/1.1.0:
+    resolution: {integrity: sha512-kl5tQ8K+r9IdQXZd8WLa+xxYN04lLnJXRVhHfdgwsUJr/SlKJxIejoc9z9obEkx1mdqbTw1ry43fxEUwyD9u7w==}
+    dependencies:
+      object-assign: 3.0.0
+    dev: false
 
   /react/18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
@@ -3889,6 +3927,10 @@ packages:
     dependencies:
       loose-envify: 1.4.0
 
+  /section-iterator/2.0.0:
+    resolution: {integrity: sha512-xvTNwcbeDayXotnV32zLb3duQsP+4XosHpb/F+tu6VzEZFmIjzPdNk6/O+QOOx5XTh08KL2ufdXeCO33p380pQ==}
+    dev: false
+
   /semver/5.7.1:
     resolution: {integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==}
     hasBin: true
@@ -3908,6 +3950,10 @@ packages:
   /set-cookie-parser/2.5.1:
     resolution: {integrity: sha512-1jeBGaKNGdEq4FgIrORu/N570dwoPYio8lSoYLWmX7sQ//0JY08Xh9o5pBcgmHQ/MbsYp/aZnOe1s1lIsbLprQ==}
     dev: true
+
+  /shallow-equal/1.2.1:
+    resolution: {integrity: sha512-S4vJDjHHMBaiZuT9NPb616CSmLf618jawtv3sufLl6ivK8WocjAo58cXwbRV1cgqxH0Qbv+iUt6m05eqEa2IRA==}
+    dev: false
 
   /shebang-command/2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}

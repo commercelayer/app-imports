@@ -31,5 +31,5 @@ declare module 'App' {
     | 'price_lists'
     | 'stock_locations'
     | 'tax_calculators'
-    | 'sku_list'
+    | 'sku_lists'
 }
