@@ -5,6 +5,7 @@ import { PaginationCounter } from '#components/List/PaginationCounter'
 import { TotalCount } from '#components/List/TotalCount'
 import { PageHeading } from '#components/PageHeading'
 import { useTokenProvider } from '#components/TokenProvider'
+import { Container } from '#components/ui/Container'
 import { appRoutes } from '#data/routes'
 import { Button } from '#ui/Button'
 import { useEffect } from 'react'
@@ -25,7 +26,7 @@ function ListPage(): JSX.Element {
   }
 
   return (
-    <div className='container mx-auto min-h-screen flex flex-col'>
+    <Container>
       <PageHeading
         title='Imports'
         onGoBack={() => {
@@ -54,7 +55,7 @@ function ListPage(): JSX.Element {
           </div>
         </div>
       </ListContainer>
-    </div>
+    </Container>
   )
 }
 

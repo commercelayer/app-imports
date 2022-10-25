@@ -14,6 +14,8 @@ import { appRoutes } from '#data/routes'
 import { useLocation, useRoute } from 'wouter'
 import { useTokenProvider } from '#components/TokenProvider'
 import { PageHeading } from '#components/PageHeading'
+import { Button } from '#ui/Button'
+import { Container } from '#components/ui/Container'
 
 function NewImportPage(): JSX.Element {
   const { sdkClient } = useTokenProvider()
@@ -62,16 +64,17 @@ function NewImportPage(): JSX.Element {
   // }
 
   const parentResource = getParentResourceIfNeeded(resourceType)
+  const canCreateImport =
+    importCreateValue != null && importCreateValue.length > 0
 
   return (
-    <div className='container mx-auto min-h-screen flex flex-col'>
+    <Container>
       <PageHeading
         title={`Import ${showResourceNiceName(resourceType)}`}
         onGoBack={() => {
           setLocation(appRoutes.selectResource.makePath())
         }}
       />
-
       {parentResource !== false && (
         <ResourceFinder
           resourceType={parentResource}
@@ -79,30 +82,29 @@ function NewImportPage(): JSX.Element {
           className='mb-14'
         />
       )}
-
       <Input
         resourceType={resourceType}
         onDataReady={setImportCreateValue}
         onDataResetRequest={() => setImportCreateValue(undefined)}
         hasParentResource={Boolean(parentResource)}
       />
-
       {importCreateValue != null && importCreateValue.length > 0 ? (
         <ImportPreviewTable rows={(importCreateValue as []).slice(0, 5)} />
       ) : null}
 
-      {importCreateValue != null && importCreateValue.length > 0 ? (
-        <button
+      <div className='mt-8'>
+        <Button
           className='btn'
+          variant='primary'
           onClick={() => {
             // void createImportTask(selectedParentResource?.id)
           }}
-          disabled={isLoading}
+          disabled={!canCreateImport || isLoading}
         >
           {isLoading ? 'Loading...' : 'Create import task'}
-        </button>
-      ) : null}
-    </div>
+        </Button>
+      </div>
+    </Container>
   )
 }
 

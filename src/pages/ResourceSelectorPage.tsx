@@ -3,12 +3,13 @@ import { appRoutes } from '#data/routes'
 import { useLocation, Link } from 'wouter'
 import { availableResources, showResourceNiceName } from '#data/resources'
 import { CaretRight } from 'phosphor-react'
+import { Container } from '#ui/Container'
 
 export function ResourceSelectorPage(): JSX.Element {
   const [_, setLocation] = useLocation()
 
   return (
-    <div className='container mx-auto'>
+    <Container>
       <PageHeading
         title='Select type'
         onGoBack={() => {
@@ -25,6 +26,6 @@ export function ResourceSelectorPage(): JSX.Element {
           </Link>
         ))}
       </div>
-    </div>
+    </Container>
   )
 }
