@@ -25,7 +25,7 @@ function adaptApiToSuggestions(
     const name = 'name' in r && r.name != null ? r.name : r.id
     return {
       id: r.id,
-      name
+      label: name
     }
   })
 }

@@ -84,11 +84,7 @@ function NewImportPage(): JSX.Element {
         />
       )}
 
-      <Tabs
-        onTabSwitch={() => {
-          //
-        }}
-      >
+      <Tabs>
         <Tab name='Upload file'>
           <Input
             resourceType={resourceType}
@@ -97,7 +93,7 @@ function NewImportPage(): JSX.Element {
             hasParentResource={Boolean(parentResource)}
           />
         </Tab>
-        <Tab name='Past code'>code</Tab>
+        <Tab name='Paste code'>code</Tab>
       </Tabs>
 
       {importCreateValue != null && importCreateValue.length > 0 ? (

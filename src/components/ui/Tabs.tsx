@@ -3,7 +3,20 @@ import invariant from 'ts-invariant'
 import cn from 'classnames'
 
 interface Props {
-  onTabSwitch: (tabIndex: number) => void
+  /**
+   * Event the fires every time a tab is activated. Note that this also fires on first render.
+   */
+  onTabSwitch?: (tabIndex: number) => void
+  /**
+   * Children can only be <Tab> components
+   * Example:
+   * ```
+   * <Tabs>
+   *   <Tab name="First tab">My content<Tab>
+   *   <Tab name="Second tab">Another content<Tab>
+   * </Tabs>
+   * ```
+   */
   children: Array<React.ReactElement<TabProps, typeof Tab>>
 }
 
@@ -32,8 +45,10 @@ export function Tabs({ children, onTabSwitch, ...rest }: Props): JSX.Element {
   )
 
   useEffect(() => {
-    onTabSwitch(activeIndex)
-  }, [activeIndex])
+    if (onTabSwitch != null) {
+      onTabSwitch(activeIndex)
+    }
+  }, [activeIndex, onTabSwitch])
 
   const allNavs = Children.map(children, (tab) => tab.props.name)
 
@@ -69,7 +84,13 @@ export function Tabs({ children, onTabSwitch, ...rest }: Props): JSX.Element {
 }
 
 interface TabProps {
+  /**
+   * This is the tab name used to render the Tab Navigation on top
+   */
   name: string
+  /**
+   * Tab Panel content
+   */
   children: ReactNode
 }
 

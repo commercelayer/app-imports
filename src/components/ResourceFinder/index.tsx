@@ -5,16 +5,29 @@ import { AllowedParentResource } from 'App'
 import { fetchResourcesByHint } from './utils'
 
 interface Props {
+  /**
+   * the type of the resource we need to access
+   */
   resourceType: AllowedParentResource
+  /**
+   * A signed SDK client
+   */
   sdkClient: CommerceLayerClient
+  /**
+   * Optional css classes for the outer wrapper
+   */
   className?: string
-  onSelect?: (resourceId: string) => void
+  /**
+   * callback function fired when the resource is selected from the list
+   */
+  onSelect?: (resourceId: string | null) => void
 }
 
 export function ResourceFinder({
   resourceType,
   sdkClient,
-  className
+  className,
+  onSelect
 }: Props): JSX.Element {
   return (
     <div className={className}>
@@ -28,7 +41,11 @@ export function ResourceFinder({
           await fetchResourcesByHint(sdkClient, hint, resourceType)
         }
         onSelect={(selected) => {
-          console.log('sel', selected)
+          if (onSelect != null) {
+            const selectedId: string | null =
+              selected != null ? `${selected.id}` : null
+            onSelect(selectedId)
+          }
         }}
       />
     </div>

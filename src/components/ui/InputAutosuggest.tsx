@@ -5,16 +5,40 @@ import Autosuggest, {
 import { isEmpty } from 'lodash-es'
 
 export interface Suggestion {
-  id: string
-  name: string
+  /**
+   * unique identifier of the suggestion item
+   */
+  id: string | number
+  /**
+   * nice name of the suggestion item
+   */
+  label: string
+  /**
+   * Optional data to be added if needed
+   */
   meta?: any
 }
 
 interface Props {
+  /**
+   * html id for the <input> element
+   */
   id?: string
+  /**
+   * placeholder for the <input> element
+   */
   placeholder?: string
-  onSelect: (suggestion: Suggestion | null) => void
+  /**
+   * Initial <input> value
+   */
   initialValue?: string
+  /**
+   * Callback fired when an item is selected from the suggestion list
+   */
+  onSelect: (suggestion: Suggestion | null) => void
+  /**
+   * A search or fetch function that will be called anytime a new value is typed. It have to return the new suggestion list
+   */
   searchFunction: (hint: string) => Promise<Suggestion[]>
 }
 
@@ -62,7 +86,7 @@ export function InputAutosuggest({
             }, 100)
           }}
         >
-          <span className='font-medium'>{selectedSuggestion.name}</span>{' '}
+          <span className='font-medium'>{selectedSuggestion.label}</span>{' '}
           <span className='text-gray-500'>(ID: {selectedSuggestion.id})</span>
         </div>
       ) : (
@@ -98,7 +122,7 @@ export function InputAutosuggest({
 }
 
 function getSuggestionValue(suggestion: Suggestion): string {
-  return suggestion.name
+  return suggestion.label
 }
 
 function renderSuggestionsContainer({
@@ -125,7 +149,7 @@ function renderSuggestion(suggestion: Suggestion): JSX.Element {
       className='py-2 cursor-pointer text-sm'
       data-test-id={`suggestion-${suggestion.id}`}
     >
-      {suggestion.name}
+      {suggestion.label}
     </div>
   )
 }

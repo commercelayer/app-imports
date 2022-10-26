@@ -12,7 +12,7 @@ const setup = (): SetupResult => {
       onSelect={() => undefined}
       initialValue='foobar'
       searchFunction={async () => {
-        return [{ id: 'abc', name: 'Commerce Layer' }]
+        return [{ id: 'abc', label: 'Commerce Layer' }]
       }}
     />
   )
