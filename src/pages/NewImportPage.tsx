@@ -2,7 +2,6 @@ import { ImportCreate } from '@commercelayer/sdk'
 import { AllowedResourceType } from 'App'
 import { useState } from 'react'
 
-import { ImportPreviewTable } from '#components/ImportPreviewTable'
 import { InputParser } from '#components/InputParser'
 import { ResourceFinder } from '#components/ResourceFinder'
 import {
@@ -18,6 +17,7 @@ import { Button } from '#ui/Button'
 import { Container } from '#ui/Container'
 import { Tab, Tabs } from '#ui/Tabs'
 import { InputCode } from '#components/InputCode'
+import { ImportPreview } from '#components/ImportPreview'
 
 function NewImportPage(): JSX.Element {
   const { sdkClient } = useTokenProvider()
@@ -27,11 +27,10 @@ function NewImportPage(): JSX.Element {
 
   const [isLoading, setIsLoading] = useState(false)
   const [cleanupRecords] = useState(false)
+  const [parentResourceId, setParentResourceId] = useState<string | null>()
   const [importCreateValue, setImportCreateValue] = useState<
     ImportCreate['inputs'] | undefined
   >(undefined)
-
-  console.log('importCreateValue', importCreateValue)
 
   if (sdkClient == null) {
     return <div>Waiting for sdk client</div>
@@ -48,28 +47,30 @@ function NewImportPage(): JSX.Element {
     return <div>404 - resource type non allowed or not enabled</div>
   }
 
-  // const createImportTask = async (parentResourceId?: string): Promise<void> => {
-  //   if (importCreateValue == null) {
-  //     return
-  //   }
+  const createImportTask = async (parentResourceId?: string): Promise<void> => {
+    if (importCreateValue == null) {
+      return
+    }
 
-  //   setIsLoading(true)
-  //   try {
-  //     await sdkClient.imports.create({
-  //       resource_type: resourceType,
-  //       cleanup_records: cleanupRecords,
-  //       parent_resource_id: parentResourceId,
-  //       inputs: importCreateValue
-  //     })
-  //     setLocation(appRoutes.list.makePath())
-  //   } catch {
-  //     setIsLoading(false)
-  //   }
-  // }
+    setIsLoading(true)
+    try {
+      await sdkClient.imports.create({
+        resource_type: resourceType,
+        cleanup_records: cleanupRecords,
+        parent_resource_id: parentResourceId,
+        inputs: importCreateValue
+      })
+      setLocation(appRoutes.list.makePath())
+    } catch {
+      setIsLoading(false)
+    }
+  }
 
   const parentResource = getParentResourceIfNeeded(resourceType)
   const canCreateImport =
-    importCreateValue != null && importCreateValue.length > 0
+    importCreateValue != null &&
+    importCreateValue.length > 0 &&
+    (parentResourceId != null || parentResource === false)
 
   return (
     <Container>
@@ -84,6 +85,7 @@ function NewImportPage(): JSX.Element {
           resourceType={parentResource}
           sdkClient={sdkClient}
           className='mb-14'
+          onSelect={setParentResourceId}
         />
       )}
 
@@ -105,7 +107,7 @@ function NewImportPage(): JSX.Element {
       </Tabs>
 
       {importCreateValue != null && importCreateValue.length > 0 ? (
-        <ImportPreviewTable rows={(importCreateValue as []).slice(0, 5)} />
+        <ImportPreview data={importCreateValue as []} limit={5} />
       ) : null}
 
       <div className='mt-8'>
@@ -113,7 +115,7 @@ function NewImportPage(): JSX.Element {
           className='btn'
           variant='primary'
           onClick={() => {
-            // void createImportTask(selectedParentResource?.id)
+            void createImportTask(parentResourceId ?? undefined)
           }}
           disabled={!canCreateImport || isLoading}
         >
