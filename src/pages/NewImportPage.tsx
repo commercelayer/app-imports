@@ -17,6 +17,7 @@ import { PageHeading } from '#components/PageHeading'
 import { Button } from '#ui/Button'
 import { Container } from '#ui/Container'
 import { Tab, Tabs } from '#ui/Tabs'
+import { InputCode } from '#components/InputCode'
 
 function NewImportPage(): JSX.Element {
   const { sdkClient } = useTokenProvider()
@@ -29,6 +30,8 @@ function NewImportPage(): JSX.Element {
   const [importCreateValue, setImportCreateValue] = useState<
     ImportCreate['inputs'] | undefined
   >(undefined)
+
+  console.log('importCreateValue', importCreateValue)
 
   if (sdkClient == null) {
     return <div>Waiting for sdk client</div>
@@ -93,7 +96,12 @@ function NewImportPage(): JSX.Element {
             hasParentResource={Boolean(parentResource)}
           />
         </Tab>
-        <Tab name='Paste code'>code</Tab>
+        <Tab name='Paste code'>
+          <InputCode
+            onDataReady={setImportCreateValue}
+            onDataResetRequest={() => setImportCreateValue(undefined)}
+          />
+        </Tab>
       </Tabs>
 
       {importCreateValue != null && importCreateValue.length > 0 ? (

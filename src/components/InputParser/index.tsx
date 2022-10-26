@@ -133,19 +133,19 @@ export const InputParser: FC<Props> = ({
         )}
       </div>
 
-      <div className='text-sm px-2'>
+      <div className='text-sm text-red-500 px-2'>
         {typeof errorMessage === 'string' && (
-          <div className='text-red-500 mb-2'>{errorMessage}</div>
+          <div className='mb-2'>{errorMessage}</div>
         )}
         {errorList != null && errorList.length > 0 ? (
-          <div className='text-red-500'>
+          <div>
             {errorList.slice(0, 5).map((issue, idx) => (
-              <div key={idx}>
+              <p key={idx}>
                 Row {issue.path[0]} - {issue.message}
-              </div>
+              </p>
             ))}
             {errorList.length > 5 ? (
-              <div className='mt-2'>We found other errors not listed here</div>
+              <p>We found other errors not listed here</p>
             ) : null}
           </div>
         ) : null}
