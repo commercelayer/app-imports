@@ -1,3 +1,4 @@
+import { InputFile } from '#ui/InputFile'
 import { isFalsy } from '#utils/isFalsy'
 import { ImportCreate } from '@commercelayer/sdk'
 import { AllowedResourceType } from 'App'
@@ -7,6 +8,7 @@ import { ZodIssue } from 'zod'
 
 import { adapters } from './adapters'
 import { parsers, isMakeSchemaFn } from './schemas'
+import { SuggestionTemplate } from './SuggestionTemplate'
 
 const importMaxSize = 10_000
 
@@ -17,7 +19,7 @@ interface Props {
   resourceType: AllowedResourceType
 }
 
-export const Input: FC<Props> = ({
+export const InputParser: FC<Props> = ({
   onDataReady,
   onDataResetRequest,
   resourceType,
@@ -32,11 +34,6 @@ export const Input: FC<Props> = ({
     setErrorMessage('')
     setErrorList([])
   }
-
-  useEffect(() => {
-    onDataResetRequest()
-    resetErrorUi()
-  }, [file])
 
   const loadAndParseCSV = async (file: File): Promise<void> => {
     setIsParsing(true)
@@ -87,58 +84,72 @@ export const Input: FC<Props> = ({
     }
   }
 
+  useEffect(
+    function parseFileWhenReady() {
+      if (file == null) {
+        return
+      }
+      switch (file.type) {
+        case 'text/csv':
+          void loadAndParseCSV(file)
+          return
+
+        case 'application/json':
+          void loadAndParseJson(file)
+          return
+
+        default:
+          setErrorMessage('Invalid file format. Only CSV or JSON allowed.')
+      }
+    },
+    [file]
+  )
+
+  useEffect(() => {
+    onDataResetRequest()
+    resetErrorUi()
+  }, [file])
+
   return (
     <div>
-      <input
-        type='file'
-        disabled={isParsing}
-        onChange={(e) => {
-          if (e.target.files != null && !isParsing) {
-            setFile(e.target.files[0])
-          }
-        }}
-      />
-      {file != null ? (
-        <button
-          className='btn'
-          disabled={isFalsy(file) || isParsing}
-          onClick={() => {
-            if (isFalsy(file)) {
-              return
-            }
-
-            switch (file.type) {
-              case 'text/csv':
-                void loadAndParseCSV(file)
-                return
-
-              case 'application/json':
-                void loadAndParseJson(file)
-                return
-
-              default:
-                setErrorMessage('Invalid format')
+      <div className='mb-9'>
+        <InputFile
+          className='mb-4'
+          label='Select a csv or json to upload'
+          onChange={(e) => {
+            if (e.target.files != null && !isParsing) {
+              setFile(e.target.files[0])
             }
           }}
-        >
-          {isParsing ? 'loading' : 'load file'}
-        </button>
-      ) : null}
-      {typeof errorMessage === 'string' && (
-        <div className='text-red-500'>{errorMessage}</div>
-      )}
-      {errorList != null && errorList.length > 0 ? (
-        <div className='text-red-500'>
-          {errorList.slice(0, 5).map((issue, idx) => (
-            <div key={idx}>
-              Row {issue.path.join(' - ')} {issue.message}
-            </div>
-          ))}
-          {errorList.length > 5
-            ? 'We found other errors not listed here'
-            : null}
-        </div>
-      ) : null}
+          disabled={isParsing}
+          progress={file != null ? 100 : 0}
+        />
+        {file == null ? (
+          <SuggestionTemplate resourceType={resourceType} />
+        ) : (
+          <div className='text-gray-500 text-sm'>
+            File uploaded: <span className='text-primary'>{file.name}</span>
+          </div>
+        )}
+      </div>
+
+      <div className='text-sm px-2'>
+        {typeof errorMessage === 'string' && (
+          <div className='text-red-500 mb-2'>{errorMessage}</div>
+        )}
+        {errorList != null && errorList.length > 0 ? (
+          <div className='text-red-500'>
+            {errorList.slice(0, 5).map((issue, idx) => (
+              <div key={idx}>
+                Row {issue.path[0]} - {issue.message}
+              </div>
+            ))}
+            {errorList.length > 5 ? (
+              <div className='mt-2'>We found other errors not listed here</div>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
     </div>
   )
 }

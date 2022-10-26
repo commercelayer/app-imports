@@ -3,7 +3,7 @@ import { AllowedResourceType } from 'App'
 import { useState } from 'react'
 
 import { ImportPreviewTable } from '#components/ImportPreviewTable'
-import { Input } from '#components/Input'
+import { InputParser } from '#components/InputParser'
 import { ResourceFinder } from '#components/ResourceFinder'
 import {
   getParentResourceIfNeeded,
@@ -86,7 +86,7 @@ function NewImportPage(): JSX.Element {
 
       <Tabs>
         <Tab name='Upload file'>
-          <Input
+          <InputParser
             resourceType={resourceType}
             onDataReady={setImportCreateValue}
             onDataResetRequest={() => setImportCreateValue(undefined)}
