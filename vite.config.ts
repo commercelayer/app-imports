@@ -7,6 +7,9 @@ import path from 'path'
 export default defineConfig({
   plugins: [react()],
   envPrefix: 'PUBLIC_',
+  build: {
+    target: 'esnext'
+  },
   resolve: {
     alias: {
       '#styles': path.resolve(__dirname, './src/styles'),
