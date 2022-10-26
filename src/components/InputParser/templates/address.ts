@@ -16,7 +16,5 @@ export const csvAddressTemplate: Array<keyof AddressCreate> = [
   'notes',
   'lat',
   'lng',
-  'billing_info',
-  'reference',
-  'reference_origin'
+  'billing_info'
 ]

@@ -3,11 +3,7 @@ import { SkuOptionCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 import { zodEnforceInt } from './zodUtils'
 
-type FlatCsvRow = Omit<
-  SkuOptionCreate,
-  'currency_code' | 'metadata' | 'market'
-> & {
-  currency_code?: string
+type FlatCsvRow = Omit<SkuOptionCreate, 'metadata' | 'market'> & {
   market_id?: string
 }
 
