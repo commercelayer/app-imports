@@ -68,7 +68,10 @@ export function ItemJob({
 }
 
 const DescriptionLine = ({ job }: { job: Import }): JSX.Element => {
-  const hasErrors = job.errors_count != null && job.errors_count > 0
+  const errorsCount =
+    job.errors_count != null && job.errors_count > 0
+      ? job.errors_count
+      : undefined
   const percentage = getProgressPercentage(job)
   return (
     <div className='text-sm font-medium text-gray-500'>
@@ -87,10 +90,11 @@ const DescriptionLine = ({ job }: { job: Import }): JSX.Element => {
           {formatDate(job.updated_at)}
         </div>
       ) : job.status === 'completed' ? (
-        hasErrors ? (
+        errorsCount != null ? (
           <div>
-            Imported with{' '}
-            <span className='text-red-400'>{job.errors_count}</span>
+            Imported with <span className='text-red-400'>{errorsCount}</span>{' '}
+            error
+            {errorsCount > 1 ? 's' : ''}
           </div>
         ) : (
           <div>Imported on {formatDate(job.completed_at)}</div>
