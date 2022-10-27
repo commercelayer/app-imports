@@ -1,14 +1,15 @@
 import cn from 'classnames'
+import { ReactNode } from 'react'
 
 export interface PageHeadingProps {
   /**
-   * Main page title
+   * Main page title wrapped in a h1 element
    */
-  title: string
+  title: ReactNode
   /**
    * A short text that helps to describe the page
    */
-  description?: string
+  description?: ReactNode
   /**
    * Optional callback that will be called when "go back" button is pressed
    * If missing, the "go back" button will not be shown
@@ -46,7 +47,9 @@ export function PageHeading({
         </button>
       ) : null}
       <h1 className='text-lg'>{title}</h1>
-      {description !== null && <p className='text-gray-500'>{description}</p>}
+      {description !== null && (
+        <div className='text-gray-500'>{description}</div>
+      )}
     </div>
   )
 }

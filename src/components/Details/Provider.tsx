@@ -4,6 +4,7 @@ import {
   createContext,
   ReactNode,
   useCallback,
+  useContext,
   useEffect,
   useReducer,
   useRef
@@ -20,6 +21,8 @@ interface ImportDetailsProviderProps {
 const POLLING_INTERVAL = 4000
 
 const Context = createContext<ImportDetailsContextValue>(initialValues)
+export const useImportDetailsContext = (): ImportDetailsContextValue =>
+  useContext(Context)
 
 export function ImportDetailsProvider({
   sdkClient,

@@ -30,7 +30,7 @@ describe('PageHeading', () => {
       title: 'My Page Heading',
       description: 'Lorem ipsum...'
     })
-    expect(element.querySelector('p')?.innerHTML).toBe('Lorem ipsum...')
+    expect(element.querySelector('div')?.innerHTML).toBe('Lorem ipsum...')
   })
 
   test('Should also have a button when onGoBack is set', () => {
