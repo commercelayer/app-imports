@@ -21,11 +21,13 @@ export function ItemJob({
   const canDelete = job.status === 'pending' || job.status === 'in_progress'
 
   return (
-    <div className='flex gap-4 px-5 py-5 border-b border-gray-100'>
-      <StatusIcon
-        status={uiStatus}
-        percentage={uiStatus === 'progress' ? percentage.value : undefined}
-      />
+    <div className='flex gap-4 px-2 sm:px-5 py-5 border-b border-gray-100'>
+      <div className='scale-75 sm:scale-100'>
+        <StatusIcon
+          status={uiStatus}
+          percentage={uiStatus === 'progress' ? percentage.value : undefined}
+        />
+      </div>
       <div className='leading-none flex flex-col justify-between items-start'>
         <button
           onClick={() => {
