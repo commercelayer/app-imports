@@ -10,6 +10,7 @@ import { Label } from '#components/ui/Label'
 import { ImportCount } from '#components/Details/ImportCount'
 import { ImportDownloadLogAsFile } from '#components/Details/ImportDownloadLogAsFile'
 import { ImportDownloadSourceFile } from '#components/Details/ImportDownloadSourceFile'
+import { RowDetail } from '#components/Details/RowDetail'
 
 const DetailsPage = (): JSX.Element => {
   const { sdkClient } = useTokenProvider()
@@ -76,24 +77,18 @@ const DetailsPage = (): JSX.Element => {
                 </div>
               </div>
 
-              <h4 className='text-[18px] font-semibold mb-2'>Details</h4>
-              <div className='border-t border-gray-100 py-4 px-3 flex gap-6'>
-                <div>ID</div>
-                <div>{data.id}</div>
-              </div>
-              <div className='border-t border-gray-100 py-4 px-3 flex gap-6'>
-                <div>Resource type</div>
-                <div>
+              <h4 className='text-[18px] font-semibold mb-4'>Details</h4>
+              <div className='pb-24'>
+                <RowDetail label='ID'>{data.id}</RowDetail>
+                <RowDetail label='Resource type'>
                   <ImportedResourceType />
-                </div>
-              </div>
-              <div className='border-t border-gray-100 py-4 px-3 flex gap-6'>
-                <div>Status</div>
-                <div>{data.status}</div>
-              </div>
-              <div className='border-t border-gray-100 py-4 px-3 flex gap-6'>
-                <div>Parent resource</div>
-                <div>{data.parent_resource_id}</div>
+                </RowDetail>
+                <RowDetail label='Status'>{data.status}</RowDetail>
+                {data.parent_resource_id != null ? (
+                  <RowDetail label='Parent resource'>
+                    {data.parent_resource_id}
+                  </RowDetail>
+                ) : null}
               </div>
             </div>
           )

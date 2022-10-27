@@ -21,7 +21,13 @@ export function ImportDownloadSourceFile({
   }
 
   return (
-    <a title={label} {...props} href={data.attachment_url}>
+    <a
+      title={label}
+      {...props}
+      target='_blank'
+      rel='noopener noreferral noreferrer'
+      href={data.attachment_url}
+    >
       {label}
     </a>
   )
