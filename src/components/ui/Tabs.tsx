@@ -66,7 +66,7 @@ export function Tabs({
   return (
     <div id={id} role='tablist' className={className} {...rest}>
       {/* Navs */}
-      <nav className='flex'>
+      <nav className='flex gap-8 border-b-gray-100 border-b'>
         {allNavs.map((navLabel, index) => (
           <TabNav
             key={index}
@@ -127,10 +127,10 @@ function TabNav({
     <div
       id={id}
       className={cn(
-        'flex-1 text-center py-4 cursor-pointer font-medium transition-all duration-300',
+        'text-center py-4 cursor-pointer font-medium transition-all duration-300 mb-[-1px]',
         {
           'border-b-black border-b-2 text-black': isActive,
-          'border-b-gray-100 border-b text-gray-500': !isActive
+          'border-b-transparent border-b-2 text-gray-500': !isActive
         }
       )}
       onClick={onClick}
