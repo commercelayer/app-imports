@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Import } from '@commercelayer/sdk'
 import {
-  formatDate,
   getProgressPercentage,
   getUiStatus,
   makeCurrentPageOffsets,
@@ -92,33 +91,6 @@ describe('getProgressPercentage', () => {
       value: 0,
       formatted: '0%'
     })
-  })
-})
-
-// formatDate
-describe('formatDate', () => {
-  test('Should return a nice date string', () => {
-    const d = new Date(`10-14-2022`).toISOString()
-    expect(formatDate(d)).toBe('Oct 14, 2022')
-  })
-
-  test('Should accept a date with no time', () => {
-    const d = '2022-07-21'
-    expect(formatDate(d)).toBe('Jul 21, 2022')
-  })
-
-  test('Should not break when date format is wrong', () => {
-    const d = '20221T15:35:42.315Z'
-    expect(formatDate(d)).toBe('N/A')
-  })
-
-  test('Should not break if date is empty string', () => {
-    const d = ''
-    expect(formatDate(d)).toBe('N/A')
-  })
-
-  test('Should not break if no date is passed', () => {
-    expect(formatDate(undefined)).toBe('N/A')
   })
 })
 

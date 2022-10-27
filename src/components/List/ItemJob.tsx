@@ -1,9 +1,10 @@
 import { Button } from '#components/ui/Button'
 import { StatusIcon } from '#components/ui/StatusIcon'
 import { showResourceNiceName } from '#data/resources'
+import { formatDate } from '#utils/date'
 import { Import } from '@commercelayer/sdk'
 import { CaretRight } from 'phosphor-react'
-import { formatDate, getProgressPercentage, getUiStatus } from './utils'
+import { getProgressPercentage, getUiStatus } from './utils'
 
 interface Props {
   job: Import

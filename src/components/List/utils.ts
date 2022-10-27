@@ -37,28 +37,6 @@ export function getProgressPercentage(job: Import): {
 }
 
 /**
- * Format the date as nice string
- * @param dateIsoString - to match iso string `created_at` or `updated_at` from the import object (or <any>_at). Example '2022-10-06T11:59:30.371Z'
- * @returns a nice string representation. Example: 'Jul 21, 2022'
- */
-export function formatDate(dateIsoString?: string): string {
-  if (dateIsoString == null) {
-    return 'N/A'
-  }
-  try {
-    const date = new Date(dateIsoString)
-    const options: Intl.DateTimeFormatOptions = {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric'
-    }
-    return new Intl.DateTimeFormat('en-US', options).format(date)
-  } catch {
-    return 'N/A'
-  }
-}
-
-/**
  * Get the relative status Union Type from the api status {@link https://docs.commercelayer.io/core/v/api-reference/imports/object}
  * @param apiStatus - The import job status. One of 'pending' (default), 'in_progress', 'interrupted', or 'completed'.
  * @returns a valid StatusUI to be used in the StatusIcon component.
