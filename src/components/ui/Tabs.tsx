@@ -4,6 +4,11 @@ import cn from 'classnames'
 
 interface Props {
   /**
+   * Used for accessability
+   */
+  id?: string
+  className?: string
+  /**
    * Event the fires every time a tab is activated. Note that this also fires on first render.
    */
   onTabSwitch?: (tabIndex: number) => void
@@ -20,7 +25,13 @@ interface Props {
   children: Array<React.ReactElement<TabProps, typeof Tab>>
 }
 
-export function Tabs({ children, onTabSwitch, ...rest }: Props): JSX.Element {
+export function Tabs({
+  id = 'tab',
+  children,
+  onTabSwitch,
+  className,
+  ...rest
+}: Props): JSX.Element {
   const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(
@@ -53,7 +64,7 @@ export function Tabs({ children, onTabSwitch, ...rest }: Props): JSX.Element {
   const allNavs = Children.map(children, (tab) => tab.props.name)
 
   return (
-    <div className='py-5' {...rest}>
+    <div id={id} role='tablist' className={className} {...rest}>
       {/* Navs */}
       <nav className='flex'>
         {allNavs.map((navLabel, index) => (
@@ -64,6 +75,7 @@ export function Tabs({ children, onTabSwitch, ...rest }: Props): JSX.Element {
             onClick={() => {
               setActiveIndex(index)
             }}
+            id={`tab-nav-${id}-${index}`}
             data-test-id={`tab-nav-${index}`}
           />
         ))}
@@ -74,6 +86,7 @@ export function Tabs({ children, onTabSwitch, ...rest }: Props): JSX.Element {
           <TabPanel
             isActive={index === activeIndex}
             data-test-id={`tab-panel-${index}`}
+            aria-labelledby={`tab-nav-${id}-${index}`}
           >
             {tab.props.children}
           </TabPanel>
@@ -102,14 +115,17 @@ function TabNav({
   isActive,
   label,
   onClick,
+  id,
   ...rest
 }: {
+  id: string
   isActive: boolean
   onClick: () => void
   label: string
 }): JSX.Element {
   return (
     <div
+      id={id}
       className={cn(
         'flex-1 text-center py-4 cursor-pointer font-medium transition-all duration-300',
         {
@@ -118,6 +134,7 @@ function TabNav({
         }
       )}
       onClick={onClick}
+      role='tab'
       {...rest}
     >
       {label}
@@ -138,7 +155,7 @@ function TabPanel({
   }
 
   return (
-    <div className='pt-4' {...rest}>
+    <div className='pt-4' role='tabpanel' aria-labelledby='' {...rest}>
       {children}
     </div>
   )
