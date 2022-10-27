@@ -1,28 +1,48 @@
-import { Details } from '#components/Details'
+import { ImportDetailsProvider } from '#components/Details/Provider'
+import { PageHeading } from '#components/PageHeading'
 import { useTokenProvider } from '#components/TokenProvider'
-import { useRoute } from 'wouter'
+import { Container } from '#components/ui/Container'
+import { showResourceNiceName } from '#data/resources'
+import { appRoutes } from '#data/routes'
+import { formatDate } from '#utils/date'
+import { useLocation, useRoute } from 'wouter'
 
 const DetailsPage = (): JSX.Element => {
   const { sdkClient } = useTokenProvider()
-
-  if (sdkClient == null) {
-    return <div>Waiting for sdk client</div>
-  }
-
-  const params = useRoute('/details/:importId')[1]
+  const [_, setLocation] = useLocation()
+  const [_match, params] = useRoute(appRoutes.details.path)
   const importId = params == null ? null : params.importId
 
   if (importId == null) {
     return <div>Missing import ID</div>
   }
 
+  if (sdkClient == null) {
+    return <div>Waiting for sdk client</div>
+  }
+
   return (
-    <div>
-      <div className='container px-3 py-4'>
-        <h1 className='text-xl pb-2 font-bold'>Import details</h1>
-        <Details sdkClient={sdkClient} importId={importId} />
-      </div>
-    </div>
+    <Container>
+      <ImportDetailsProvider sdkClient={sdkClient} importId={importId}>
+        {({ state: { isLoading, data } }) =>
+          isLoading ? (
+            <div>Loading</div>
+          ) : data == null ? (
+            <div>no data</div>
+          ) : (
+            <div>
+              <PageHeading
+                title={showResourceNiceName(data.resource_type)}
+                description={`Imported on ${formatDate(data.created_at, true)}`}
+                onGoBack={() => {
+                  setLocation(appRoutes.list.makePath())
+                }}
+              />
+            </div>
+          )
+        }
+      </ImportDetailsProvider>
+    </Container>
   )
 }
 
