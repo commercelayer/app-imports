@@ -7,7 +7,6 @@ import {
 } from 'App'
 import {
   createContext,
-  FC,
   ReactNode,
   useCallback,
   useEffect,
@@ -32,12 +31,12 @@ const Context = createContext<ListImportContextValue>(initialValues)
 
 export const useListContext = (): ListImportContextValue => useContext(Context)
 
-export const ListImportProvider: FC<ListImportProviderProps> = ({
+export function ListImportProvider({
   children,
   pageSize,
   polling,
   sdkClient
-}) => {
+}: ListImportProviderProps): JSX.Element {
   const [state, dispatch] = useReducer(reducer, initialState)
   const intervalId = useRef<NodeJS.Timer | null>(null)
 

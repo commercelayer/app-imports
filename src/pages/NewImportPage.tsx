@@ -23,7 +23,7 @@ import { InputToggleBox } from '#ui/InputToggleBox'
 function NewImportPage(): JSX.Element {
   const { sdkClient } = useTokenProvider()
 
-  const [_match, params] = useRoute('/new/:resourceType')
+  const [_match, params] = useRoute(appRoutes.newImport.path)
   const [_location, setLocation] = useLocation()
 
   const [isLoading, setIsLoading] = useState(false)

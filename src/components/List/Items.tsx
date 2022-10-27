@@ -10,7 +10,7 @@ export function Items(): JSX.Element | null {
     deleteImport
   } = useListContext()
 
-  const setLocation = useLocation()[1]
+  const [_location, setLocation] = useLocation()
 
   if (list == null) {
     return null
