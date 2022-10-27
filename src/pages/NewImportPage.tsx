@@ -18,6 +18,7 @@ import { Container } from '#ui/Container'
 import { Tab, Tabs } from '#ui/Tabs'
 import { InputCode } from '#components/InputCode'
 import { ImportPreview } from '#components/ImportPreview'
+import { InputToggleBox } from '#ui/InputToggleBox'
 
 function NewImportPage(): JSX.Element {
   const { sdkClient } = useTokenProvider()
@@ -26,7 +27,7 @@ function NewImportPage(): JSX.Element {
   const [_location, setLocation] = useLocation()
 
   const [isLoading, setIsLoading] = useState(false)
-  const [cleanupRecords] = useState(false)
+  const [cleanupRecords, setCleanupRecords] = useState(false)
   const [parentResourceId, setParentResourceId] = useState<string | null>()
   const [importCreateValue, setImportCreateValue] = useState<
     ImportCreate['inputs'] | undefined
@@ -89,7 +90,7 @@ function NewImportPage(): JSX.Element {
         />
       )}
 
-      <Tabs>
+      <Tabs id='tab-import-input' className='mb-14'>
         <Tab name='Upload file'>
           <InputParser
             resourceType={resourceType}
@@ -107,10 +108,29 @@ function NewImportPage(): JSX.Element {
       </Tabs>
 
       {importCreateValue != null && importCreateValue.length > 0 ? (
-        <ImportPreview data={importCreateValue as []} limit={5} />
+        <ImportPreview
+          className='mb-14'
+          data={importCreateValue as []}
+          limit={5}
+        />
       ) : null}
 
-      <div className='mt-8'>
+      <div className='mb-14 px-4 border-t border-b b-gray-100 py-4'>
+        <InputToggleBox
+          id='toggle-cleanup'
+          label='Cleanup records'
+          description={
+            <>
+              Deletes all the resources that are not in the import. <br />
+              Be careful, this action cannot be undone.
+            </>
+          }
+          isChecked={cleanupRecords}
+          onToggle={setCleanupRecords}
+        />
+      </div>
+
+      <div className='mb-14'>
         <Button
           className='btn'
           variant='primary'
@@ -119,7 +139,7 @@ function NewImportPage(): JSX.Element {
           }}
           disabled={!canCreateImport || isLoading}
         >
-          {isLoading ? 'Loading...' : 'Create import task'}
+          {isLoading ? 'Loading...' : 'Start Import'}
         </Button>
       </div>
     </Container>

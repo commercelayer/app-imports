@@ -112,7 +112,7 @@ export const InputParser: FC<Props> = ({
 
   return (
     <div>
-      <div className='mb-9'>
+      <div className='mb-4'>
         <InputFile
           className='mb-4'
           label='Select a csv or json to upload'
