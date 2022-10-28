@@ -17,7 +17,7 @@ export function ResourceSelectorPage(): JSX.Element {
         }}
       />
       <div className='border-t border-gray-100 mb-20'>
-        {availableResources.map((resource) => (
+        {availableResources.sort().map((resource) => (
           <Link key={resource} href={appRoutes.newImport.makePath(resource)}>
             <a className='flex justify-between px-5 py-5 border-b border-gray-100 text-gray-800 font-semibold hover:opacity-70 '>
               {showResourceNiceName(resource)}
