@@ -1,6 +1,7 @@
+import { ErrorPage } from '#components/ErrorPage'
 import TokenProvider from '#components/TokenProvider'
 import { appRoutes } from '#data/routes'
-import { Route } from 'wouter'
+import { Route, Switch } from 'wouter'
 import DetailsPage from './pages/DetailsPage'
 import ListPage from './pages/ListPage'
 import NewImportPage from './pages/NewImportPage'
@@ -16,7 +17,7 @@ function App(): JSX.Element {
         console.log('invalid callback received: ', reason)
       }}
     >
-      <>
+      <Switch>
         <Route path={appRoutes.list.path}>
           <ListPage />
         </Route>
@@ -29,7 +30,10 @@ function App(): JSX.Element {
         <Route path={appRoutes.details.path}>
           <DetailsPage />
         </Route>
-      </>
+        <Route>
+          <ErrorPage />
+        </Route>
+      </Switch>
     </TokenProvider>
   )
 }
