@@ -13,6 +13,7 @@ import { ImportDownloadSourceFile } from '#components/Details/ImportDownloadSour
 import { RowDetail } from '#components/Details/RowDetail'
 import { ImportStatusBadge } from '#components/Details/ImportStatusBadge'
 import { formatDate } from '#utils/date'
+import { ImportParentResource } from '#components/Details/ImportParentResource'
 
 const DetailsPage = (): JSX.Element => {
   const { sdkClient } = useTokenProvider()
@@ -84,10 +85,15 @@ const DetailsPage = (): JSX.Element => {
                 <RowDetail label='ID'>{data.id}</RowDetail>
                 <RowDetail label='Resource type'>
                   <ImportedResourceType />
-                </RowDetail>{' '}
-                {data.parent_resource_id != null ? (
+                </RowDetail>
+                {data.parent_resource_id != null &&
+                data.resource_type != null ? (
                   <RowDetail label='Parent resource'>
-                    {data.parent_resource_id}
+                    <ImportParentResource
+                      sdkClient={sdkClient}
+                      resourceId={data.parent_resource_id}
+                      resourceType={data.resource_type}
+                    />
                   </RowDetail>
                 ) : null}
                 {data.status != null ? (
