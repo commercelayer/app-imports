@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { StatusUI } from '#components/ui/StatusIcon'
+import { StatusUI } from '#ui/StatusIcon'
 import { Import } from '@commercelayer/sdk'
 
 /**

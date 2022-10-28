@@ -1,5 +1,5 @@
-import { InputAutosuggest } from '#components/ui/InputAutosuggest'
-import { Label } from '#components/ui/Label'
+import { InputAutosuggest } from '#ui/InputAutosuggest'
+import { Label } from '#ui/Label'
 import { CommerceLayerClient } from '@commercelayer/sdk'
 import { AllowedParentResource } from 'App'
 import { fetchResourcesByHint } from './utils'

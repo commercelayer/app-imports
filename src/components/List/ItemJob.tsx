@@ -1,5 +1,5 @@
-import { Button } from '#components/ui/Button'
-import { StatusIcon } from '#components/ui/StatusIcon'
+import { Button } from '#ui/Button'
+import { StatusIcon } from '#ui/StatusIcon'
 import { showResourceNiceName } from '#data/resources'
 import { formatDate } from '#utils/date'
 import { Import } from '@commercelayer/sdk'

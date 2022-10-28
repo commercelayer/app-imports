@@ -1,4 +1,4 @@
-import { InputTextArea } from '#components/ui/InputTextArea'
+import { InputTextArea } from '#ui/InputTextArea'
 import { ImportCreate } from '@commercelayer/sdk'
 import { isEmpty } from 'lodash-es'
 import { useEffect, useState } from 'react'

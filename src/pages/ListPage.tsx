@@ -5,7 +5,7 @@ import { PaginationCounter } from '#components/List/PaginationCounter'
 import { TotalCount } from '#components/List/TotalCount'
 import { PageHeading } from '#components/PageHeading'
 import { useTokenProvider } from '#components/TokenProvider'
-import { Container } from '#components/ui/Container'
+import { Container } from '#ui/Container'
 import { appRoutes } from '#data/routes'
 import { Button } from '#ui/Button'
 import { useEffect } from 'react'
@@ -33,7 +33,7 @@ function ListPage(): JSX.Element {
           window.location.href = dashboardUrl != null ? dashboardUrl : '/'
         }}
       />
-      <ListContainer sdkClient={sdkClient} pageSize={25} polling={false}>
+      <ListContainer sdkClient={sdkClient} pageSize={8} polling={false}>
         <div className='flex flex-col flex-1'>
           <div className='flex justify-between pb-4 border-b border-gray-100'>
             <div className='text-gray-500'>
