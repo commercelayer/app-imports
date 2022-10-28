@@ -14,6 +14,8 @@ import { RowDetail } from '#components/Details/RowDetail'
 import { ImportStatusBadge } from '#components/Details/ImportStatusBadge'
 import { formatDate } from '#utils/date'
 import { ImportParentResource } from '#components/Details/ImportParentResource'
+import { Button } from '#ui/Button'
+import { ErrorPage } from '#components/ErrorPage'
 
 const DetailsPage = (): JSX.Element => {
   const { sdkClient } = useTokenProvider()
@@ -30,93 +32,105 @@ const DetailsPage = (): JSX.Element => {
   }
 
   return (
-    <Container>
-      <ImportDetailsProvider sdkClient={sdkClient} importId={importId}>
-        {({ state: { isLoading, data } }) =>
-          isLoading ? (
-            <div>Loading</div>
-          ) : data == null ? (
-            <div>no data</div>
-          ) : (
-            <div>
-              <PageHeading
-                title={<ImportedResourceType />}
-                description={
-                  <ImportDate
-                    atType='created_at'
-                    prefixText='Imported on '
-                    includeTime
-                  />
-                }
-                onGoBack={() => {
-                  setLocation(appRoutes.list.makePath())
-                }}
-              />
+    <ImportDetailsProvider sdkClient={sdkClient} importId={importId}>
+      {({ state: { isLoading, isDeleting, data }, deleteImport }) =>
+        isLoading ? (
+          <div className='opacity-0'>Loading</div>
+        ) : data == null ? (
+          <ErrorPage />
+        ) : (
+          <Container>
+            <PageHeading
+              title={<ImportedResourceType />}
+              description={
+                <ImportDate
+                  atType='created_at'
+                  prefixText='Imported on '
+                  includeTime
+                />
+              }
+              onGoBack={() => {
+                setLocation(appRoutes.list.makePath())
+              }}
+            />
 
-              <div className='border-t border-b border-gray-100 py-8 mb-14'>
-                <div className='flex'>
-                  <div className='flex-1 flex flex-col items-start py-4 px-6'>
-                    <Label className='font-sm text-gray-500'>
-                      Record imported
-                    </Label>
-                    <ImportCount
-                      type='processed_count'
-                      className='font-semibold text-xl font-xl pt-1 pb-4'
-                    />
-                    <ImportDownloadSourceFile className='text-sm font-bold text-primary hover:underline' />
-                  </div>
-                  <div className='flex-1 flex flex-col items-start py-4 px-6 border-l border-gray-100'>
-                    <Label className='font-sm text-gray-500'>Errors</Label>
-                    <ImportCount
-                      type='errors_count'
-                      className='font-semibold text-xl font-xl pt-1 pb-4'
-                    />
-                    <ImportDownloadLogAsFile
-                      logType='errors_log'
-                      className='text-sm font-bold text-primary hover:underline'
-                      label='View logs'
-                    />
-                  </div>
+            <div className='border-t border-b border-gray-100 py-8 mb-14'>
+              <div className='flex'>
+                <div className='flex-1 flex flex-col items-start py-4 px-6'>
+                  <Label className='font-sm text-gray-500'>
+                    Record imported
+                  </Label>
+                  <ImportCount
+                    type='processed_count'
+                    className='font-semibold text-xl font-xl pt-1 pb-4'
+                  />
+                  <ImportDownloadSourceFile className='text-sm font-bold text-primary hover:underline' />
+                </div>
+                <div className='flex-1 flex flex-col items-start py-4 px-6 border-l border-gray-100'>
+                  <Label className='font-sm text-gray-500'>Errors</Label>
+                  <ImportCount
+                    type='errors_count'
+                    className='font-semibold text-xl font-xl pt-1 pb-4'
+                  />
+                  <ImportDownloadLogAsFile
+                    logType='errors_log'
+                    className='text-sm font-bold text-primary hover:underline'
+                    label='View logs'
+                  />
                 </div>
               </div>
-
-              <h4 className='text-[18px] font-semibold mb-4'>Details</h4>
-              <div className='pb-24'>
-                <RowDetail label='ID'>{data.id}</RowDetail>
-                <RowDetail label='Resource type'>
-                  <ImportedResourceType />
-                </RowDetail>
-                {data.parent_resource_id != null &&
-                data.resource_type != null ? (
-                  <RowDetail label='Parent resource'>
-                    <ImportParentResource
-                      sdkClient={sdkClient}
-                      parentResourceId={data.parent_resource_id}
-                      childResourceType={data.resource_type}
-                    />
-                  </RowDetail>
-                ) : null}
-                {data.status != null ? (
-                  <RowDetail label='Status'>
-                    <ImportStatusBadge job={data} />
-                  </RowDetail>
-                ) : null}
-                {data.completed_at != null ? (
-                  <RowDetail label='Completed at'>
-                    {formatDate(data.completed_at, true)}
-                  </RowDetail>
-                ) : null}
-                {data.updated_at != null && data.completed_at == null ? (
-                  <RowDetail label='Last update'>
-                    {formatDate(data.updated_at, true)}
-                  </RowDetail>
-                ) : null}
-              </div>
             </div>
-          )
-        }
-      </ImportDetailsProvider>
-    </Container>
+
+            <h4 className='text-[18px] font-semibold mb-4'>Details</h4>
+            <div className='mb-10'>
+              <RowDetail label='ID'>{data.id}</RowDetail>
+              <RowDetail label='Resource type'>
+                <ImportedResourceType />
+              </RowDetail>
+              {data.parent_resource_id != null && data.resource_type != null ? (
+                <RowDetail label='Parent resource'>
+                  <ImportParentResource
+                    sdkClient={sdkClient}
+                    parentResourceId={data.parent_resource_id}
+                    childResourceType={data.resource_type}
+                  />
+                </RowDetail>
+              ) : null}
+              {data.status != null ? (
+                <RowDetail label='Status'>
+                  <ImportStatusBadge job={data} />
+                </RowDetail>
+              ) : null}
+              {data.completed_at != null ? (
+                <RowDetail label='Completed at'>
+                  {formatDate(data.completed_at, true)}
+                </RowDetail>
+              ) : null}
+              {data.updated_at != null && data.completed_at == null ? (
+                <RowDetail label='Last update'>
+                  {formatDate(data.updated_at, true)}
+                </RowDetail>
+              ) : null}
+            </div>
+
+            <div className='mb-14 flex justify-start'>
+              <Button
+                variant='danger'
+                size='small'
+                disabled={isDeleting}
+                onClick={() => {
+                  void deleteImport().then(() => {
+                    setLocation(appRoutes.list.makePath())
+                  })
+                }}
+              >
+                Delete
+              </Button>
+            </div>
+          </Container>
+        )
+      }
+    </ImportDetailsProvider>
   )
 }
 

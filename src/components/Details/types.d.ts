@@ -4,11 +4,13 @@ declare module 'App' {
   export interface ImportDetailsContextValue {
     state: ImportDetailsContextState
     refetch: () => Promise<void>
+    deleteImport: () => Promise<void>
   }
 
   export interface ImportDetailsContextState {
     data?: Import
     isLoading: boolean
+    isDeleting: boolean
     isPolling: boolean
     isNotFound: boolean
   }

@@ -3,6 +3,7 @@ import { ImportDetailsContextState } from 'App'
 
 type Action =
   | { type: 'setLoading'; payload: boolean }
+  | { type: 'setDeleting'; payload: boolean }
   | { type: 'setNotFound'; payload: boolean }
   | { type: 'setData'; payload: Import }
   | { type: 'togglePolling'; payload: boolean }
@@ -10,12 +11,17 @@ type Action =
 export const reducer = (
   state: ImportDetailsContextState,
   action: Action
-): ImportDetailsContextState => {
+): ImportDetailsContextState | never => {
   switch (action.type) {
     case 'setLoading':
       return {
         ...state,
         isLoading: action.payload
+      }
+    case 'setDeleting':
+      return {
+        ...state,
+        isDeleting: action.payload
       }
     case 'setNotFound':
       return {

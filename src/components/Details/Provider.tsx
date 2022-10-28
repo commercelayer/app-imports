@@ -48,6 +48,16 @@ export function ImportDetailsProvider({
     [importId]
   )
 
+  const deleteImport = useCallback(async (): Promise<void> => {
+    dispatch({ type: 'setDeleting', payload: true })
+    try {
+      await sdkClient.imports.delete(importId)
+    } catch (deleteError) {
+      console.warn(deleteError)
+      dispatch({ type: 'setDeleting', payload: false })
+    }
+  }, [importId])
+
   useEffect(
     function handlePollingState() {
       if (state.data?.status == null) {
@@ -81,7 +91,8 @@ export function ImportDetailsProvider({
 
   const value: ImportDetailsContextValue = {
     state,
-    refetch: async () => await fetchImport({ handleLoadingState: false })
+    refetch: async () => await fetchImport({ handleLoadingState: false }),
+    deleteImport
   }
 
   return (
