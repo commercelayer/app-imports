@@ -47,6 +47,18 @@ const resourceNiceName: Record<AllowedResourceType, string> = {
 }
 
 /**
+ * Parent Resources dictionary (we want singular names)
+ */
+const parentResourceNiceName: Record<AllowedParentResource, string> = {
+  markets: 'Market',
+  promotion_rules: 'Promotion Rule',
+  price_lists: 'Price list',
+  stock_locations: 'Stock Location',
+  tax_calculators: 'Tax calculator',
+  sku_lists: 'Sku List'
+}
+
+/**
  * Typesafe arry of AllowedResourceType
  */
 const allResources = Object.keys(resources) as AllowedResourceType[]
@@ -74,7 +86,11 @@ export function showResourceNiceName(resource?: string): string {
   if (resource == null) {
     return '-'
   }
-  return resourceNiceName[resource as AllowedResourceType] ?? resource
+  return (
+    resourceNiceName[resource as AllowedResourceType] ??
+    parentResourceNiceName[resource as AllowedParentResource] ??
+    resource
+  )
 }
 
 /**

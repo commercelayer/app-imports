@@ -1,14 +1,22 @@
 import { InputAutosuggest } from '#ui/InputAutosuggest'
 import { Label } from '#ui/Label'
 import { CommerceLayerClient } from '@commercelayer/sdk'
-import { AllowedParentResource } from 'App'
+import { AllowedParentResource, AllowedResourceType } from 'App'
 import { fetchResourcesByHint } from './utils'
 
 interface Props {
   /**
+   * Text to show above the input
+   */
+  label: string
+  /**
+   * Optional input placeholder
+   */
+  placeholder?: string
+  /**
    * the type of the resource we need to access
    */
-  resourceType: AllowedParentResource
+  resourceType: AllowedResourceType | AllowedParentResource
   /**
    * A signed SDK client
    */
@@ -24,6 +32,8 @@ interface Props {
 }
 
 export function ResourceFinder({
+  label,
+  placeholder,
   resourceType,
   sdkClient,
   className,
@@ -32,11 +42,11 @@ export function ResourceFinder({
   return (
     <div className={className}>
       <Label gap htmlFor='parent-resource'>
-        Parent resource
+        {label}
       </Label>
       <InputAutosuggest
-        id='parent-resource'
-        placeholder='Type to select parent resource'
+        id='resource-finder'
+        placeholder={placeholder}
         searchFunction={async (hint) =>
           await fetchResourcesByHint(sdkClient, hint, resourceType)
         }

@@ -83,13 +83,14 @@ function NewImportPage(): JSX.Element {
       />
       {parentResource !== false && (
         <ResourceFinder
+          label={showResourceNiceName(parentResource)}
+          placeholder='Type to select parent resource'
           resourceType={parentResource}
           sdkClient={sdkClient}
           className='mb-14'
           onSelect={setParentResourceId}
         />
       )}
-
       <Tabs id='tab-import-input' className='mb-14'>
         <Tab name='Upload file'>
           <InputParser
