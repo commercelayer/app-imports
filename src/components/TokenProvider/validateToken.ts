@@ -21,8 +21,7 @@ export function isTokenExpired({
 
 export async function isValidTokenForCurrentApp({
   accessToken,
-  clientKind,
-  currentApp
+  clientKind
 }: {
   accessToken: string
   clientKind: string

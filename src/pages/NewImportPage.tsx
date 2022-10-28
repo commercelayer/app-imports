@@ -10,7 +10,7 @@ import {
   showResourceNiceName
 } from '#data/resources'
 import { appRoutes } from '#data/routes'
-import { useLocation, useRoute } from 'wouter'
+import { Link, useLocation, useRoute } from 'wouter'
 import { useTokenProvider } from '#components/TokenProvider'
 import { PageHeading } from '#components/PageHeading'
 import { Button } from '#ui/Button'
@@ -131,7 +131,7 @@ function NewImportPage(): JSX.Element {
         />
       </div>
 
-      <div className='mb-14'>
+      <div className='mb-14 flex justify-between'>
         <Button
           className='btn'
           variant='primary'
@@ -142,6 +142,9 @@ function NewImportPage(): JSX.Element {
         >
           {isLoading ? 'Loading...' : 'Start Import'}
         </Button>
+        <Link href={appRoutes.list.makePath()}>
+          <Button variant='link'>Cancel</Button>
+        </Link>
       </div>
     </Container>
   )

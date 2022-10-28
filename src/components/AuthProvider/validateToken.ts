@@ -26,8 +26,7 @@ export function isTokenExpiredOrMissing({
 
 export function isValidTokenForCurrentApp({
   accessToken,
-  clientKind,
-  currentApp
+  clientKind
 }: {
   accessToken: string
   clientKind: string
