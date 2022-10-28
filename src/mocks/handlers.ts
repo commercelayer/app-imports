@@ -150,5 +150,54 @@ export const handlers = [
         }
       })
     )
+  }),
+
+  rest.get('https://*.commercelayer.io/api/imports/*', (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        data: {
+          id: 'qYzgIkGdaJ',
+          type: 'imports',
+          links: {
+            self: 'https://giuseppe-imports.commercelayer.io/api/imports/qYzgIkGdaJ'
+          },
+          attributes: {
+            resource_type: 'sku_lists',
+            parent_resource_id: null,
+            status: 'in_progress',
+            started_at: '2022-10-28T09:12:19.546Z',
+            completed_at: null,
+            interrupted_at: null,
+            inputs: null,
+            inputs_size: 1941,
+            errors_count: 0,
+            warnings_count: 0,
+            destroyed_count: 0,
+            processed_count: 800,
+            errors_log: {},
+            warnings_log: {},
+            cleanup_records: true,
+            attachment_url:
+              'https://team-cl-core-api-import-prd.s3.eu-west-1.amazonaws.com/imports_60kpsykntafq3i3blrsc1md8c9h7?response-content-disposition=attachment%3B%20filename%3D%221666948339_import_b49f3a5c77.json.gz%22%3B%20filename%2A%3DUTF-8%27%271666948339_import_b49f3a5c77.json.gz&response-content-type=application%2Fgzip&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA3S53Q2L5GVX6MIFV%2F20221028%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Date=20221028T091301Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=18e60f7c4312f1e961f65f27caa40b7ef739d829f2d54ddb7cb03602bfdc4547',
+            created_at: '2022-10-28T09:12:19.538Z',
+            updated_at: '2022-10-28T09:12:19.544Z',
+            reference: null,
+            reference_origin: null,
+            metadata: {}
+          },
+          relationships: {
+            events: {
+              links: {
+                self: 'https://giuseppe-imports.commercelayer.io/api/imports/qYzgIkGdaJ/relationships/events',
+                related:
+                  'https://giuseppe-imports.commercelayer.io/api/imports/qYzgIkGdaJ/events'
+              }
+            }
+          },
+          meta: { mode: 'test', organization_id: 'dXkmZFMqGR' }
+        }
+      })
+    )
   })
 ]

@@ -3,14 +3,16 @@ import { ImportDetailsProvider } from '#components/Details/Provider'
 import { ImportedResourceType } from '#components/Details/ImportedResourceType'
 import { ImportDate } from '#components/Details/ImportDate'
 import { useTokenProvider } from '#components/TokenProvider'
-import { Container } from '#components/ui/Container'
+import { Container } from '#ui/Container'
 import { appRoutes } from '#data/routes'
 import { useLocation, useRoute } from 'wouter'
-import { Label } from '#components/ui/Label'
+import { Label } from '#ui/Label'
 import { ImportCount } from '#components/Details/ImportCount'
 import { ImportDownloadLogAsFile } from '#components/Details/ImportDownloadLogAsFile'
 import { ImportDownloadSourceFile } from '#components/Details/ImportDownloadSourceFile'
 import { RowDetail } from '#components/Details/RowDetail'
+import { ImportStatusBadge } from '#components/Details/ImportStatusBadge'
+import { formatDate } from '#utils/date'
 
 const DetailsPage = (): JSX.Element => {
   const { sdkClient } = useTokenProvider()
@@ -82,11 +84,25 @@ const DetailsPage = (): JSX.Element => {
                 <RowDetail label='ID'>{data.id}</RowDetail>
                 <RowDetail label='Resource type'>
                   <ImportedResourceType />
-                </RowDetail>
-                <RowDetail label='Status'>{data.status}</RowDetail>
+                </RowDetail>{' '}
                 {data.parent_resource_id != null ? (
                   <RowDetail label='Parent resource'>
                     {data.parent_resource_id}
+                  </RowDetail>
+                ) : null}
+                {data.status != null ? (
+                  <RowDetail label='Status'>
+                    <ImportStatusBadge job={data} />
+                  </RowDetail>
+                ) : null}
+                {data.completed_at != null ? (
+                  <RowDetail label='Completed at'>
+                    {formatDate(data.completed_at, true)}
+                  </RowDetail>
+                ) : null}
+                {data.updated_at != null && data.completed_at == null ? (
+                  <RowDetail label='Last update'>
+                    {formatDate(data.updated_at, true)}
                   </RowDetail>
                 ) : null}
               </div>

@@ -4,7 +4,8 @@ import { showResourceNiceName } from '#data/resources'
 import { formatDate } from '#utils/date'
 import { Import } from '@commercelayer/sdk'
 import { CaretRight } from 'phosphor-react'
-import { getProgressPercentage, getUiStatus } from './utils'
+import { getUiStatus } from './utils'
+import { getProgressPercentage } from '#utils/getProgressPercentage'
 
 interface Props {
   job: Import
