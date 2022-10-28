@@ -119,8 +119,8 @@ const DetailsPage = (): JSX.Element => {
                 size='small'
                 disabled={isDeleting}
                 onClick={() => {
-                  void deleteImport().then(() => {
-                    setLocation(appRoutes.list.makePath())
+                  void deleteImport().then((success) => {
+                    success && setLocation(appRoutes.list.makePath())
                   })
                 }}
               >

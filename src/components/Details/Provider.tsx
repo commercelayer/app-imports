@@ -48,14 +48,15 @@ export function ImportDetailsProvider({
     [importId]
   )
 
-  const deleteImport = useCallback(async (): Promise<void> => {
+  const deleteImport = useCallback(async (): Promise<boolean> => {
     dispatch({ type: 'setDeleting', payload: true })
-    try {
-      await sdkClient.imports.delete(importId)
-    } catch (deleteError) {
-      console.warn(deleteError)
-      dispatch({ type: 'setDeleting', payload: false })
-    }
+    return await sdkClient.imports
+      .delete(importId)
+      .then(() => true)
+      .catch(() => {
+        dispatch({ type: 'setDeleting', payload: false })
+        return false
+      })
   }, [importId])
 
   useEffect(

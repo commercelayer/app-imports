@@ -4,7 +4,7 @@ declare module 'App' {
   export interface ImportDetailsContextValue {
     state: ImportDetailsContextState
     refetch: () => Promise<void>
-    deleteImport: () => Promise<void>
+    deleteImport: () => Promise<boolean>
   }
 
   export interface ImportDetailsContextState {

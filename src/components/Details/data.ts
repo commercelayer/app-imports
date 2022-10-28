@@ -10,5 +10,5 @@ export const initialState: ImportDetailsContextState = {
 export const initialValues: ImportDetailsContextValue = {
   state: initialState,
   refetch: async () => undefined,
-  deleteImport: async () => undefined
+  deleteImport: async () => false
 }

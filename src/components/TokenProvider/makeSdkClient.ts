@@ -43,7 +43,7 @@ export function makeSdkClient({
       if (isSdk401Error(error)) {
         onInvalidToken()
       }
-      return error
+      throw error
     }
   )
 
