@@ -7,18 +7,24 @@ import { useEffect, useState } from 'react'
 
 interface Props {
   sdkClient: CommerceLayerClient
-  resourceId: string
-  resourceType: string
+  /*
+   * Resource ID to fetch
+   */
+  parentResourceId: string
+  /*
+   * Resource type of the imported resource, we will find the parent resource type from it
+   */
+  childResourceType: string
 }
 
 export function ImportParentResource({
   sdkClient,
-  resourceId,
-  resourceType
+  parentResourceId,
+  childResourceType
 }: Props): JSX.Element {
   const [isLoading, setIsLoading] = useState(true)
   const [parentResourceName, setParentResourceName] = useState('')
-  const parentResouceType = getParentResourceIfNeeded(resourceType)
+  const parentResouceType = getParentResourceIfNeeded(childResourceType)
 
   useEffect(
     function fetchResourceAndSetName() {
@@ -30,21 +36,21 @@ export function ImportParentResource({
 
       if (canFetch) {
         sdkClient[parentResouceType]
-          .retrieve(resourceId)
+          .retrieve(parentResourceId)
           .then((res) => {
             const resourceName =
               'name' in res && res.name != null
-                ? `${res.name} (ID: ${resourceId})`
+                ? `${res.name} (ID: ${parentResourceId})`
                 : res.id
             setParentResourceName(resourceName)
           })
           .catch(() => {
-            setParentResourceName(resourceId)
+            setParentResourceName(parentResourceId)
           })
           .finally(() => setIsLoading(false))
       }
     },
-    [parentResouceType, resourceId, sdkClient]
+    [parentResouceType, parentResourceId, sdkClient]
   )
 
   if (isLoading) {

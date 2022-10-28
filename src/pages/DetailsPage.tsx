@@ -91,8 +91,8 @@ const DetailsPage = (): JSX.Element => {
                   <RowDetail label='Parent resource'>
                     <ImportParentResource
                       sdkClient={sdkClient}
-                      resourceId={data.parent_resource_id}
-                      resourceType={data.resource_type}
+                      parentResourceId={data.parent_resource_id}
+                      childResourceType={data.resource_type}
                     />
                   </RowDetail>
                 ) : null}
