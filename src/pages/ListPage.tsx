@@ -35,7 +35,7 @@ function ListPage(): JSX.Element {
         }}
       />
 
-      <ListImportProvider sdkClient={sdkClient} pageSize={8} polling={false}>
+      <ListImportProvider sdkClient={sdkClient} pageSize={8}>
         {({ state }) => {
           const { isLoading, list } = state
 

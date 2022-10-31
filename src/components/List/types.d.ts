@@ -29,6 +29,7 @@ declare module 'App' {
   export interface ListImportContextState {
     list?: ListResponse<Import>
     isLoading: boolean
+    isPolling: boolean
     currentPage: number
     sort: {
       created_at: 'asc' | 'desc'

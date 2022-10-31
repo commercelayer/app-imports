@@ -10,6 +10,7 @@ type Action =
   | { type: 'setLoading'; payload: boolean }
   | { type: 'setList'; payload: ListResponse<Import> }
   | { type: 'changePage'; payload: number }
+  | { type: 'togglePolling'; payload: boolean }
   | { type: 'sort'; payload: 'asc' | 'desc' }
   | { type: 'filterStatus'; payload: ListImportAllowedStatusType | 'all' }
   | { type: 'filterResourceType'; payload: AllowedResourceType | 'all' }
@@ -33,6 +34,11 @@ export const reducer = (
       return {
         ...state,
         currentPage: action.payload
+      }
+    case 'togglePolling':
+      return {
+        ...state,
+        isPolling: action.payload
       }
     case 'sort':
       return {

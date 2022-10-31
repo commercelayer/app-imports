@@ -21,7 +21,6 @@ import { reducer } from './reducer'
 
 interface ListImportProviderProps {
   pageSize: number
-  polling: boolean
   children: ((props: ListImportContextValue) => ReactNode) | ReactNode
   sdkClient: CommerceLayerClient
 }
@@ -34,7 +33,6 @@ export const useListContext = (): ListImportContextValue => useContext(Context)
 export function ListImportProvider({
   children,
   pageSize,
-  polling,
   sdkClient
 }: ListImportProviderProps): JSX.Element {
   const [state, dispatch] = useReducer(reducer, initialState)
@@ -81,22 +79,39 @@ export function ListImportProvider({
       })
   }
 
-  useEffect(() => {
-    void fetchList({ handleLoadingState: true })
-    if (!polling) {
-      return
-    }
-    // start polling
-    intervalId.current = setInterval(() => {
-      void fetchList({ handleLoadingState: false })
-    }, POLLING_INTERVAL)
-
-    return () => {
-      if (intervalId.current != null) {
-        clearInterval(intervalId.current)
+  useEffect(
+    function handlePollingState() {
+      if (state.list == null || state.list.length === 0) {
+        return
       }
-    }
-  }, [polling, state.currentPage, state.filters])
+
+      const shouldPoll = state.list.some((job) =>
+        statusForPolling.includes(job.status)
+      )
+      dispatch({ type: 'togglePolling', payload: shouldPoll })
+    },
+    [state.list]
+  )
+
+  useEffect(
+    function startPolling() {
+      void fetchList({ handleLoadingState: true })
+      if (!state.isPolling) {
+        return
+      }
+      // start polling
+      intervalId.current = setInterval(() => {
+        void fetchList({ handleLoadingState: false })
+      }, POLLING_INTERVAL)
+
+      return () => {
+        if (intervalId.current != null) {
+          clearInterval(intervalId.current)
+        }
+      }
+    },
+    [state.isPolling]
+  )
 
   const value: ListImportContextValue = {
     state,
@@ -139,3 +154,5 @@ const getAllImports = async ({
     filters
   })
 }
+
+const statusForPolling: Array<Import['status']> = ['pending', 'in_progress']
