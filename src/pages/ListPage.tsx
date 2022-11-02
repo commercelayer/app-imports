@@ -7,20 +7,12 @@ import { useTokenProvider } from '#components/TokenProvider'
 import { Container } from '#ui/Container'
 import { appRoutes } from '#data/routes'
 import { Button } from '#ui/Button'
-import { useEffect } from 'react'
 import { Link } from 'wouter'
 import { ListImportProvider } from '#components/List/Provider'
 import { EmptyState } from '#components/ui/EmptyState'
 
 function ListPage(): JSX.Element {
   const { sdkClient, dashboardUrl } = useTokenProvider()
-
-  useEffect(() => {
-    if (sdkClient == null) {
-      return
-    }
-    void sdkClient.sku_list_items.list()
-  }, [sdkClient])
 
   if (sdkClient == null) {
     return <div>Waiting for sdk client</div>
