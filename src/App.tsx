@@ -1,3 +1,4 @@
+import { ErrorBoundary } from '#components/ErrorBoundary'
 import { ErrorPage } from '#components/ErrorPage'
 import TokenProvider from '#components/TokenProvider'
 import { appRoutes } from '#data/routes'
@@ -9,32 +10,34 @@ import { ResourceSelectorPage } from './pages/ResourceSelectorPage'
 
 function App(): JSX.Element {
   return (
-    <TokenProvider
-      currentApp='imports'
-      clientKind='integration'
-      domain={import.meta.env.PUBLIC_DOMAIN}
-      onInvalidAuth={({ reason }) => {
-        console.log('invalid callback received: ', reason)
-      }}
-    >
-      <Switch>
-        <Route path={appRoutes.list.path}>
-          <ListPage />
-        </Route>
-        <Route path={appRoutes.selectResource.path}>
-          <ResourceSelectorPage />
-        </Route>
-        <Route path={appRoutes.newImport.path}>
-          <NewImportPage />
-        </Route>
-        <Route path={appRoutes.details.path}>
-          <DetailsPage />
-        </Route>
-        <Route>
-          <ErrorPage />
-        </Route>
-      </Switch>
-    </TokenProvider>
+    <ErrorBoundary>
+      <TokenProvider
+        currentApp='imports'
+        clientKind='webapp'
+        domain={import.meta.env.PUBLIC_DOMAIN}
+        onInvalidAuth={({ reason }) => {
+          console.log('invalid callback received: ', reason)
+        }}
+      >
+        <Switch>
+          <Route path={appRoutes.list.path}>
+            <ListPage />
+          </Route>
+          <Route path={appRoutes.selectResource.path}>
+            <ResourceSelectorPage />
+          </Route>
+          <Route path={appRoutes.newImport.path}>
+            <NewImportPage />
+          </Route>
+          <Route path={appRoutes.details.path}>
+            <DetailsPage />
+          </Route>
+          <Route>
+            <ErrorPage />
+          </Route>
+        </Switch>
+      </TokenProvider>
+    </ErrorBoundary>
   )
 }
 

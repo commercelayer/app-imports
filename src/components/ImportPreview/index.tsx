@@ -1,5 +1,5 @@
+import { ErrorBoundary } from '#components/ErrorBoundary'
 import cn from 'classnames'
-import { FC } from 'react'
 import { extractHeaders } from './extractHeaders'
 import { TableCell } from './TableCell'
 import { TableHeader } from './TableHeader'
@@ -10,7 +10,11 @@ interface Props {
   className?: string
 }
 
-export const ImportPreview: FC<Props> = ({ className, data, limit }) => {
+function ImportPreviewComponent({
+  className,
+  data,
+  limit
+}: Props): JSX.Element {
   const headings = extractHeaders(data)
   const rows = data.slice(0, limit)
   const othersCount = rows.length - limit
@@ -44,5 +48,16 @@ export const ImportPreview: FC<Props> = ({ className, data, limit }) => {
         <div className='py-4 font-bold'>and others {othersCount} records</div>
       ) : null}
     </div>
+  )
+}
+
+export function ImportPreview(props: Props): JSX.Element {
+  return (
+    <ErrorBoundary
+      errorTitle='We were unable to show the preview'
+      errorDescription='Try to upload a different file'
+    >
+      <ImportPreviewComponent {...props} />
+    </ErrorBoundary>
   )
 }
