@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@commercelayer/eslint-config-ts-react': ^0.1.2
+  '@commercelayer/eslint-config-ts-react': ^0.1.4
   '@commercelayer/sdk': ^4.16.0
   '@esbuild-plugins/node-globals-polyfill': ^0.1.1
   '@testing-library/jest-dom': ^5.16.5
@@ -43,7 +43,7 @@ specifiers:
   zod: ^3.17.3
 
 dependencies:
-  '@commercelayer/eslint-config-ts-react': 0.1.2_y5uksxbapjeyvejb4wn3cepw7y
+  '@commercelayer/eslint-config-ts-react': 0.1.4_y5uksxbapjeyvejb4wn3cepw7y
   '@commercelayer/sdk': 4.16.0
   '@esbuild-plugins/node-globals-polyfill': 0.1.1_esbuild@0.14.54
   '@types/lodash-es': 4.17.6
@@ -366,14 +366,16 @@ packages:
       to-fast-properties: 2.0.0
     dev: true
 
-  /@commercelayer/eslint-config-ts-react/0.1.2_y5uksxbapjeyvejb4wn3cepw7y:
-    resolution: {integrity: sha512-v6M0h6JsgtJsfJc0xsigXAAKSvTEpR6W/bwmPqPfKviaNkrbNVZwDO0txqdY7oTbhtTKzNABgYxNJXGUupapaQ==}
+  /@commercelayer/eslint-config-ts-react/0.1.4_y5uksxbapjeyvejb4wn3cepw7y:
+    resolution: {integrity: sha512-XwE6o2Rl86Pg7byPZUvY/tzvRuM/64z5mzvzYpdN8nayALdH16n9poyJGZUbamnLj0zEuXoEPLFhwByFMozfmg==}
     peerDependencies:
       eslint: '>=8.0'
       react: '>= 17.0'
       typescript: '>=4.0'
     dependencies:
-      '@commercelayer/eslint-config-ts': 0.1.2_4brgkhw6cq4me3drk3kxrpb2mm
+      '@commercelayer/eslint-config-ts': 0.1.4_4brgkhw6cq4me3drk3kxrpb2mm
+      '@typescript-eslint/eslint-plugin': 5.39.0_d64ffx4fgvgxtf4rpww7ew343e
+      '@typescript-eslint/parser': 5.39.0_4brgkhw6cq4me3drk3kxrpb2mm
       eslint: 8.23.1
       eslint-config-standard-jsx: 11.0.0_g6sljrn72fr5r5n2js2jyjg7bi
       eslint-plugin-react: 7.31.8_eslint@8.23.1
@@ -385,8 +387,8 @@ packages:
       - supports-color
     dev: false
 
-  /@commercelayer/eslint-config-ts/0.1.2_4brgkhw6cq4me3drk3kxrpb2mm:
-    resolution: {integrity: sha512-NRizFrCG8LZYD9P8/LmYxMitaiG2eCu/XxHgKbP8a9oc5LGThwzXqx31vqvk/T4rRzmG+njgWWTJDxriAXQDuw==}
+  /@commercelayer/eslint-config-ts/0.1.4_4brgkhw6cq4me3drk3kxrpb2mm:
+    resolution: {integrity: sha512-fKq9te52kxLxAPQ+BR9kk+i7yWQzWWjYwOzqFos2cq5ZhCZmFYBtCtEx+QiLdROv6dyFHqbgmcjpWj/PsEhFng==}
     peerDependencies:
       eslint: '>=8.0'
       typescript: '>=4.0'
