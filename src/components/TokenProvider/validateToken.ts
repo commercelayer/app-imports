@@ -28,14 +28,22 @@ export async function isValidTokenForCurrentApp({
   currentApp: string
 }): Promise<boolean> {
   const { slug, kind } = getInfoFromJwt(accessToken)
-
   const isValidKind = kind === clientKind
   const isValidSlug = isProduction()
     ? slug === getOrgSlugFromCurrentUrl()
     : true
 
-  // TODO: implement async verification againt user_info endpoint
-  // const isValidForApp = await fetch('../tokenInfo')
+  if (slug == null) {
+    return false
+  }
+
+  // TODO: implement async verification against tokeninfo endpoint
+  const tokenInfoResponse = await fetch(
+    `https://${slug}.${import.meta.env.PUBLIC_DOMAIN ?? ''}/oauth/tokeninfo`,
+    { method: 'GET', headers: { authorization: `Bearer ${accessToken}` } }
+  )
+  const tokenInfo = await tokenInfoResponse.json()
+  console.log('tokenInfo', tokenInfo)
 
   return isValidKind && isValidSlug
 }
