@@ -108,6 +108,7 @@ function NewImportPage(): JSX.Element {
 
       {importCreateValue != null && importCreateValue.length > 0 ? (
         <ImportPreview
+          title='Preview'
           className='mb-14'
           data={importCreateValue as []}
           limit={5}
