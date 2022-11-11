@@ -1,5 +1,5 @@
 import { render, RenderResult } from '@testing-library/react'
-import { PageHeading, PageHeadingProps } from './'
+import { PageHeading, PageHeadingProps } from './PageHeading'
 
 interface SetupProps extends PageHeadingProps {
   id: string

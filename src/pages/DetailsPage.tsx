@@ -1,9 +1,7 @@
-import { PageHeading } from '#components/PageHeading'
 import { ImportDetailsProvider } from '#components/Details/Provider'
 import { ImportedResourceType } from '#components/Details/ImportedResourceType'
 import { ImportDate } from '#components/Details/ImportDate'
 import { useTokenProvider } from '#components/TokenProvider'
-import { Container } from '#ui/Container'
 import { appRoutes } from '#data/routes'
 import { useLocation, useRoute } from 'wouter'
 import { Label } from '#ui/Label'
@@ -16,6 +14,7 @@ import { formatDate } from '#utils/date'
 import { ImportParentResource } from '#components/Details/ImportParentResource'
 import { Button } from '#ui/Button'
 import { ErrorPage } from '#components/ErrorPage'
+import { PageLayout } from '#components/ui/PageLayout'
 
 const DetailsPage = (): JSX.Element => {
   const { sdkClient } = useTokenProvider()
@@ -39,21 +38,19 @@ const DetailsPage = (): JSX.Element => {
         ) : data == null ? (
           <ErrorPage />
         ) : (
-          <Container>
-            <PageHeading
-              title={<ImportedResourceType />}
-              description={
-                <ImportDate
-                  atType='created_at'
-                  prefixText='Imported on '
-                  includeTime
-                />
-              }
-              onGoBack={() => {
-                setLocation(appRoutes.list.makePath())
-              }}
-            />
-
+          <PageLayout
+            title={<ImportedResourceType />}
+            description={
+              <ImportDate
+                atType='created_at'
+                prefixText='Imported on '
+                includeTime
+              />
+            }
+            onGoBack={() => {
+              setLocation(appRoutes.list.makePath())
+            }}
+          >
             <div className='border-t border-b border-gray-100 py-8 mb-14'>
               <div className='flex'>
                 <div className='flex-1 flex flex-col items-start py-4 px-6'>
@@ -127,7 +124,7 @@ const DetailsPage = (): JSX.Element => {
                 Delete
               </Button>
             </div>
-          </Container>
+          </PageLayout>
         )
       }
     </ImportDetailsProvider>

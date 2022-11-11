@@ -12,13 +12,12 @@ import {
 import { appRoutes } from '#data/routes'
 import { Link, useLocation, useRoute } from 'wouter'
 import { useTokenProvider } from '#components/TokenProvider'
-import { PageHeading } from '#components/PageHeading'
 import { Button } from '#ui/Button'
-import { Container } from '#ui/Container'
 import { Tab, Tabs } from '#ui/Tabs'
 import { InputCode } from '#components/InputCode'
 import { ImportPreview } from '#components/ImportPreview'
 import { InputToggleBox } from '#ui/InputToggleBox'
+import { PageLayout } from '#components/ui/PageLayout'
 
 function NewImportPage(): JSX.Element {
   const { sdkClient } = useTokenProvider()
@@ -74,13 +73,12 @@ function NewImportPage(): JSX.Element {
     (parentResourceId != null || parentResource === false)
 
   return (
-    <Container>
-      <PageHeading
-        title={`Import ${showResourceNiceName(resourceType)}`}
-        onGoBack={() => {
-          setLocation(appRoutes.selectResource.makePath())
-        }}
-      />
+    <PageLayout
+      title={`Import ${showResourceNiceName(resourceType)}`}
+      onGoBack={() => {
+        setLocation(appRoutes.selectResource.makePath())
+      }}
+    >
       {parentResource !== false && (
         <ResourceFinder
           label={showResourceNiceName(parentResource)}
@@ -146,7 +144,7 @@ function NewImportPage(): JSX.Element {
           <Button variant='link'>Cancel</Button>
         </Link>
       </div>
-    </Container>
+    </PageLayout>
   )
 }
 

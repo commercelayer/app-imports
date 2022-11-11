@@ -80,6 +80,15 @@ export function ListImportProvider({
   }
 
   useEffect(
+    function handleChangePageSkippingFirstRender() {
+      if (state.list?.meta.currentPage != null) {
+        void fetchList({ handleLoadingState: false })
+      }
+    },
+    [state.currentPage]
+  )
+
+  useEffect(
     function handlePollingState() {
       if (state.list == null || state.list.length === 0) {
         return

@@ -1,35 +1,36 @@
-import { Items } from '#components/List/Items'
-import { Pagination } from '#components/List/Pagination'
-import { PaginationCounter } from '#components/List/PaginationCounter'
-import { TotalCount } from '#components/List/TotalCount'
-import { PageHeading } from '#components/PageHeading'
 import { useTokenProvider } from '#components/TokenProvider'
-import { Container } from '#ui/Container'
 import { appRoutes } from '#data/routes'
 import { Button } from '#ui/Button'
-import { Link } from 'wouter'
+import { Link, useLocation } from 'wouter'
 import { ListImportProvider } from '#components/List/Provider'
 import { EmptyState } from '#components/ui/EmptyState'
+import { getUiStatus } from '#components/List/utils'
+import { TotalCount } from '#components/List/TotalCount'
+import { ListTask } from '#components/ui/ListTask'
+import { ListTaskItem } from '#components/ui/ListTaskItem'
+import { getProgressPercentage } from '#utils/getProgressPercentage'
+import { showResourceNiceName } from '#data/resources'
+import { DescriptionLine } from '#components/List/ItemDescriptionLine'
+import { PageLayout } from '#components/ui/PageLayout'
 
 function ListPage(): JSX.Element {
   const { sdkClient, dashboardUrl } = useTokenProvider()
+  const [_location, setLocation] = useLocation()
 
   if (sdkClient == null) {
     return <div>Waiting for sdk client</div>
   }
 
   return (
-    <Container>
-      <PageHeading
-        title='Imports'
-        onGoBack={() => {
-          window.location.href = dashboardUrl != null ? dashboardUrl : '/'
-        }}
-      />
-
+    <PageLayout
+      title='Imports'
+      onGoBack={() => {
+        window.location.href = dashboardUrl != null ? dashboardUrl : '/'
+      }}
+    >
       <ListImportProvider sdkClient={sdkClient} pageSize={8}>
-        {({ state }) => {
-          const { isLoading, list } = state
+        {({ state, changePage, deleteImport }) => {
+          const { isLoading, currentPage, list } = state
 
           if (isLoading && list == null) {
             return <div />
@@ -55,31 +56,56 @@ function ListPage(): JSX.Element {
             )
           }
 
+          const isRefetching = currentPage !== list.meta.currentPage
+          const { recordCount, recordsPerPage, pageCount } = list.meta
+
           return (
-            <div className='flex flex-col flex-1'>
-              <div className='flex justify-between pb-4 border-b border-gray-100'>
-                <div className='text-gray-500'>
+            <ListTask
+              isDisabled={isRefetching}
+              title={
+                <div>
                   All imports · <TotalCount />
                 </div>
+              }
+              actionButton={
                 <Link href={appRoutes.selectResource.makePath()}>
                   <Button variant='link' className='text-primary'>
                     Add new
                   </Button>
                 </Link>
-              </div>
-              <Items />
-              <div className='flex mt-auto items-center justify-between py-9'>
-                <PaginationCounter className='text-gray-500 font-medium' />
-                <Pagination
-                  className='border border-gray-500 text text-sm rounded-sm w-10 h-10 flex items-center justify-center'
-                  activeClass='border-2 border-black text-black font-bold'
-                />
-              </div>
-            </div>
+              }
+              pagination={{
+                recordsPerPage,
+                recordCount,
+                currentPage,
+                onChangePageRequest: changePage,
+                pageCount
+              }}
+            >
+              {list.map((job) => {
+                const canDelete =
+                  job.status === 'pending' || job.status === 'in_progress'
+                return (
+                  <ListTaskItem
+                    key={job.id}
+                    status={getUiStatus(job.status)}
+                    progressPercentage={getProgressPercentage(job)?.value}
+                    onClick={() => {
+                      setLocation(appRoutes.details.makePath(job.id))
+                    }}
+                    title={showResourceNiceName(job.resource_type)}
+                    onCancelRequest={
+                      canDelete ? () => deleteImport(job.id) : undefined
+                    }
+                    description={<DescriptionLine job={job} />}
+                  />
+                )
+              })}
+            </ListTask>
           )
         }}
       </ListImportProvider>
-    </Container>
+    </PageLayout>
   )
 }
 

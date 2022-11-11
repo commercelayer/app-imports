@@ -1,21 +1,19 @@
 import { appRoutes } from '#data/routes'
 import { Link, useLocation } from 'wouter'
-import { PageHeading } from './PageHeading'
 import { Button } from './ui/Button'
-import { Container } from './ui/Container'
 import { EmptyState } from './ui/EmptyState'
+import { PageLayout } from './ui/PageLayout'
 
 export function ErrorPage(): JSX.Element {
   const [_, setLocation] = useLocation()
 
   return (
-    <Container>
-      <PageHeading
-        title='Imports'
-        onGoBack={() => {
-          setLocation(appRoutes.list.makePath())
-        }}
-      />
+    <PageLayout
+      title='Imports'
+      onGoBack={() => {
+        setLocation(appRoutes.list.makePath())
+      }}
+    >
       <EmptyState
         title='Not found'
         description='We could not find the resource you are looking for.'
@@ -25,6 +23,6 @@ export function ErrorPage(): JSX.Element {
           </Link>
         }
       />
-    </Container>
+    </PageLayout>
   )
 }
