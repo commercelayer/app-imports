@@ -1,9 +1,9 @@
 import { csvStockItemsSchema } from './stockItems'
 
 describe('Validate csvStockItemsSchema', () => {
-  test('received input should have a valid schema', () => {
+  test('should require `stock_location_id` when parent resource is not set', () => {
     expect(
-      csvStockItemsSchema.parse([
+      csvStockItemsSchema({ hasParentResource: false }).parse([
         {
           sku_code: 'ABC',
           quantity: '100',
@@ -25,6 +25,30 @@ describe('Validate csvStockItemsSchema', () => {
         sku_id: 'XYZ',
         quantity: 40,
         stock_location_id: 'XXX123'
+      }
+    ])
+  })
+
+  test('should require `stock_location_id` when parent resource is set', () => {
+    expect(
+      csvStockItemsSchema({ hasParentResource: true }).parse([
+        {
+          sku_code: 'ABC',
+          quantity: '100'
+        },
+        {
+          quantity: 40,
+          sku_id: 'XYZ'
+        }
+      ])
+    ).toStrictEqual([
+      {
+        sku_code: 'ABC',
+        quantity: 100
+      },
+      {
+        sku_id: 'XYZ',
+        quantity: 40
       }
     ])
   })
