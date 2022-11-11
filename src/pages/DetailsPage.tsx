@@ -13,8 +13,8 @@ import { ImportStatusBadge } from '#components/Details/ImportStatusBadge'
 import { formatDate } from '#utils/date'
 import { ImportParentResource } from '#components/Details/ImportParentResource'
 import { Button } from '#ui/Button'
-import { ErrorPage } from '#components/ErrorPage'
 import { PageLayout } from '#components/ui/PageLayout'
+import { ErrorNotFound } from '#components/ErrorNotFound'
 
 const DetailsPage = (): JSX.Element => {
   const { sdkClient } = useTokenProvider()
@@ -36,7 +36,7 @@ const DetailsPage = (): JSX.Element => {
         isLoading ? (
           <div className='opacity-0'>Loading</div>
         ) : data == null ? (
-          <ErrorPage />
+          <ErrorNotFound />
         ) : (
           <PageLayout
             title={<ImportedResourceType />}

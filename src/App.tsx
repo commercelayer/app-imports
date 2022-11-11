@@ -1,5 +1,5 @@
 import { ErrorBoundary } from '#components/ErrorBoundary'
-import { ErrorPage } from '#components/ErrorPage'
+import { ErrorNotFound } from '#components/ErrorNotFound'
 import TokenProvider from '#components/TokenProvider'
 import { appRoutes } from '#data/routes'
 import { Route, Switch } from 'wouter'
@@ -13,7 +13,7 @@ function App(): JSX.Element {
     <ErrorBoundary>
       <TokenProvider
         currentApp='imports'
-        clientKind='webapp'
+        clientKind='integration'
         domain={import.meta.env.PUBLIC_DOMAIN}
         onInvalidAuth={({ reason }) => {
           console.log('invalid callback received: ', reason)
@@ -33,7 +33,7 @@ function App(): JSX.Element {
             <DetailsPage />
           </Route>
           <Route>
-            <ErrorPage />
+            <ErrorNotFound />
           </Route>
         </Switch>
       </TokenProvider>

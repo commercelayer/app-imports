@@ -8,19 +8,19 @@ import {
 } from 'react'
 
 import { getInfoFromJwt } from '#utils/getInfoFromJwt'
-import { isEmpty } from 'lodash-es'
 import { isTokenExpired, isValidTokenForCurrentApp } from './validateToken'
 import { makeDashboardUrl } from './slug'
 import { getPersistentAccessToken, savePersistentAccessToken } from './storage'
 import { getAccessTokenFromUrl } from './getAccessTokenFromUrl'
 import { makeSdkClient } from './makeSdkClient'
+import { PageError } from '#components/ui/PageError'
 
 interface TokenProviderValue {
   dashboardUrl?: string
   sdkClient?: CommerceLayerClient
 }
 
-export type CurrentApp = 'imports' // TODO: app slug to be defined
+export type CurrentApp = 'imports' | 'exports' | 'webhooks'
 
 interface TokenProviderProps {
   clientKind: 'integration' | 'sales_channel' | 'webapp'
@@ -127,13 +127,23 @@ function TokenProvider({
 
   if (isTokenError) {
     return (
-      <>{isEmpty(errorElement) ? <div>Invalid Token</div> : errorElement}</>
+      <>
+        {errorElement != null ? (
+          <PageError
+            pageTitle='Commerce Layer'
+            errorName='Invalid token'
+            errorDescription='The provided authorization token is not valid'
+          />
+        ) : (
+          errorElement
+        )}
+      </>
     )
   }
 
   if (isLoading) {
     return (
-      <>{isEmpty(loadingElement) ? <div>Loading...</div> : loadingElement}</>
+      <>{loadingElement != null ? <div>Loading...</div> : loadingElement}</>
     )
   }
 
