@@ -53,7 +53,6 @@ export function ListTask({
 
           <Pagination
             isDisabled={isDisabled}
-            {...pagination}
             currentPage={pagination.currentPage}
             // eslint-disable-next-line react/jsx-handler-names
             onChangePageRequest={pagination.onChangePageRequest}
