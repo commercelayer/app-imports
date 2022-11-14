@@ -128,7 +128,7 @@ function TokenProvider({
   if (isTokenError) {
     return (
       <>
-        {errorElement != null ? (
+        {errorElement == null ? (
           <PageError
             pageTitle='Commerce Layer'
             errorName='Invalid token'
@@ -143,7 +143,7 @@ function TokenProvider({
 
   if (isLoading) {
     return (
-      <>{loadingElement != null ? <div>Loading...</div> : loadingElement}</>
+      <>{loadingElement == null ? <div>Loading...</div> : loadingElement}</>
     )
   }
 

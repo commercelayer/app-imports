@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 import cn from 'classnames'
 import { Pagination, PaginationProps } from './Pagination'
 import { makeCurrentPageOffsets } from '#components/List/utils'
+import { Skeleton, SkeletonItem } from './Skeleton'
 
 export interface ListTaskProps {
   title?: ReactNode
@@ -12,6 +13,7 @@ export interface ListTaskProps {
     recordsPerPage: number
     recordCount: number
   } & Omit<PaginationProps, 'className' | 'isDisabled'>
+  isLoading?: boolean
 }
 
 export function ListTask({
@@ -20,6 +22,7 @@ export function ListTask({
   isDisabled,
   children,
   pagination,
+  isLoading,
   ...rest
 }: ListTaskProps): JSX.Element {
   const offsets =
@@ -30,6 +33,22 @@ export function ListTask({
           recordsPerPage: pagination.recordsPerPage
         })
       : null
+
+  if (isLoading === true) {
+    return (
+      <Skeleton>
+        <div className='flex justify-between pb-4'>
+          <SkeletonItem className='w-32 h-10' />
+          <SkeletonItem className='w-32 h-10' />
+        </div>
+        <SkeletonItem className='w-full h-16 mb-2' />
+        <SkeletonItem className='w-full h-16 mb-2' />
+        <SkeletonItem className='w-full h-16 mb-2' />
+        <SkeletonItem className='w-full h-16 mb-2' />
+        <SkeletonItem className='w-full h-16 mb-2' />
+      </Skeleton>
+    )
+  }
 
   return (
     <div className='flex flex-col flex-1' {...rest}>

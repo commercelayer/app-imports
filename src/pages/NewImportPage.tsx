@@ -19,6 +19,8 @@ import { ImportPreview } from '#components/ImportPreview'
 import { InputToggleBox } from '#ui/InputToggleBox'
 import { PageLayout } from '#components/ui/PageLayout'
 import { FormFooter } from '#components/ui/FormFooter'
+import { PageSkeleton } from '#components/ui/PageSkeleton'
+import { PageError } from '#components/ui/PageError'
 
 function NewImportPage(): JSX.Element {
   const { sdkClient } = useTokenProvider()
@@ -34,18 +36,29 @@ function NewImportPage(): JSX.Element {
   >(undefined)
 
   if (sdkClient == null) {
-    return <div>Waiting for sdk client</div>
+    console.warn('Waiting for SDK client')
+    return <PageSkeleton />
   }
 
   const resourceType =
     params == null ? null : (params.resourceType as AllowedResourceType)
 
   if (resourceType == null) {
-    return <div>No params</div>
+    return <PageError errorName='Missing param' errorDescription='' />
   }
 
   if (!isAvailableResource(resourceType)) {
-    return <div>404 - resource type non allowed or not enabled</div>
+    return (
+      <PageError
+        errorName='Invalid resource type'
+        errorDescription='Resource not allowed or not enabled'
+        actionButton={
+          <Link href={appRoutes.list.makePath()}>
+            <Button variant='primary'>Go back</Button>
+          </Link>
+        }
+      />
+    )
   }
 
   const createImportTask = async (parentResourceId?: string): Promise<void> => {

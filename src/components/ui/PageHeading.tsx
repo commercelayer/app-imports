@@ -29,7 +29,7 @@ export function PageHeading({
   ...rest
 }: PageHeadingProps): JSX.Element {
   return (
-    <div className={cn({ 'pt-10 pb-14': !noGap })} {...rest}>
+    <div className={cn(['w-full', { 'pt-10 pb-14': !noGap }])} {...rest}>
       {onGoBack != null ? (
         <button onClick={onGoBack}>
           <svg

@@ -6,7 +6,7 @@ interface PageErrorProps {
   /**
    * Main page title wrapped in a h1 element
    */
-  pageTitle: string
+  pageTitle?: string
   /**
    * Optional callback that will be called when "go back" button is pressed
    * If missing, the "go back" button will not be shown
@@ -29,7 +29,7 @@ interface PageErrorProps {
 }
 
 export function PageError({
-  pageTitle,
+  pageTitle = 'Commerce Layer',
   onGoBack,
   errorName,
   errorDescription,

@@ -1,6 +1,7 @@
 import { ErrorBoundary } from '#components/ErrorBoundary'
 import { ErrorNotFound } from '#components/ErrorNotFound'
 import TokenProvider from '#components/TokenProvider'
+import { PageSkeleton } from '#components/ui/PageSkeleton'
 import { appRoutes } from '#data/routes'
 import { Route, Switch } from 'wouter'
 import DetailsPage from './pages/DetailsPage'
@@ -18,6 +19,7 @@ function App(): JSX.Element {
         onInvalidAuth={({ reason }) => {
           console.error('invalid callback received: ', reason)
         }}
+        loadingElement={<PageSkeleton />}
       >
         <Switch>
           <Route path={appRoutes.list.path}>

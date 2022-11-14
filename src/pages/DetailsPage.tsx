@@ -15,26 +15,28 @@ import { ImportParentResource } from '#components/Details/ImportParentResource'
 import { Button } from '#ui/Button'
 import { PageLayout } from '#components/ui/PageLayout'
 import { ErrorNotFound } from '#components/ErrorNotFound'
+import { PageSkeleton } from '#components/ui/PageSkeleton'
 
-const DetailsPage = (): JSX.Element => {
+const DetailsPage = (): JSX.Element | null => {
   const { sdkClient } = useTokenProvider()
   const [_, setLocation] = useLocation()
   const [_match, params] = useRoute(appRoutes.details.path)
   const importId = params == null ? null : params.importId
 
   if (importId == null) {
-    return <div>Missing import ID</div>
+    return null
   }
 
   if (sdkClient == null) {
-    return <div>Waiting for sdk client</div>
+    console.warn('Waiting for SDK client')
+    return <PageSkeleton />
   }
 
   return (
     <ImportDetailsProvider sdkClient={sdkClient} importId={importId}>
       {({ state: { isLoading, isDeleting, data }, deleteImport }) =>
         isLoading ? (
-          <div className='opacity-0'>Loading</div>
+          <PageSkeleton layout='details' hasHeaderDescription />
         ) : data == null ? (
           <ErrorNotFound />
         ) : (

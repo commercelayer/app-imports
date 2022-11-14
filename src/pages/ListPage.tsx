@@ -12,13 +12,15 @@ import { getProgressPercentage } from '#utils/getProgressPercentage'
 import { showResourceNiceName } from '#data/resources'
 import { DescriptionLine } from '#components/List/ItemDescriptionLine'
 import { PageLayout } from '#components/ui/PageLayout'
+import { PageSkeleton } from '#components/ui/PageSkeleton'
 
 function ListPage(): JSX.Element {
   const { sdkClient, dashboardUrl } = useTokenProvider()
   const [_location, setLocation] = useLocation()
 
   if (sdkClient == null) {
-    return <div>Waiting for sdk client</div>
+    console.warn('Waiting for SDK client')
+    return <PageSkeleton />
   }
 
   return (
@@ -32,12 +34,12 @@ function ListPage(): JSX.Element {
         {({ state, changePage, deleteImport }) => {
           const { isLoading, currentPage, list } = state
 
-          if (isLoading && list == null) {
-            return <div />
+          if (isLoading) {
+            return <ListTask isLoading />
           }
 
           if (list == null) {
-            return null
+            return <div>Error</div>
           }
 
           if (list.length === 0) {
