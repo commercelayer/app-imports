@@ -6,7 +6,6 @@ type SetupResult = RenderResult & {
 }
 
 const setup = (props: TableProps): SetupResult => {
-  console.log('props')
   const utils = render(<Table data-test-id='my-table' {...props} />)
   const element = utils.getByTestId('my-table')
   return {

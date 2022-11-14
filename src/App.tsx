@@ -16,7 +16,7 @@ function App(): JSX.Element {
         clientKind='integration'
         domain={import.meta.env.PUBLIC_DOMAIN}
         onInvalidAuth={({ reason }) => {
-          console.log('invalid callback received: ', reason)
+          console.error('invalid callback received: ', reason)
         }}
       >
         <Switch>

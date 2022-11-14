@@ -72,7 +72,7 @@ export function ListImportProvider({
     sdkClient.imports
       .delete(importId)
       .catch(() => {
-        console.log('Import not found')
+        console.error('Import not found')
       })
       .finally(() => {
         void fetchList({ handleLoadingState: false })

@@ -1,7 +1,8 @@
+import { Text } from '#components/ui/Text'
 import { InputFile } from '#ui/InputFile'
-import { isFalsy } from '#utils/isFalsy'
 import { ImportCreate } from '@commercelayer/sdk'
 import { AllowedResourceType } from 'App'
+import { isEmpty } from 'lodash-es'
 import { parse } from 'papaparse'
 import { FC, useState, useEffect } from 'react'
 import { ZodIssue } from 'zod'
@@ -43,7 +44,7 @@ export const InputParser: FC<Props> = ({
       header: true,
       skipEmptyLines: true,
       transform: (value) => {
-        return isFalsy(value) ? undefined : value
+        return isEmpty(value) ? undefined : value
       },
       error: () => {
         setIsParsing(false)
@@ -127,13 +128,16 @@ export const InputParser: FC<Props> = ({
         {file == null ? (
           <SuggestionTemplate resourceType={resourceType} />
         ) : (
-          <div className='text-gray-500 text-sm'>
-            File uploaded: <span className='text-primary'>{file.name}</span>
-          </div>
+          <Text variant='info' size='small'>
+            File uploaded:{' '}
+            <Text variant='primary' tag='span'>
+              {file.name}
+            </Text>
+          </Text>
         )}
       </div>
 
-      <div className='text-sm text-red-500 px-2'>
+      <Text variant='danger' size='small' className='px-2'>
         {typeof errorMessage === 'string' && (
           <div className='mb-2'>{errorMessage}</div>
         )}
@@ -149,7 +153,7 @@ export const InputParser: FC<Props> = ({
             ) : null}
           </div>
         ) : null}
-      </div>
+      </Text>
     </div>
   )
 }
