@@ -27,12 +27,12 @@ export const InputParser: FC<Props> = ({
   hasParentResource = false
 }) => {
   const [isParsing, setIsParsing] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [errorList, setErrorList] = useState<ZodIssue[]>()
   const [file, setFile] = useState<File | null>(null)
 
   const resetErrorUi = (): void => {
-    setErrorMessage('')
+    setErrorMessage(null)
     setErrorList([])
   }
 
@@ -74,12 +74,12 @@ export const InputParser: FC<Props> = ({
 
   const loadAndParseJson = async (file: File): Promise<void> => {
     setIsParsing(true)
-    setErrorMessage('')
+    setErrorMessage(null)
     try {
       const json = JSON.parse(await file.text())
       onDataReady(json as ImportCreate['inputs'])
     } catch {
-      setErrorMessage('Invalid json file')
+      setErrorMessage('Invalid JSON file')
     } finally {
       setIsParsing(false)
     }
@@ -113,36 +113,35 @@ export const InputParser: FC<Props> = ({
 
   return (
     <div>
-      <div className='mb-4'>
-        <InputFile
-          className='mb-4'
-          label='Select a csv or json to upload'
-          onChange={(e) => {
-            if (e.target.files != null && !isParsing) {
-              setFile(e.target.files[0])
-            }
-          }}
-          disabled={isParsing}
-          progress={file != null ? 100 : 0}
-        />
-        {file == null ? (
-          <SuggestionTemplate resourceType={resourceType} />
-        ) : (
-          <Text variant='info' size='small'>
-            File uploaded:{' '}
-            <Text variant='primary' tag='span'>
-              {file.name}
-            </Text>
-          </Text>
-        )}
-      </div>
+      <InputFile
+        className='mb-4'
+        label='Select a csv or json to upload'
+        onChange={(e) => {
+          if (e.target.files != null && !isParsing) {
+            setFile(e.target.files[0])
+          }
+        }}
+        disabled={isParsing}
+        progress={file != null ? 100 : 0}
+      />
 
-      <Text variant='danger' size='small' className='px-2'>
+      {file == null ? (
+        <SuggestionTemplate resourceType={resourceType} />
+      ) : (
+        <Text variant='info' size='small'>
+          File uploaded:{' '}
+          <Text variant='primary' tag='span'>
+            {file.name}
+          </Text>
+        </Text>
+      )}
+
+      <Text variant='danger' size='small'>
         {typeof errorMessage === 'string' && (
-          <div className='mb-2'>{errorMessage}</div>
+          <div className='mt-2'>{errorMessage}</div>
         )}
         {errorList != null && errorList.length > 0 ? (
-          <div>
+          <div className='mt-2'>
             {errorList.slice(0, 5).map((issue, idx) => (
               <p key={idx}>
                 Row {issue.path[0]} - {issue.message}

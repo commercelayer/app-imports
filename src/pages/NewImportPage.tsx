@@ -18,6 +18,7 @@ import { InputCode } from '#components/InputCode'
 import { ImportPreview } from '#components/ImportPreview'
 import { InputToggleBox } from '#ui/InputToggleBox'
 import { PageLayout } from '#components/ui/PageLayout'
+import { FormFooter } from '#components/ui/FormFooter'
 
 function NewImportPage(): JSX.Element {
   const { sdkClient } = useTokenProvider()
@@ -115,7 +116,7 @@ function NewImportPage(): JSX.Element {
         />
       ) : null}
 
-      <div className='mb-14 px-4 border-t border-b b-gray-100 py-4'>
+      <div className='mb-14'>
         <InputToggleBox
           id='toggle-cleanup'
           label='Cleanup records'
@@ -130,21 +131,26 @@ function NewImportPage(): JSX.Element {
         />
       </div>
 
-      <div className='mb-14 flex justify-between'>
-        <Button
-          className='btn'
-          variant='primary'
-          onClick={() => {
-            void createImportTask(parentResourceId ?? undefined)
-          }}
-          disabled={!canCreateImport || isLoading}
-        >
-          {isLoading ? 'Loading...' : 'Start Import'}
-        </Button>
-        <Link href={appRoutes.list.makePath()}>
-          <Button variant='link'>Cancel</Button>
-        </Link>
-      </div>
+      <FormFooter
+        className='mb-14'
+        buttonSubmit={
+          <Button
+            className='btn'
+            variant='primary'
+            onClick={() => {
+              void createImportTask(parentResourceId ?? undefined)
+            }}
+            disabled={!canCreateImport || isLoading}
+          >
+            {isLoading ? 'Loading...' : 'Start Import'}
+          </Button>
+        }
+        buttonCancel={
+          <Link href={appRoutes.list.makePath()}>
+            <Button variant='link'>Cancel</Button>
+          </Link>
+        }
+      />
     </PageLayout>
   )
 }
