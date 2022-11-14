@@ -17,7 +17,7 @@ export function ImportDownloadLogAsFile({
   } = useImportDetailsContext()
   const log = data?.[logType]
 
-  if (data == null || log == null) {
+  if (data == null || log == null || Object.keys(log).length === 0) {
     return null
   }
 
