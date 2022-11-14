@@ -1,12 +1,17 @@
 import { SkuCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 
-import { zodEnforceInt, zodEnforceBoolean, zodEnforceFloat } from './zodUtils'
+import {
+  zodEnforceInt,
+  zodEnforceBoolean,
+  zodEnforceFloat,
+  zodCaseInsensitiveNativeEnum
+} from './zodUtils'
 
 enum AllowedUnitOfWeightEnum {
-  'gr' = 'gr',
-  'lb' = 'gr',
-  'oz' = 'oz'
+  'grams' = 'gr',
+  'libra' = 'lb',
+  'ounce' = 'oz'
 }
 
 type FlatCsvRow = Omit<SkuCreate, 'unit_of_weight' | 'shipping_category'> & {
@@ -23,7 +28,9 @@ const schema = z
     image_url: z.optional(z.string().url()),
     pieces_per_pack: z.optional(zodEnforceInt),
     weight: z.optional(zodEnforceFloat),
-    unit_of_weight: z.optional(z.nativeEnum(AllowedUnitOfWeightEnum)),
+    unit_of_weight: z.optional(
+      zodCaseInsensitiveNativeEnum(AllowedUnitOfWeightEnum)
+    ),
     hs_tariff_number: z.optional(z.string()),
     do_not_ship: zodEnforceBoolean(true),
     do_not_track: zodEnforceBoolean(true),

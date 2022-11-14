@@ -8,13 +8,18 @@ interface Props {
   className?: string
 }
 
-export function ImportPreview({ title, data, limit }: Props): JSX.Element {
+export function ImportPreview({
+  title,
+  data,
+  limit,
+  className
+}: Props): JSX.Element {
   return (
     <ErrorBoundary
       errorTitle='We were unable to show the preview'
       errorDescription='Try to upload a different file'
     >
-      <Table title={title} data={data} limit={limit} />
+      <Table title={title} data={data} limit={limit} className={className} />
     </ErrorBoundary>
   )
 }

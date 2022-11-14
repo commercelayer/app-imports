@@ -3,20 +3,21 @@ import { z } from 'zod'
 
 type MaybeBoolean = boolean | undefined
 
-export const zodEnforceBoolean = (
+export function zodEnforceBoolean(
   optional?: boolean
 ): z.ZodEffects<
   z.ZodBoolean | z.ZodOptional<z.ZodBoolean>,
   MaybeBoolean,
   MaybeBoolean
-> =>
-  z.preprocess(
+> {
+  return z.preprocess(
     (value) =>
       value === undefined || value === ''
         ? undefined
         : String(value).toLowerCase() === 'true',
     isFalsy(optional) ? z.boolean() : z.optional(z.boolean())
   )
+}
 
 export const zodEnforceInt = z.preprocess(
   (value) => parseFloat(String(value)),
@@ -35,3 +36,17 @@ export const zodEnforceDateString = z.preprocess((value: unknown) => {
     return undefined
   }
 }, z.string())
+
+interface DefaultEnumLike {
+  [k: string]: string | number
+  [nu: number]: string
+}
+
+export function zodCaseInsensitiveNativeEnum<T extends DefaultEnumLike>(
+  enumValue: T
+): z.ZodEffects<z.ZodNativeEnum<T>> {
+  return z.preprocess(
+    (enumValue) => String(enumValue).toLowerCase(),
+    z.nativeEnum(enumValue)
+  )
+}

@@ -4,7 +4,8 @@ import {
   zodEnforceBoolean,
   zodEnforceInt,
   zodEnforceFloat,
-  zodEnforceDateString
+  zodEnforceDateString,
+  zodCaseInsensitiveNativeEnum
 } from './zodUtils'
 
 describe('check zodEnforceBoolean', () => {
@@ -100,5 +101,20 @@ describe('check zodEnforceDateString', () => {
         expect(err).toBeInstanceOf(ZodError)
       }
     }
+  })
+})
+
+describe('check zodCaseInsensitiveNativeEnum', () => {
+  test('should allow int', () => {
+    enum MyCustomEnum {
+      'large' = 'xl',
+      'medium' = 'm',
+      'small' = 's'
+    }
+    expect(zodCaseInsensitiveNativeEnum(MyCustomEnum).parse('M')).toBe('m')
+    expect(zodCaseInsensitiveNativeEnum(MyCustomEnum).parse('xl')).toBe('xl')
+    expect(
+      zodCaseInsensitiveNativeEnum(MyCustomEnum).parse(MyCustomEnum.small)
+    ).toBe('s')
   })
 })
