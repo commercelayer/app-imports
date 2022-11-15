@@ -30,7 +30,7 @@ function ListPage(): JSX.Element {
         window.location.href = dashboardUrl != null ? dashboardUrl : '/'
       }}
     >
-      <ListImportProvider sdkClient={sdkClient} pageSize={8}>
+      <ListImportProvider sdkClient={sdkClient} pageSize={10}>
         {({ state, changePage, deleteImport }) => {
           const { isLoading, currentPage, list } = state
 
@@ -72,7 +72,7 @@ function ListPage(): JSX.Element {
               actionButton={
                 <Link href={appRoutes.selectResource.makePath()}>
                   <Button variant='link' className='text-primary'>
-                    Add new
+                    New import
                   </Button>
                 </Link>
               }

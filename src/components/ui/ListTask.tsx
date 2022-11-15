@@ -52,7 +52,7 @@ export function ListTask({
 
   return (
     <div className='flex flex-col flex-1' {...rest}>
-      <div className='flex justify-between pb-4 border-b border-gray-100'>
+      <div className='flex justify-between items-center pb-4 border-b border-gray-100'>
         <h2 className='text-gray-500'>{title}</h2>
         <div>{actionButton}</div>
       </div>
@@ -65,7 +65,7 @@ export function ListTask({
       </div>
       {pagination != null && offsets != null ? (
         <div className='flex mt-auto items-center justify-between py-9'>
-          <div className='text-gray-500 font-medium'>
+          <div className='text-gray-500 font-medium mt'>
             {offsets.firstOfPage}-{offsets.lastOfPage} of{' '}
             {pagination.recordCount}
           </div>
