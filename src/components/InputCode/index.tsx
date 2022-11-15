@@ -1,3 +1,4 @@
+import { ErrorBoundary } from '#components/ErrorBoundary'
 import { ImportCreate } from '@commercelayer/sdk'
 import { isEmpty } from 'lodash-es'
 import { useEffect, useState } from 'react'
@@ -7,7 +8,22 @@ interface Props {
   onDataResetRequest: () => void
 }
 
-export function InputCode({
+export function InputCode(props: Props): JSX.Element {
+  const [renderKey, setRenderKey] = useState<number | undefined>(undefined)
+  return (
+    <ErrorBoundary
+      errorDescription='We could not parse your input. Please try again.'
+      onRetry={() => {
+        setRenderKey(new Date().getTime())
+      }}
+      key={renderKey}
+    >
+      <InputCodeComponent {...props} />
+    </ErrorBoundary>
+  )
+}
+
+function InputCodeComponent({
   onDataReady,
   onDataResetRequest
 }: Props): JSX.Element {
