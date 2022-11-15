@@ -1,10 +1,14 @@
 import { Component, ErrorInfo, ReactNode } from 'react'
+import { Button } from './ui/Button'
+import { Container } from './ui/Container'
 import { EmptyState } from './ui/EmptyState'
 
 interface Props {
   children?: ReactNode
   errorTitle?: string
   errorDescription?: string
+  onRetry?: () => void
+  hasContainer?: boolean
 }
 
 interface State {
@@ -27,15 +31,34 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   public render(): ReactNode {
+    const inner = (
+      <EmptyState
+        title={this.props.errorTitle ?? 'Something went wrong'}
+        description={
+          this.props.errorDescription ??
+          'Try to reload the page and start again'
+        }
+        action={
+          <Button
+            onClick={() => {
+              if (this.props.onRetry != null) {
+                this.props.onRetry()
+              } else {
+                window.location.reload()
+              }
+            }}
+          >
+            Retry
+          </Button>
+        }
+      />
+    )
+
     if (this.state.hasError) {
-      return (
-        <EmptyState
-          title={this.props.errorTitle ?? 'Something went wrong'}
-          description={
-            this.props.errorDescription ??
-            'Try to reload the page and start again'
-          }
-        />
+      return this.props.hasContainer === true ? (
+        <Container className='pt-14'>{inner}</Container>
+      ) : (
+        inner
       )
     }
 

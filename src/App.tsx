@@ -11,7 +11,7 @@ import { ResourceSelectorPage } from './pages/ResourceSelectorPage'
 
 function App(): JSX.Element {
   return (
-    <ErrorBoundary>
+    <ErrorBoundary hasContainer>
       <TokenProvider
         currentApp='imports'
         clientKind='integration'
