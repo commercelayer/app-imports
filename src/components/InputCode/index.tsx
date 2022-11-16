@@ -55,11 +55,11 @@ function InputCodeComponent({
         data-gramm='false'
         placeholder={preparePlacehoder()}
         value={value}
-        onChange={(e) => setValue(prettifyJson(e.currentTarget.value))}
+        onChange={(e) => setValue(e.currentTarget.value)}
         onBlur={() => {
           setValue((val) => prettifyJson(val))
         }}
-        className='bg-gray-700 text-white font-semibold text-sm font-mono h-52 p-3 w-full border border-gray-200 rounded-md'
+        className='bg-black text-white font-semibold text-xs font-mono h-72 p-3 w-full rounded-md outline-none'
       />
       {errorMessage !== null ? (
         <div className='text-sm text-red-500 px-2'>{errorMessage}</div>
