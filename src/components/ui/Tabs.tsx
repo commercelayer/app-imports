@@ -23,6 +23,10 @@ interface Props {
    * ```
    */
   children: Array<React.ReactElement<TabProps, typeof Tab>>
+  /**
+   * This controls whether the content of inactive panels should be un-mounted or kept mounted but hidden.
+   */
+  keepAlive?: boolean
 }
 
 export function Tabs({
@@ -30,6 +34,7 @@ export function Tabs({
   children,
   onTabSwitch,
   className,
+  keepAlive,
   ...rest
 }: Props): JSX.Element {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -87,6 +92,7 @@ export function Tabs({
             isActive={index === activeIndex}
             data-test-id={`tab-panel-${index}`}
             aria-labelledby={`tab-nav-${id}-${index}`}
+            keepAlive={Boolean(keepAlive)}
           >
             {tab.props.children}
           </TabPanel>
@@ -145,17 +151,25 @@ function TabNav({
 function TabPanel({
   children,
   isActive,
+  keepAlive,
   ...rest
 }: {
   isActive: boolean
   children: ReactNode
+  keepAlive: boolean
 }): JSX.Element | null {
-  if (!isActive) {
+  if (!isActive && !keepAlive) {
     return null
   }
 
   return (
-    <div className='pt-4' role='tabpanel' aria-labelledby='' {...rest}>
+    <div
+      className='pt-4'
+      role='tabpanel'
+      aria-labelledby=''
+      {...rest}
+      hidden={!isActive}
+    >
       {children}
     </div>
   )

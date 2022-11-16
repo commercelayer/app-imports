@@ -103,7 +103,7 @@ function NewImportPage(): JSX.Element {
           onSelect={setParentResourceId}
         />
       )}
-      <Tabs id='tab-import-input' className='mb-14'>
+      <Tabs id='tab-import-input' className='mb-14' keepAlive>
         <Tab name='Upload file'>
           <InputParser
             resourceType={resourceType}
