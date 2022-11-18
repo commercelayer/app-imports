@@ -23,7 +23,7 @@ export function Table({
   return (
     <div className={cn('overflow-x-auto pb-3', className)} {...rest}>
       {title != null ? <h2 className='font-semibold mb-2'>{title}</h2> : null}
-      <table className='w-full rounded-sm overflow-hidden'>
+      <table className='w-full rounded overflow-hidden'>
         <thead>
           <tr data-test-id='table-row-header'>
             {headings.map((heading) => (

@@ -62,7 +62,7 @@ function InputCodeComponent({
         className='bg-black text-white font-semibold text-xs font-mono h-72 p-3 w-full rounded-md outline-none'
       />
       {errorMessage !== null ? (
-        <div className='text-sm text-red-500 px-2'>{errorMessage}</div>
+        <div className='text-sm text-red px-2'>{errorMessage}</div>
       ) : null}
     </div>
   )

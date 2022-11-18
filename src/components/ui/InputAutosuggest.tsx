@@ -76,7 +76,7 @@ export function InputAutosuggest({
     <div className='relative' {...rest}>
       {selectedSuggestion != null ? (
         <div
-          className='px-5 py-3 border w-full rounded-sm cursor-pointer'
+          className='px-5 py-3 border w-full rounded cursor-pointer'
           onClick={() => {
             setSuggestions([])
             handleSuggestionSelect(null)
@@ -111,7 +111,7 @@ export function InputAutosuggest({
               setInputValue(newValue)
             },
             value: inputValue,
-            className: 'px-5 py-3 border w-full rounded-sm',
+            className: 'px-5 py-3 border w-full rounded',
             ref: inputEl
           }}
         />
@@ -135,7 +135,7 @@ function renderSuggestionsContainer({
   return (
     <div
       {...containerProps}
-      className='border absolute w-full top-full bg-white px-5 py-3 rounded-sm'
+      className='border absolute w-full top-full bg-white px-5 py-3 rounded'
       data-test-id='suggestions-container'
     >
       {children}

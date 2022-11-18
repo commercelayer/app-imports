@@ -20,7 +20,7 @@ export function ImportStatusBadge({ job }: Props): JSX.Element {
       </div>
 
       {job.status === 'in_progress' && percentage.value < 100 ? (
-        <div className='w-full h-2 bg-gray-200 rounded-sm overflow-hidden'>
+        <div className='w-full h-2 bg-gray-200 rounded overflow-hidden'>
           <div
             className='h-full bg-primary transition-all'
             style={{

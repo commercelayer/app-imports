@@ -56,8 +56,8 @@ describe('Button', () => {
       text: 'Danger variant'
     })
     expect(element.className).toContain('bg-white')
-    expect(element.className).toContain('text-red-400')
-    expect(element.className).toContain('border border-red-400')
+    expect(element.className).toContain('text-red')
+    expect(element.className).toContain('border border-red')
   })
 
   test('Should render as size small', () => {

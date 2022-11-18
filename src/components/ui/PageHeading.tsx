@@ -1,4 +1,5 @@
 import cn from 'classnames'
+import { ArrowLeft } from 'phosphor-react'
 import { ReactNode } from 'react'
 
 export interface PageHeadingProps {
@@ -31,22 +32,11 @@ export function PageHeading({
   return (
     <div className={cn(['w-full', { 'pt-10 pb-14': !noGap }])} {...rest}>
       {onGoBack != null ? (
-        <button onClick={onGoBack}>
-          <svg
-            width='32'
-            height='32'
-            fill='none'
-            xmlns='http://www.w3.org/2000/svg'
-          >
-            <path
-              d='M27 16H5M14 7l-9 9 9 9'
-              stroke='currentColor'
-              strokeWidth='2'
-            />
-          </svg>
+        <button onClick={onGoBack} className='mb-4'>
+          <ArrowLeft size={32} />
         </button>
       ) : null}
-      <h1 className='text-lg'>{title}</h1>
+      <h1 className='font-semibold text-title leading-title'>{title}</h1>
       {description !== null && (
         <div className='text-gray-500'>{description}</div>
       )}

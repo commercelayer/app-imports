@@ -19,7 +19,7 @@ export function SkeletonItem({
       className={cn(className, {
         'bg-gray-200': true,
         'rounded-full': type === 'circle',
-        'rounded-xl': type === 'box'
+        rounded: type === 'box'
       })}
     />
   )

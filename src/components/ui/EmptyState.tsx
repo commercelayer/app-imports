@@ -23,7 +23,7 @@ export function EmptyState({
       )}
       {...rest}
     >
-      <h4 className='font-semibold text-lg mb-4'>{title}</h4>
+      <h4 className='font-semibold text-title mb-4'>{title}</h4>
 
       {description != null ? (
         <div className='font-medium text-gray-500'>{description}</div>

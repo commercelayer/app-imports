@@ -1,3 +1,7 @@
+const { transparentize } = require('polished')
+
+const colorBrand = '#666EFF'
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -10,13 +14,16 @@ module.exports = {
         sm: '540px'
       }
     },
+    borderRadius: {
+      DEFAULT: '0.313rem',
+      md: '0.625rem',
+      full: '9999px'
+    },
     colors: {
       primary: {
-        light: 'var(--primary-light)',
-        DEFAULT: '#666EFF',
-        dark: 'var(--primary-dark)'
+        light: transparentize(0.2, colorBrand),
+        DEFAULT: colorBrand
       },
-      contrast: 'var(--contrast)',
       transparent: 'transparent',
       black: '#101111',
       white: '#fff',
@@ -32,30 +39,34 @@ module.exports = {
         800: '#282929',
         900: '#1D1E1E'
       },
-      red: {
-        50: '#ffe0e1',
-        400: '#FF656B',
-        500: '#cc5156'
-      },
-      green: {
-        400: '#1FDA8A'
-      },
-      orange: {
-        400: '#FFAB2E'
-      }
+      green: '#1fda8a',
+      orange: '#ffab2e',
+      red: '#ff656b'
     },
     fontFamily: {
       sans: ['Manrope', 'ui-sans-serif', 'sans-serif'],
       mono: ['ui-monospace', 'Menlo', 'monospace']
     },
-    borderColor: (theme) => ({
-      ...theme('colors'),
-      DEFAULT: theme('colors.gray.200', 'currentColor')
-    }),
+    fontSize: {
+      '2xs': '.688rem',
+      xs: '.75rem',
+      sm: '.875rem',
+      base: '1rem',
+      lg: '1.125rem',
+      xl: '1.25rem',
+      '2xl': '1.5rem',
+      '2.5xl': '2rem',
+      '3xl': '1.875rem',
+      '4xl': '2.25rem',
+      '5xl': '3rem',
+      '6xl': '4rem',
+      '8xl': '6rem',
+      '10xl': '8rem',
+      title: '2rem'
+    },
     extend: {
-      fontSize: {
-        md: '1rem',
-        lg: '2rem'
+      lineHeight: {
+        title: '2.375rem'
       },
       transitionProperty: {
         bg: 'background'

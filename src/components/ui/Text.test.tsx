@@ -44,12 +44,12 @@ describe('Text', () => {
 
   test('Should render a danger variant', () => {
     const { element } = setup({ variant: 'danger' })
-    expect(element.className).toContain('text-red-400')
+    expect(element.className).toContain('text-red')
   })
 
   test('Should render a success variant', () => {
     const { element } = setup({ variant: 'success' })
-    expect(element.className).toContain('text-green-400')
+    expect(element.className).toContain('text-green')
   })
 
   test('Should render a primary variant', () => {

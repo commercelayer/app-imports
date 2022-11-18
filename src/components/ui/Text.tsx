@@ -21,13 +21,13 @@ export function Text({
 }: TextProps): JSX.Element {
   const computedClassName = cn(className, {
     // variant
-    'text-green-400': variant === 'success',
-    'text-red-400': variant === 'danger',
+    'text-green': variant === 'success',
+    'text-red': variant === 'danger',
     'text-primary': variant === 'primary',
     'text-gray-500': variant === 'info',
     // size
     'text-sm': size === 'small',
-    'text-lg': size === 'large'
+    'text-title': size === 'large'
   })
   return tag === 'span' ? (
     <span {...rest} className={computedClassName}>

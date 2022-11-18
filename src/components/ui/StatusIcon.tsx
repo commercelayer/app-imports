@@ -96,7 +96,7 @@ const ProgressCircle = ({
 const SuccessCircle = (): JSX.Element => (
   <div
     data-test-id='icon-success'
-    className='flex justify-center align-middle text-center items-center w-full h-full rounded-full bg-green-400 border-green-400 border text-white'
+    className='flex justify-center align-middle text-center items-center w-full h-full rounded-full bg-green border-green border text-white'
   >
     <Check />
   </div>
@@ -112,7 +112,7 @@ const PendingCircle = (): JSX.Element => (
 const DangerCircle = (): JSX.Element => (
   <div
     data-test-id='icon-danger'
-    className='flex justify-center align-middle text-center items-center w-full h-full rounded-full bg-red-400 border-red-400 border text-white'
+    className='flex justify-center align-middle text-center items-center w-full h-full rounded-full bg-red border-red border text-white'
   >
     <X />
   </div>
