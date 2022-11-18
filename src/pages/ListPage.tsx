@@ -13,6 +13,7 @@ import { showResourceNiceName } from '#data/resources'
 import { DescriptionLine } from '#components/List/ItemDescriptionLine'
 import { PageLayout } from '#components/ui/PageLayout'
 import { PageSkeleton } from '#components/ui/PageSkeleton'
+import { A } from '#components/ui/A'
 
 function ListPage(): JSX.Element {
   const { sdkClient, dashboardUrl } = useTokenProvider()
@@ -71,9 +72,7 @@ function ListPage(): JSX.Element {
               }
               actionButton={
                 <Link href={appRoutes.selectResource.makePath()}>
-                  <Button variant='link' className='text-primary'>
-                    New import
-                  </Button>
+                  <A>New import</A>
                 </Link>
               }
               pagination={{
