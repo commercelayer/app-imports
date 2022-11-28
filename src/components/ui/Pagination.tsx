@@ -20,21 +20,23 @@ export function Pagination({
 }: PaginationProps): JSX.Element | null {
   const nextPages = makeSomeAdjacentPages({
     currentPage,
-    adjacentPagesCount: 3,
+    // we want to show always 3 buttons, so on first page we need 2 next pages
+    adjacentPagesCount: currentPage === 1 ? 2 : 1,
     pageCount,
-    direction: 'forward'
+    direction: 'forward',
+    excludeCurrentPage: true
   })
 
   const prevPages = makeSomeAdjacentPages({
     currentPage,
-    adjacentPagesCount: 3,
+    adjacentPagesCount: 1,
     pageCount,
     direction: 'backward',
     excludeCurrentPage: true
   })
 
   // hide pagination if is only 1 page
-  if (nextPages.length === 1 && currentPage === 1) {
+  if (nextPages.length === 0 && currentPage === 1) {
     return null
   }
 
@@ -57,6 +59,7 @@ export function Pagination({
           <CaretLeft />
         </PaginationButton>
       ) : null}
+
       {prevPages.map((p) => (
         <PaginationButton
           key={p}
@@ -66,6 +69,11 @@ export function Pagination({
           {p}
         </PaginationButton>
       ))}
+
+      <PaginationButton data-test-id='pagination-btn' isActive>
+        {currentPage}
+      </PaginationButton>
+
       {nextPages.map((p) => {
         const isCurrentPage = p === currentPage
         return (
@@ -105,9 +113,9 @@ function PaginationButton({
     <button
       {...props}
       className={cn([
-        'border border-gray-500 text text-sm rounded w-10 h-10 flex items-center justify-center',
+        'border border-gray-100 text text-sm text-gray-500 font-medium rounded w-[46px] h-[38px] flex items-center justify-center',
         {
-          'border-2 border-black text-black font-bold': isActive
+          'border-2 border-black text-black': isActive
         }
       ])}
     >

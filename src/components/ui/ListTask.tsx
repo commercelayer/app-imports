@@ -39,8 +39,8 @@ export function ListTask({
     return (
       <Skeleton>
         <div className='flex justify-between pb-4'>
-          <SkeletonItem className='w-32 h-10' />
-          <SkeletonItem className='w-32 h-10' />
+          <SkeletonItem className='w-32 h-6' />
+          <SkeletonItem className='w-24 h-6' />
         </div>
         <SkeletonItem className='w-full h-16 mb-2' />
         <SkeletonItem className='w-full h-16 mb-2' />
@@ -77,8 +77,8 @@ export function ListTask({
         {children}
       </div>
       {pagination != null && offsets != null ? (
-        <div className='flex mt-auto items-center justify-between py-9'>
-          <div className='text-gray-500 font-medium mt'>
+        <div className='flex mt-auto items-center justify-between pt-9 pb-24'>
+          <div className='text-gray-500 font-medium text-sm'>
             {offsets.firstOfPage}-{offsets.lastOfPage} of{' '}
             {pagination.recordCount}
           </div>
