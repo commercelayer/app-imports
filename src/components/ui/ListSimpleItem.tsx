@@ -11,9 +11,9 @@ export function ListSimpleItem({
   return (
     <a
       {...rest}
-      className='flex justify-between px-5 py-5 border-b border-gray-100 text-gray-800 font-semibold hover:opacity-70 '
+      className='flex justify-between items-center px-4 py-4 border-b border-gray-100 text-gray-800 font-semibold hover:bg-gray-50'
     >
-      {label}
+      <div>{label}</div>
       <CaretRight />
     </a>
   )
