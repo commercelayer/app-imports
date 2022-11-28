@@ -7,7 +7,7 @@ export function A({ className, children, ...rest }: Props): JSX.Element {
     <a
       className={cn([
         className,
-        'text-primary font-bold outline-0 outline-offset-4 outline-primary-light hover:text-primary-light border-primary-light'
+        'text-primary font-bold outline-0 outline-offset-4 outline-primary-light hover:text-primary-light border-primary-light cursor-pointer'
       ])}
       {...rest}
     >

@@ -46,7 +46,7 @@ export function Button({
     <button
       className={cn([
         className,
-        'text-sm leading-none rounded text-center font-semibold transition-bg duration-500 focus:outline-none',
+        'text-sm rounded text-center font-bold transition-opacity duration-500 focus:outline-none',
         { 'opacity-50 pointer-events-none touch-none': disabled },
         sizeCss[size],
         variantCss[variant]
