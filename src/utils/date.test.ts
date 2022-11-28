@@ -13,7 +13,12 @@ describe('formatDate', () => {
 
   test('Should accept a date with time', () => {
     const d = '2022-10-26T16:16:31.279Z'
-    expect(formatDate(d, true)).toBe('Oct 26, 2022 · 6:16 PM')
+    expect(formatDate(d, true, 'UTC')).toBe('Oct 26, 2022 · 4:16 PM')
+  })
+
+  test('Should accept a specic timezone override', () => {
+    const d = '2022-10-26T16:16:31.279Z'
+    expect(formatDate(d, false, 'Australia/Sydney')).toBe('Oct 27, 2022')
   })
 
   test('Should not break when date format is wrong', () => {
