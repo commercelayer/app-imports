@@ -37,10 +37,10 @@ export function InputFile({
         className='inset-0 absolute opacity-0 z-10 cursor-pointer'
       />
       <UploadSimple className='text-3xl mb-2' />
-      <div className='font-medium'>{label}</div>
+      <div className='font-semibold text-sm text-gray-800'>{label}</div>
       <div className='text-sm'>
         drag and drop it here or{' '}
-        <span className='text-primary font-medium group-hover:underline'>
+        <span className='text-primary font-semibold group-hover:underline'>
           browse files
         </span>
       </div>

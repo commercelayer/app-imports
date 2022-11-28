@@ -145,7 +145,9 @@ function NewImportPage(): JSX.Element {
         <div>
           <InputToggleBox
             id='toggle-cleanup'
-            label='Deletes all the prices that are not in the import'
+            label={`Deletes all the ${showResourceNiceName(
+              resourceType
+            ).toLowerCase()} that are not in the import`}
             description='Be careful, this action cannot be undone.'
             isChecked={cleanupRecords}
             onToggle={setCleanupRecords}
