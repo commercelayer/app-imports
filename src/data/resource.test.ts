@@ -2,7 +2,7 @@ import { showResourceNiceName, getParentResourceIfNeeded } from './resources'
 
 describe('showResourceNiceName', () => {
   test('Should return the full resource name', () => {
-    expect(showResourceNiceName('sku_lists')).toBe('SKU Lists')
+    expect(showResourceNiceName('sku_lists')).toBe('SKU lists')
   })
 
   test('Should return the the id name if not found in dictionary', () => {

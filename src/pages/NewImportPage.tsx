@@ -21,6 +21,8 @@ import { PageLayout } from '#components/ui/PageLayout'
 import { FormFooter } from '#components/ui/FormFooter'
 import { PageSkeleton } from '#components/ui/PageSkeleton'
 import { PageError } from '#components/ui/PageError'
+import { Text } from '#components/ui/Text'
+import { Label } from '#components/ui/Label'
 
 function NewImportPage(): JSX.Element {
   const { sdkClient } = useTokenProvider()
@@ -28,6 +30,7 @@ function NewImportPage(): JSX.Element {
   const [_match, params] = useRoute(appRoutes.newImport.path)
   const [_location, setLocation] = useLocation()
 
+  const [isTouched, setIsTouched] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [cleanupRecords, setCleanupRecords] = useState(false)
   const [parentResourceId, setParentResourceId] = useState<string | null>()
@@ -88,20 +91,26 @@ function NewImportPage(): JSX.Element {
 
   return (
     <PageLayout
-      title={`Import ${showResourceNiceName(resourceType)}`}
+      title={`Import ${showResourceNiceName(resourceType).toLowerCase()}`}
       onGoBack={() => {
         setLocation(appRoutes.selectResource.makePath())
       }}
     >
       {parentResource !== false && (
-        <ResourceFinder
-          label={showResourceNiceName(parentResource)}
-          placeholder='Type to select parent resource'
-          resourceType={parentResource}
-          sdkClient={sdkClient}
-          className='mb-14'
-          onSelect={setParentResourceId}
-        />
+        <div className='mb-14'>
+          <ResourceFinder
+            label={showResourceNiceName(parentResource)}
+            placeholder='Type to select parent resource'
+            resourceType={parentResource}
+            sdkClient={sdkClient}
+            onSelect={setParentResourceId}
+          />
+          {parentResourceId == null && isTouched ? (
+            <Text variant='danger' size='small'>
+              Please select a parent resource
+            </Text>
+          ) : null}
+        </div>
       )}
       <Tabs id='tab-import-input' className='mb-14' keepAlive>
         <Tab name='Upload file'>
@@ -130,18 +139,18 @@ function NewImportPage(): JSX.Element {
       ) : null}
 
       <div className='mb-14'>
-        <InputToggleBox
-          id='toggle-cleanup'
-          label='Cleanup records'
-          description={
-            <>
-              Deletes all the resources that are not in the import. <br />
-              Be careful, this action cannot be undone.
-            </>
-          }
-          isChecked={cleanupRecords}
-          onToggle={setCleanupRecords}
-        />
+        <Label gap htmlFor='toggle-cleanup'>
+          More options
+        </Label>
+        <div>
+          <InputToggleBox
+            id='toggle-cleanup'
+            label='Deletes all the prices that are not in the import'
+            description='Be careful, this action cannot be undone.'
+            isChecked={cleanupRecords}
+            onToggle={setCleanupRecords}
+          />
+        </div>
       </div>
 
       <FormFooter
@@ -151,17 +160,18 @@ function NewImportPage(): JSX.Element {
             className='btn'
             variant='primary'
             onClick={() => {
+              setIsTouched(true)
+              if (!canCreateImport) {
+                return
+              }
               void createImportTask(parentResourceId ?? undefined)
             }}
-            disabled={!canCreateImport || isLoading}
+            disabled={isLoading}
           >
-            {isLoading ? 'Loading...' : 'Start Import'}
+            {isLoading
+              ? 'Importing...'
+              : `Import ${showResourceNiceName(resourceType).toLowerCase()}`}
           </Button>
-        }
-        buttonCancel={
-          <Link href={appRoutes.list.makePath()}>
-            <Button variant='link'>Cancel</Button>
-          </Link>
         }
       />
     </PageLayout>

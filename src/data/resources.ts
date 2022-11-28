@@ -35,14 +35,14 @@ const resourceNiceName: Record<AllowedResourceType, string> = {
   skus: 'SKUs',
   prices: 'Prices',
   coupons: 'Coupons',
-  sku_lists: 'SKU Lists',
-  sku_options: 'SKU Options',
-  customer_subscriptions: 'Customer Subscriptions',
+  sku_lists: 'SKU lists',
+  sku_options: 'SKU options',
+  customer_subscriptions: 'Customer subscriptions',
   customers: 'Customers',
-  gift_cards: 'Gift Cards',
-  stock_items: 'Stock Items',
-  tax_categories: 'Tax Categories',
-  shipping_categories: 'Shipping Categories',
+  gift_cards: 'Gift cards',
+  stock_items: 'Stock items',
+  tax_categories: 'Tax categories',
+  shipping_categories: 'Shipping categories',
   orders: 'Orders'
 }
 
@@ -51,11 +51,11 @@ const resourceNiceName: Record<AllowedResourceType, string> = {
  */
 const parentResourceNiceName: Record<AllowedParentResource, string> = {
   markets: 'Market',
-  promotion_rules: 'Promotion Rule',
+  promotion_rules: 'Promotion rule',
   price_lists: 'Price list',
-  stock_locations: 'Stock Location',
+  stock_locations: 'Stock location',
   tax_calculators: 'Tax calculator',
-  sku_lists: 'Sku List'
+  sku_lists: 'Sku list'
 }
 
 /**
