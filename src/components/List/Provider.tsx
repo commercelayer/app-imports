@@ -60,9 +60,16 @@ export function ListImportProvider({
   const fetchList = useCallback(
     async ({ handleLoadingState }: { handleLoadingState: boolean }) => {
       handleLoadingState && dispatch({ type: 'setLoading', payload: true })
-      const list = await getAllImports({ cl: sdkClient, state, pageSize })
-      dispatch({ type: 'setList', payload: list })
-      handleLoadingState && dispatch({ type: 'setLoading', payload: false })
+      try {
+        const list = await getAllImports({
+          cl: sdkClient,
+          state,
+          pageSize
+        })
+        dispatch({ type: 'setList', payload: list })
+      } finally {
+        handleLoadingState && dispatch({ type: 'setLoading', payload: false })
+      }
     },
     [state.currentPage, state.filters]
   )

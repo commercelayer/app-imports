@@ -30,7 +30,7 @@ function ListPage(): JSX.Element {
         window.location.href = dashboardUrl != null ? dashboardUrl : '/'
       }}
     >
-      <ListImportProvider sdkClient={sdkClient} pageSize={10}>
+      <ListImportProvider sdkClient={sdkClient} pageSize={25}>
         {({ state, changePage, deleteImport }) => {
           const { isLoading, currentPage, list } = state
 
@@ -39,7 +39,11 @@ function ListPage(): JSX.Element {
           }
 
           if (list == null) {
-            return <div>Error</div>
+            return (
+              <div>
+                <EmptyState title='Unable to load list' />
+              </div>
+            )
           }
 
           if (list.length === 0) {

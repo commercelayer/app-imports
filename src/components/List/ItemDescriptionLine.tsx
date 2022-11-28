@@ -1,4 +1,3 @@
-import { Text } from '#components/ui/Text'
 import { formatDate } from '#utils/date'
 import { getProgressPercentage } from '#utils/getProgressPercentage'
 import { Import } from '@commercelayer/sdk'
@@ -25,15 +24,11 @@ export function DescriptionLine({ job }: Props): JSX.Element {
           percentage.formatted
         )
       ) : job.status === 'interrupted' ? (
-        <div>
-          <Text variant='danger'>Import failed</Text> on{' '}
-          {formatDate(job.updated_at)}
-        </div>
+        <div>Import failed on {formatDate(job.updated_at)}</div>
       ) : job.status === 'completed' ? (
         errorsCount != null ? (
           <div>
-            Imported with <Text variant='danger'>{errorsCount}</Text> error
-            {errorsCount > 1 ? 's' : ''}
+            Imported with {errorsCount} error{errorsCount > 1 ? 's' : ''}
           </div>
         ) : (
           <div>Imported on {formatDate(job.completed_at)}</div>
