@@ -3,9 +3,10 @@ import cn from 'classnames'
 import { Pagination, PaginationProps } from './Pagination'
 import { makeCurrentPageOffsets } from '#components/List/utils'
 import { Skeleton, SkeletonItem } from './Skeleton'
+import { Legend } from './Legend'
 
 export interface ListTaskProps {
-  title?: ReactNode
+  title?: string
   actionButton?: ReactNode
   isDisabled?: boolean
   children?: ReactNode
@@ -50,12 +51,24 @@ export function ListTask({
     )
   }
 
+  const computedTitle =
+    title != null && pagination != null && offsets != null
+      ? computeTitleWithPagination({
+          title,
+          currentPage: pagination.currentPage,
+          recordCount: pagination.recordCount,
+          firstOfPage: offsets.firstOfPage,
+          lastOfPage: offsets.lastOfPage
+        })
+      : title
+
   return (
     <div className='flex flex-col flex-1' {...rest}>
-      <div className='flex justify-between items-center pb-4 border-b border-gray-100'>
-        <h2 className='text-gray-500'>{title}</h2>
-        <div>{actionButton}</div>
-      </div>
+      <Legend
+        title={computedTitle}
+        actionButton={actionButton}
+        data-test-id='list-task-legend'
+      />
       <div
         className={cn({
           'opacity-40 pointer-events-none touch-none': isDisabled
@@ -81,4 +94,24 @@ export function ListTask({
       ) : null}
     </div>
   )
+}
+
+function computeTitleWithPagination({
+  title,
+  firstOfPage,
+  lastOfPage,
+  recordCount,
+  currentPage
+}: {
+  title: string
+  firstOfPage: number
+  lastOfPage: number
+  recordCount: number
+  currentPage: number
+}): string {
+  if (currentPage === 1) {
+    return `${title} · ${recordCount}`
+  }
+
+  return `${title} · ${firstOfPage}-${lastOfPage} of ${recordCount}`
 }

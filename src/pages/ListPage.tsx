@@ -5,7 +5,6 @@ import { Link, useLocation } from 'wouter'
 import { ListImportProvider } from '#components/List/Provider'
 import { EmptyState } from '#components/ui/EmptyState'
 import { getUiStatus } from '#components/List/utils'
-import { TotalCount } from '#components/List/TotalCount'
 import { ListTask } from '#components/ui/ListTask'
 import { ListTaskItem } from '#components/ui/ListTaskItem'
 import { getProgressPercentage } from '#utils/getProgressPercentage'
@@ -65,11 +64,7 @@ function ListPage(): JSX.Element {
           return (
             <ListTask
               isDisabled={isRefetching}
-              title={
-                <div>
-                  All imports · <TotalCount />
-                </div>
-              }
+              title='All Imports'
               actionButton={
                 <Link href={appRoutes.selectResource.makePath()}>
                   <A>New import</A>

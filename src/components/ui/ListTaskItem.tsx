@@ -22,7 +22,8 @@ export function ListTaskItem({
 }: ListTaskItemProps): JSX.Element {
   return (
     <div
-      className='flex gap-4 px-2 sm:px-5 py-5 border-b border-gray-100 last:border-b-0'
+      className='flex gap-4 px-3 sm:px-5 py-4 border-b border-gray-100 last:border-b-0 hover:cursor-pointer hover:bg-gray-50'
+      onClick={onClick}
       {...rest}
     >
       <div className='scale-75 sm:scale-100'>
@@ -32,8 +33,8 @@ export function ListTaskItem({
         />
       </div>
 
-      <div className='leading-none flex flex-col justify-between items-start'>
-        <button onClick={onClick} className='font-semibold hover:underline'>
+      <div className='flex flex-col justify-between items-start'>
+        <button className='font-semibold'>
           <h4 data-test-id='list-task-item-title'>{title}</h4>
         </button>
         {description != null && (
@@ -51,7 +52,10 @@ export function ListTaskItem({
           <Button
             variant='danger'
             size='small'
-            onClick={onCancelRequest}
+            onClick={(e) => {
+              e.stopPropagation()
+              onCancelRequest()
+            }}
             data-test-id='list-task-item-btn-cancel'
           >
             Cancel
@@ -60,7 +64,6 @@ export function ListTaskItem({
           <Button
             variant='link'
             size='small'
-            onClick={onClick}
             data-test-id='list-task-item-btn-view'
           >
             <CaretRight />
