@@ -1,8 +1,13 @@
-import { InputAutosuggest } from '#ui/InputAutosuggest'
+import {
+  InputSelect,
+  isSingleValueSelected,
+  SelectValue
+} from '#components/ui/InputSelect'
 import { Label } from '#ui/Label'
 import { CommerceLayerClient } from '@commercelayer/sdk'
 import { AllowedParentResource, AllowedResourceType } from 'App'
-import { fetchResourcesByHint } from './utils'
+import { useEffect, useState } from 'react'
+import { fetchInitialResources, fetchResourcesByHint } from './utils'
 
 interface Props {
   /**
@@ -39,23 +44,38 @@ export function ResourceFinder({
   className,
   onSelect
 }: Props): JSX.Element {
+  const [isLoading, setIsLoading] = useState(true)
+  const [initialValues, setInitialValues] = useState<SelectValue[]>([])
+  useEffect(() => {
+    if (resourceType == null) {
+      return
+    }
+    setIsLoading(true)
+    fetchInitialResources(sdkClient, resourceType)
+      .then(setInitialValues)
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }, [resourceType])
+
   return (
     <div className={className}>
       <Label gap htmlFor='parent-resource'>
         {label}
       </Label>
-      <InputAutosuggest
-        id='resource-finder'
+      <InputSelect
+        initialValues={initialValues}
         placeholder={placeholder}
-        searchFunction={async (hint) =>
-          await fetchResourcesByHint(sdkClient, hint, resourceType)
-        }
+        isLoading={isLoading}
         onSelect={(selected) => {
           if (onSelect != null) {
-            const selectedId: string | null =
-              selected != null ? `${selected.id}` : null
-            onSelect(selectedId)
+            onSelect(
+              isSingleValueSelected(selected) ? `${selected.value}` : null
+            )
           }
+        }}
+        loadAsyncValues={async (hint) => {
+          return await fetchResourcesByHint(sdkClient, hint, resourceType)
         }}
       />
     </div>

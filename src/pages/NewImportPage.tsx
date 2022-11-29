@@ -1,7 +1,6 @@
 import { ImportCreate } from '@commercelayer/sdk'
 import { AllowedResourceType } from 'App'
 import { useState } from 'react'
-
 import { InputParser } from '#components/InputParser'
 import { ResourceFinder } from '#components/ResourceFinder'
 import {
@@ -17,12 +16,12 @@ import { Tab, Tabs } from '#ui/Tabs'
 import { InputCode } from '#components/InputCode'
 import { ImportPreview } from '#components/ImportPreview'
 import { InputToggleBox } from '#ui/InputToggleBox'
-import { PageLayout } from '#components/ui/PageLayout'
-import { FormFooter } from '#components/ui/FormFooter'
-import { PageSkeleton } from '#components/ui/PageSkeleton'
-import { PageError } from '#components/ui/PageError'
-import { Text } from '#components/ui/Text'
-import { Label } from '#components/ui/Label'
+import { PageLayout } from '#ui/PageLayout'
+import { FormFooter } from '#ui/FormFooter'
+import { PageSkeleton } from '#ui/PageSkeleton'
+import { PageError } from '#ui/PageError'
+import { Text } from '#ui/Text'
+import { Label } from '#ui/Label'
 
 function NewImportPage(): JSX.Element {
   const { sdkClient } = useTokenProvider()
@@ -112,6 +111,7 @@ function NewImportPage(): JSX.Element {
           ) : null}
         </div>
       )}
+
       <Tabs id='tab-import-input' className='mb-14' keepAlive>
         <Tab name='Upload file'>
           <InputParser
