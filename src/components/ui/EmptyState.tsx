@@ -18,18 +18,20 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        'bg-gray-50 flex flex-col p-14 min-h-[300px] rounded-lg',
+        'flex flex-col p-6 lg:p-14   bg-gray-50 border-gray-50 rounded-md overflow-hidden shadow-lg',
         className
       )}
       {...rest}
     >
-      <h4 className='font-semibold text-title mb-4'>{title}</h4>
+      <h4 className='text-black font-semibold text-2xl mb-4'>{title}</h4>
 
       {description != null ? (
-        <div className='font-medium text-gray-500'>{description}</div>
+        <div className='font-medium text-gray-500 text-lg'>{description}</div>
       ) : null}
 
       {action !== null ? <div className='mt-16'>{action}</div> : null}
+
+      <div className='pt-20' />
     </div>
   )
 }
