@@ -51,6 +51,23 @@ describe('Table', () => {
     expect(getByText('This is a title')).toBeInTheDocument()
   })
 
+  test('Should show total count', () => {
+    const { getByTestId } = setup({
+      data: [
+        {
+          first_name: 'George',
+          last_name: 'Harrison'
+        },
+        {
+          first_name: 'Ringo',
+          last_name: 'Start'
+        }
+      ],
+      showTotal: true
+    })
+    expect(getByTestId('table-total-string')).toBeInTheDocument()
+  })
+
   test('Should render all headers', () => {
     const { element, getByTestId } = setup({
       data: [
@@ -91,7 +108,8 @@ describe('Table', () => {
           last_name: 'Lennon'
         }
       ],
-      limit: 2
+      limit: 2,
+      showOthers: true
     })
     expect(getAllByTestId('table-row-content').length).toBe(2)
     expect(getByText('and others 2 records')).toBeVisible()

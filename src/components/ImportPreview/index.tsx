@@ -19,7 +19,13 @@ export function ImportPreview({
       errorTitle='We were unable to show the preview'
       errorDescription='Try to upload a different file'
     >
-      <Table title={title} data={data} limit={limit} className={className} />
+      <Table
+        title={title}
+        data={data}
+        limit={limit}
+        showTotal
+        className={className}
+      />
     </ErrorBoundary>
   )
 }

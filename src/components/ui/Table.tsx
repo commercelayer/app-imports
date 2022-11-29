@@ -7,6 +7,8 @@ export interface TableProps {
   className?: string
   limit?: number
   title?: string
+  showTotal?: boolean
+  showOthers?: boolean
 }
 
 export function Table({
@@ -14,6 +16,8 @@ export function Table({
   className,
   limit,
   title,
+  showTotal,
+  showOthers,
   ...rest
 }: TableProps): JSX.Element {
   const headings = extractHeaders(data)
@@ -22,7 +26,18 @@ export function Table({
 
   return (
     <div className={cn('overflow-x-auto pb-3', className)} {...rest}>
-      {title != null ? <h2 className='font-semibold mb-2'>{title}</h2> : null}
+      <div className='flex justify-between'>
+        {title != null ? (
+          <h2 className='font-semibold mb-2'>{title}</h2>
+        ) : (
+          <div />
+        )}
+        {showTotal === true ? (
+          <div className='text-sm' data-test-id='table-total-string'>
+            {data.length} records
+          </div>
+        ) : null}
+      </div>
       <table className='w-full rounded overflow-hidden'>
         <thead>
           <tr data-test-id='table-row-header'>
@@ -48,8 +63,11 @@ export function Table({
           ))}
         </tbody>
       </table>
-      {othersCount > 0 ? (
-        <div className='py-4 font-bold' data-test-id='table-others-string'>
+      {othersCount > 0 && showOthers === true ? (
+        <div
+          className='py-4 text-sm text-right'
+          data-test-id='table-others-string'
+        >
           {othersCount === 1
             ? 'and another record'
             : `and others ${othersCount} records`}
