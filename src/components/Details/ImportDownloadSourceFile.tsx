@@ -16,7 +16,11 @@ export function ImportDownloadSourceFile({
     state: { data }
   } = useImportDetailsContext()
 
-  if (data?.attachment_url == null) {
+  if (
+    data?.attachment_url == null ||
+    data?.processed_count == null ||
+    data.processed_count === 0
+  ) {
     return null
   }
 

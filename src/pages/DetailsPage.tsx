@@ -12,7 +12,6 @@ import { RowDetail } from '#components/Details/RowDetail'
 import { ImportStatusBadge } from '#components/Details/ImportStatusBadge'
 import { formatDate } from '#utils/date'
 import { ImportParentResource } from '#components/Details/ImportParentResource'
-import { Button } from '#ui/Button'
 import { PageLayout } from '#components/ui/PageLayout'
 import { ErrorNotFound } from '#components/ErrorNotFound'
 import { PageSkeleton } from '#components/ui/PageSkeleton'
@@ -34,7 +33,7 @@ const DetailsPage = (): JSX.Element | null => {
 
   return (
     <ImportDetailsProvider sdkClient={sdkClient} importId={importId}>
-      {({ state: { isLoading, isDeleting, data }, deleteImport }) =>
+      {({ state: { isLoading, data } }) =>
         isLoading ? (
           <PageSkeleton layout='details' hasHeaderDescription />
         ) : data == null ? (
@@ -63,7 +62,10 @@ const DetailsPage = (): JSX.Element | null => {
                     type='processed_count'
                     className='font-semibold text-xl font-xl pt-1 pb-4'
                   />
-                  <ImportDownloadSourceFile className='text-sm font-bold text-primary hover:underline' />
+                  <ImportDownloadSourceFile
+                    label='Download CSV file'
+                    className='text-sm font-bold text-primary hover:underline'
+                  />
                 </div>
                 <div className='flex-1 flex flex-col items-start py-4 px-6 border-l border-gray-100'>
                   <Label className='font-sm text-gray-500'>Errors</Label>
@@ -110,21 +112,6 @@ const DetailsPage = (): JSX.Element | null => {
                   {formatDate(data.updated_at, true)}
                 </RowDetail>
               ) : null}
-            </div>
-
-            <div className='mb-14 flex justify-start'>
-              <Button
-                variant='danger'
-                size='small'
-                disabled={isDeleting}
-                onClick={() => {
-                  void deleteImport().then((success) => {
-                    success && setLocation(appRoutes.list.makePath())
-                  })
-                }}
-              >
-                Delete
-              </Button>
             </div>
           </PageLayout>
         )
