@@ -52,6 +52,7 @@
   },
   "include": [
     "src",
+    "vitePlugins",
     "*.config.ts",
     "*.config.js",
     "@typing/**/*.d.ts"
