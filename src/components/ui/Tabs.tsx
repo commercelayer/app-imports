@@ -133,7 +133,7 @@ function TabNav({
     <div
       id={id}
       className={cn(
-        'text-center py-4 cursor-pointer font-medium transition-all duration-300 mb-[-1px]',
+        'text-center pb-4 leading-6 cursor-pointer font-medium transition-all duration-300 -mb-[2px]',
         {
           'border-b-black border-b-2 text-black': isActive,
           'border-b-transparent border-b-2 text-gray-500': !isActive

@@ -38,7 +38,7 @@ export function PageHeading({
       ) : null}
       <h1 className='font-semibold text-title leading-title'>{title}</h1>
       {description !== null && (
-        <div className='text-gray-500'>{description}</div>
+        <div className='text-gray-500 leading-6 pt-2'>{description}</div>
       )}
     </div>
   )

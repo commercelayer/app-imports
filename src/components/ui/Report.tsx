@@ -26,13 +26,13 @@ export function Report({
 }: ReportProps): JSX.Element {
   if (isLoading === true) {
     return (
-      <div {...rest} className='border-t border-b border-gray-100 py-8 mb-14'>
+      <div {...rest} className='border-t border-b border-gray-100 py-6 mb-14'>
         <Skeleton>
           <div className='flex' data-test-id='report-loading-items'>
             {[...Array(loadingLines).keys()].map((_, idx) => (
               <div
                 key={`report-loading-${idx}`}
-                className='flex-1 flex flex-col items-start py-4 px-6 border-l border-gray-100 first:border-l-0'
+                className='flex-1 flex flex-col items-start py-2 px-4 border-l border-gray-100 first:border-l-0'
               >
                 <SkeletonItem className='h-6 w-20' />
                 <SkeletonItem className='h-[30px] w-8 mt-1 mb-4' />
@@ -46,15 +46,15 @@ export function Report({
   }
 
   return (
-    <div {...rest} className='border-t border-b border-gray-100 py-8 mb-14'>
+    <div {...rest} className='border-t border-b border-gray-100 py-6 mb-14'>
       <div className='flex'>
         {items.map((item, idx) => (
           <div
             data-test-id={`report-item-${idx}`}
             key={`report-item-${idx}`}
-            className='flex-1 flex flex-col items-start py-4 px-6 border-l border-gray-100 first:border-l-0'
+            className='flex-1 flex flex-col items-start py-2 px-4 border-l border-gray-100 first:border-l-0'
           >
-            <Label className='font-sm text-gray-500'>{item.label}</Label>
+            <Label className='text-sm text-gray-500'>{item.label}</Label>
             <div
               className='font-semibold text-xl font-xl pt-1 pb-4'
               data-test-id={`report-item-${idx}-count`}

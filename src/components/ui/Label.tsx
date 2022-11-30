@@ -13,7 +13,7 @@ export function Label({
   return (
     <label
       {...rest}
-      className={cn('block font-semibold', className, {
+      className={cn('block font-semibold leading-6', className, {
         'mb-2': gap
       })}
     >

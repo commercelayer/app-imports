@@ -25,7 +25,7 @@ export function InputToggleBox({
     >
       <div className='flex justify-between items-start gap-5'>
         <div>
-          <label htmlFor={id} className='text-sm font-semibold'>
+          <label htmlFor={id} className='font-semibold'>
             {label}
           </label>
           {description != null ? (

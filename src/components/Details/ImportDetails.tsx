@@ -22,10 +22,6 @@ export function ImportDetails({ sdkClient }: Props): JSX.Element | null {
 
   return (
     <DetailsList title='Details'>
-      <DetailsRow label='ID'>{data.id}</DetailsRow>
-      <DetailsRow label='Resource type'>
-        <ImportedResourceType />
-      </DetailsRow>
       <RowParentResource sdkClient={sdkClient} />
       {data.status != null ? (
         <DetailsRow label='Status'>

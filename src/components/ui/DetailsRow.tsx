@@ -18,7 +18,7 @@ export function DetailsRow({
       className='border-t last-of-type:border-b border-gray-100 py-4 px-3 flex gap-6'
       {...rest}
     >
-      <div className='w-1/3 font-medium text-gray-500'>{label}</div>
+      <div className='w-1/3 font-medium text-gray-500 text-[15px]'>{label}</div>
       <div className='flex-1 font-semibold'>
         {isLoading === true ? (
           <Skeleton>

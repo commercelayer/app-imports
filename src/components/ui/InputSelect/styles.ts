@@ -42,6 +42,11 @@ const selectStyles: StylesConfig<SelectValue> = {
     ...style,
     padding: '0 1rem'
   }),
+  singleValue: (style) => ({
+    ...style,
+    fontWeight: 600,
+    fontSize: '1rem'
+  }),
   control: (style) => ({
     ...style,
     minHeight: '2.75rem',

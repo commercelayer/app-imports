@@ -36,7 +36,7 @@ export function InputFile({
         {...rest}
         className='inset-0 absolute opacity-0 z-10 cursor-pointer'
       />
-      <UploadSimple className='text-3xl mb-2' />
+      <UploadSimple className='mb-2' size={32} />
       <div className='font-semibold text-sm text-gray-800'>{label}</div>
       <div className='text-sm'>
         drag and drop it here or{' '}
