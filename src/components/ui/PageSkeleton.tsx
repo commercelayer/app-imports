@@ -1,4 +1,5 @@
 import { Container } from './Container'
+import { DetailsList } from './DetailsList'
 import { ListTask } from './ListTask'
 import { Skeleton, SkeletonItem } from './Skeleton'
 
@@ -25,7 +26,13 @@ export function PageSkeleton({
           </div>
         </div>
 
-        {layout === 'list' ? <ListTask isLoading /> : null}
+        {layout === 'list' ? (
+          <ListTask isLoading />
+        ) : layout === 'details' ? (
+          <DetailsList title='Details' isLoading loadingLines={4}>
+            <div />
+          </DetailsList>
+        ) : null}
       </Skeleton>
     </Container>
   )

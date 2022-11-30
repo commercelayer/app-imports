@@ -32,7 +32,7 @@ export function Badge({
       {...rest}
       className={cn([
         className,
-        'text-[11px] font-bold leading-none py-1 px-2 rounded-full',
+        'text-[11px] font-bold leading-none py-1 px-2 rounded-full inline-block',
         variantCss[variant]
       ])}
     >

@@ -5,17 +5,15 @@ interface Props {
   job: Import
 }
 
-export function ImportStatusBadge({ job }: Props): JSX.Element {
+export function StatusBadge({ job }: Props): JSX.Element {
   const errorsCount =
     job.errors_count != null && job.errors_count > 0
       ? job.errors_count
       : undefined
 
   return (
-    <div className='flex flex-col gap-2 items-start w-full'>
-      <div>
-        <Badge {...getUiStatusVariant(job.status, errorsCount)} />
-      </div>
+    <div>
+      <Badge {...getUiStatusVariant(job.status, errorsCount)} />
     </div>
   )
 }

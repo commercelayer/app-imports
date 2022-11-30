@@ -4,17 +4,18 @@ import { ImportDate } from '#components/Details/ImportDate'
 import { useTokenProvider } from '#components/TokenProvider'
 import { appRoutes } from '#data/routes'
 import { useLocation, useRoute } from 'wouter'
-import { Label } from '#ui/Label'
 import { ImportCount } from '#components/Details/ImportCount'
 import { ImportDownloadLogAsFile } from '#components/Details/ImportDownloadLogAsFile'
 import { ImportDownloadSourceFile } from '#components/Details/ImportDownloadSourceFile'
-import { RowDetail } from '#components/Details/RowDetail'
-import { ImportStatusBadge } from '#components/Details/ImportStatusBadge'
-import { formatDate } from '#utils/date'
-import { ImportParentResource } from '#components/Details/ImportParentResource'
-import { PageLayout } from '#components/ui/PageLayout'
+import { DetailsRow } from '#ui/DetailsRow'
+import { Label } from '#ui/Label'
+import { PageLayout } from '#ui/PageLayout'
+import { PageSkeleton } from '#ui/PageSkeleton'
+import { StatusBadge } from '#components/Details/StatusBadge'
 import { ErrorNotFound } from '#components/ErrorNotFound'
-import { PageSkeleton } from '#components/ui/PageSkeleton'
+import { RowParentResource } from '#components/Details/RowParentResource'
+import { formatDate } from '#utils/date'
+import { DetailsList } from '#components/ui/DetailsList'
 
 const DetailsPage = (): JSX.Element | null => {
   const { sdkClient } = useTokenProvider()
@@ -28,7 +29,7 @@ const DetailsPage = (): JSX.Element | null => {
 
   if (sdkClient == null) {
     console.warn('Waiting for SDK client')
-    return <PageSkeleton />
+    return <PageSkeleton layout='details' />
   }
 
   return (
@@ -82,37 +83,28 @@ const DetailsPage = (): JSX.Element | null => {
               </div>
             </div>
 
-            <h4 className='text-[18px] font-semibold mb-4'>Details</h4>
-            <div className='mb-10'>
-              <RowDetail label='ID'>{data.id}</RowDetail>
-              <RowDetail label='Resource type'>
+            <DetailsList title='Details' className='mb-10'>
+              <DetailsRow label='ID'>{data.id}</DetailsRow>
+              <DetailsRow label='Resource type'>
                 <ImportedResourceType />
-              </RowDetail>
-              {data.parent_resource_id != null && data.resource_type != null ? (
-                <RowDetail label='Parent resource'>
-                  <ImportParentResource
-                    sdkClient={sdkClient}
-                    parentResourceId={data.parent_resource_id}
-                    childResourceType={data.resource_type}
-                  />
-                </RowDetail>
-              ) : null}
+              </DetailsRow>
+              <RowParentResource sdkClient={sdkClient} />
               {data.status != null ? (
-                <RowDetail label='Status'>
-                  <ImportStatusBadge job={data} />
-                </RowDetail>
+                <DetailsRow label='Status'>
+                  <StatusBadge job={data} />
+                </DetailsRow>
               ) : null}
               {data.completed_at != null ? (
-                <RowDetail label='Completed at'>
+                <DetailsRow label='Completed at'>
                   {formatDate(data.completed_at, true)}
-                </RowDetail>
+                </DetailsRow>
               ) : null}
               {data.updated_at != null && data.completed_at == null ? (
-                <RowDetail label='Last update'>
+                <DetailsRow label='Last update'>
                   {formatDate(data.updated_at, true)}
-                </RowDetail>
+                </DetailsRow>
               ) : null}
-            </div>
+            </DetailsList>
           </PageLayout>
         )
       }
