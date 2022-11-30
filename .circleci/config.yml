@@ -42,10 +42,11 @@ jobs:
           aws-access-key-id: AWS_ACCESS_KEY
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           from: dist
-          to: "s3://$S3_ASSETS_BUCKET/$CIRCLE_PROJECT_REPONAME/<<pipeline.git.tag>>"
+          to: "s3://$S3_ASSETS_BUCKET/team/$CIRCLE_PROJECT_REPONAME/<<pipeline.git.tag>>"
 
 workflows:
-  version: 2.1
+  version: 2
+  
   run-tests:
     jobs:
       - test:
