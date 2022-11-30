@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import { Skeleton, SkeletonItem } from './Skeleton'
 
 export interface DetailsListProps {
-  title: string
+  title?: string
   children?: ReactNode
   className?: string
   isLoading?: boolean
@@ -23,7 +23,7 @@ export function DetailsList({
           <h4 className='text-[18px] font-semibold mb-4'>
             <SkeletonItem className='h-7 w-32' />
           </h4>
-          <div data-test-id='details-list-rows'>
+          <div data-test-id='details-list-loading-rows'>
             {[...Array(loadingLines).keys()].map((_, idx) => (
               <SkeletonItem
                 key={`details-loading-${idx}`}
@@ -38,12 +38,14 @@ export function DetailsList({
 
   return (
     <div {...rest}>
-      <h4
-        className='text-[18px] font-semibold mb-4'
-        data-test-id='details-list-title'
-      >
-        {title}
-      </h4>
+      {title != null ? (
+        <h4
+          className='text-[18px] font-semibold mb-4'
+          data-test-id='details-list-title'
+        >
+          {title}
+        </h4>
+      ) : null}
       <div data-test-id='details-list-rows'>{children}</div>
     </div>
   )

@@ -37,7 +37,7 @@ export function ListTask({
 
   if (isLoading === true) {
     return (
-      <Skeleton>
+      <Skeleton {...rest}>
         <div className='flex justify-between pb-4'>
           <SkeletonItem className='w-32 h-6' />
           <SkeletonItem className='w-24 h-6' />

@@ -1,8 +1,17 @@
 import cn from 'classnames'
 import { ReactNode } from 'react'
 
-export function Skeleton({ children }: { children: ReactNode }): JSX.Element {
-  return <div className='animate-pulse'>{children}</div>
+export function Skeleton({
+  children,
+  ...rest
+}: {
+  children: ReactNode
+}): JSX.Element {
+  return (
+    <div {...rest} className='animate-pulse'>
+      {children}
+    </div>
+  )
 }
 
 interface SkeletonItemProps {

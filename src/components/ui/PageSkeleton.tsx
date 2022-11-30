@@ -22,18 +22,21 @@ export function PageSkeleton({
             <SkeletonItem className='w-8 h-8 mb-2' />
             <SkeletonItem className='w-36 h-8' />
             {hasHeaderDescription === true && (
-              <SkeletonItem className='w-36 h-5 mt-2' />
+              <SkeletonItem
+                data-test-id='loading-header-description'
+                className='w-36 h-5 mt-2'
+              />
             )}
           </div>
         </div>
 
         {layout === 'list' ? (
-          <ListTask isLoading />
+          <ListTask data-test-id='loading-list' isLoading />
         ) : layout === 'details' ? (
-          <>
+          <div data-test-id='loading-details'>
             <Report isLoading loadingLines={2} items={[]} />
             <DetailsList title='Details' isLoading loadingLines={4} />
-          </>
+          </div>
         ) : null}
       </Skeleton>
     </Container>
