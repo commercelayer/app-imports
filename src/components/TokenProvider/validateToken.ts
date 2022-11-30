@@ -21,11 +21,13 @@ export function isTokenExpired({
 
 export async function isValidTokenForCurrentApp({
   accessToken,
-  clientKind
+  clientKind,
+  domain
 }: {
   accessToken: string
   clientKind: string
   currentApp: string
+  domain: string
 }): Promise<boolean> {
   const { slug, kind } = getInfoFromJwt(accessToken)
   const isValidKind = kind === clientKind
@@ -37,13 +39,17 @@ export async function isValidTokenForCurrentApp({
     return false
   }
 
-  // TODO: implement async verification against tokeninfo endpoint
-  const tokenInfoResponse = await fetch(
-    `https://${slug}.${import.meta.env.PUBLIC_DOMAIN ?? ''}/oauth/tokeninfo`,
-    { method: 'GET', headers: { authorization: `Bearer ${accessToken}` } }
-  )
-  const tokenInfo = await tokenInfoResponse.json()
-  console.log('tokenInfo', tokenInfo)
+  try {
+    // TODO: implement async verification against tokeninfo endpoint
+    const tokenInfoResponse = await fetch(
+      `https://${slug}.${domain}/oauth/tokeninfo`,
+      { method: 'GET', headers: { authorization: `Bearer ${accessToken}` } }
+    )
+    const tokenInfo = await tokenInfoResponse.json()
+    console.log('tokenInfo', tokenInfo)
 
-  return isValidKind && isValidSlug
+    return isValidKind && isValidSlug
+  } catch {
+    return false
+  }
 }

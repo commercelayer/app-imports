@@ -25,7 +25,7 @@ export type CurrentApp = 'imports' | 'exports' | 'webhooks'
 interface TokenProviderProps {
   clientKind: 'integration' | 'sales_channel' | 'webapp'
   currentApp: CurrentApp
-  domain?: string
+  domain: string
   onInvalidAuth: (info: { dashboardUrl: string; reason: string }) => void
   loadingElement?: ReactNode
   errorElement?: ReactNode
@@ -88,7 +88,8 @@ function TokenProvider({
       const isTokenValid = await isValidTokenForCurrentApp({
         accessToken,
         clientKind,
-        currentApp
+        currentApp,
+        domain
       })
 
       if (isTokenValid) {
