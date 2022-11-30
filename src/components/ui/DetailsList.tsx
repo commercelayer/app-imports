@@ -3,7 +3,7 @@ import { Skeleton, SkeletonItem } from './Skeleton'
 
 export interface DetailsListProps {
   title: string
-  children: ReactNode
+  children?: ReactNode
   className?: string
   isLoading?: boolean
   loadingLines?: number
@@ -27,7 +27,7 @@ export function DetailsList({
             {[...Array(loadingLines).keys()].map((_, idx) => (
               <SkeletonItem
                 key={`details-loading-${idx}`}
-                className='h-[53px] w-full mb-1'
+                className='h-[53px] w-full mb-1 last:mb-0'
               />
             ))}
           </div>
