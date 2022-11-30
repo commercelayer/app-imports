@@ -32,7 +32,7 @@ function prepareFileContent(): string {
 
 function generateFile({ distFolder, fileName }: GenerateFileParams): void {
   const filePath = resolve(__dirname, '..', distFolder, fileName)
-  writeFile(filePath, prepareFileContent(), (err) => {
+  writeFile(filePath, prepareFileContent(), { flag: 'w' }, (err) => {
     if (err != null) {
       throw err
     }
