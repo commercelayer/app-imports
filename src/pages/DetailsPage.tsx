@@ -83,28 +83,30 @@ const DetailsPage = (): JSX.Element | null => {
               </div>
             </div>
 
-            <DetailsList title='Details' className='mb-10'>
-              <DetailsRow label='ID'>{data.id}</DetailsRow>
-              <DetailsRow label='Resource type'>
-                <ImportedResourceType />
-              </DetailsRow>
-              <RowParentResource sdkClient={sdkClient} />
-              {data.status != null ? (
-                <DetailsRow label='Status'>
-                  <StatusBadge job={data} />
+            <div className='mb-10'>
+              <DetailsList title='Details'>
+                <DetailsRow label='ID'>{data.id}</DetailsRow>
+                <DetailsRow label='Resource type'>
+                  <ImportedResourceType />
                 </DetailsRow>
-              ) : null}
-              {data.completed_at != null ? (
-                <DetailsRow label='Completed at'>
-                  {formatDate(data.completed_at, true)}
-                </DetailsRow>
-              ) : null}
-              {data.updated_at != null && data.completed_at == null ? (
-                <DetailsRow label='Last update'>
-                  {formatDate(data.updated_at, true)}
-                </DetailsRow>
-              ) : null}
-            </DetailsList>
+                <RowParentResource sdkClient={sdkClient} />
+                {data.status != null ? (
+                  <DetailsRow label='Status'>
+                    <StatusBadge job={data} />
+                  </DetailsRow>
+                ) : null}
+                {data.completed_at != null ? (
+                  <DetailsRow label='Completed at'>
+                    {formatDate(data.completed_at, true)}
+                  </DetailsRow>
+                ) : null}
+                {data.updated_at != null && data.completed_at == null ? (
+                  <DetailsRow label='Last update'>
+                    {formatDate(data.updated_at, true)}
+                  </DetailsRow>
+                ) : null}
+              </DetailsList>
+            </div>
           </PageLayout>
         )
       }

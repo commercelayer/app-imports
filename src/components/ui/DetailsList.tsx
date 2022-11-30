@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import { Skeleton, SkeletonItem } from './Skeleton'
 
-interface DetailsListProps {
+export interface DetailsListProps {
   title: string
   children: ReactNode
   className?: string
@@ -23,12 +23,14 @@ export function DetailsList({
           <h4 className='text-[18px] font-semibold mb-4'>
             <SkeletonItem className='h-7 w-32' />
           </h4>
-          {[...Array(loadingLines).keys()].map((_, idx) => (
-            <SkeletonItem
-              key={`loading-${idx}`}
-              className='h-[53px] w-full mb-1'
-            />
-          ))}
+          <div data-test-id='details-list-rows'>
+            {[...Array(loadingLines).keys()].map((_, idx) => (
+              <SkeletonItem
+                key={`details-loading-${idx}`}
+                className='h-[53px] w-full mb-1'
+              />
+            ))}
+          </div>
         </Skeleton>
       </div>
     )
@@ -36,8 +38,13 @@ export function DetailsList({
 
   return (
     <div {...rest}>
-      <h4 className='text-[18px] font-semibold mb-4'>{title}</h4>
-      <div>{children}</div>
+      <h4
+        className='text-[18px] font-semibold mb-4'
+        data-test-id='details-list-title'
+      >
+        {title}
+      </h4>
+      <div data-test-id='details-list-rows'>{children}</div>
     </div>
   )
 }

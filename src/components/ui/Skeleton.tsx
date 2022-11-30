@@ -12,10 +12,12 @@ interface SkeletonItemProps {
 
 export function SkeletonItem({
   className,
-  type = 'box'
+  type = 'box',
+  ...rest
 }: SkeletonItemProps): JSX.Element {
   return (
     <div
+      {...rest}
       className={cn(className, {
         'bg-gray-200': true,
         'rounded-full': type === 'circle',
