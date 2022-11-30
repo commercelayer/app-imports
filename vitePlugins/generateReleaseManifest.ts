@@ -1,7 +1,7 @@
 import { execSync } from 'child_process'
 import { writeFile } from 'fs'
 import { resolve } from 'path'
-import { Plugin } from 'vite'
+import { Plugin, ResolvedConfig } from 'vite'
 
 interface Options {
   fileName: string
@@ -41,17 +41,20 @@ function generateFile({ distFolder, fileName }: GenerateFileParams): void {
 }
 
 function generateReleaseManifestPlugin(options: Options): Plugin {
-  let distFolder: string
+  let viteConfig: ResolvedConfig
 
   return {
     name: 'vite-plugin-generate-release-manifest',
     configResolved(resolvedConfig) {
-      distFolder = resolvedConfig.build.outDir
+      viteConfig = resolvedConfig
     },
 
     closeBundle() {
+      if (viteConfig.command !== 'build') {
+        return
+      }
       generateFile({
-        distFolder,
+        distFolder: viteConfig.build.outDir,
         fileName: options.fileName
       })
     }
