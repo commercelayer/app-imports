@@ -70,26 +70,6 @@ workflows:
           context: commercelayer
           filters:
             tags:
-              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/
-            branches:
-              ignore: /.*/
-
-  test-build-and-push-beta:
-    jobs:
-      - test:
-          context: commercelayer
-          filters:
-            tags:
-              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-beta.*/
-            branches:
-              ignore: /.*/
-      - build:
-          public-domain: commercelayer.co
-          requires:
-            - test
-          context: commercelayer
-          filters:
-            tags:
-              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-beta.*/
+              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*).*/
             branches:
               ignore: /.*/
