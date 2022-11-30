@@ -1,12 +1,14 @@
+import { PageError } from '#components/ui/PageError'
 import { createContext, ReactNode, useEffect, useState } from 'react'
+import { z, ZodType } from 'zod'
 
 interface RuntimeConfigContextValue {
-  domain?: string
+  domain: string
 }
 
-const RuntimeConfigContext = createContext<RuntimeConfigContextValue>({
-  domain: undefined
-})
+const RuntimeConfigContext = createContext<RuntimeConfigContextValue | null>(
+  null
+)
 
 interface RuntimeConfigProviderProps {
   children: ((props: RuntimeConfigContextValue) => ReactNode) | ReactNode
@@ -16,15 +18,13 @@ export function RuntimeConfigProvider({
   children
 }: RuntimeConfigProviderProps): JSX.Element | null {
   const [isLoading, setIsLoading] = useState(true)
-  const [value, setValue] = useState<RuntimeConfigContextValue>({})
+  const [value, setValue] = useState<RuntimeConfigContextValue | null>(null)
 
   useEffect(() => {
     fetch('/config.json')
       .then(async (r) => await r.json())
       .then((cfg) => {
-        setValue({
-          domain: parseFlatJsonValue(cfg.domain)
-        })
+        setValue(parseConfig(cfg))
       })
       .catch((e) => console.error(e))
       .finally(() => setIsLoading(false))
@@ -34,6 +34,15 @@ export function RuntimeConfigProvider({
     return null
   }
 
+  if ((!isLoading && value == null) || value == null) {
+    return (
+      <PageError
+        errorName='Invalid configuration'
+        errorDescription='It seems we could not find the required configuration for the current environment'
+      />
+    )
+  }
+
   return (
     <RuntimeConfigContext.Provider value={value}>
       {typeof children === 'function' ? children(value) : children}
@@ -41,6 +50,15 @@ export function RuntimeConfigProvider({
   )
 }
 
-function parseFlatJsonValue(value: any): string | undefined {
-  return typeof value === 'string' ? value : undefined
+function parseConfig(
+  configFromJson: unknown
+): RuntimeConfigContextValue | null {
+  const configSchema: ZodType<RuntimeConfigContextValue> = z.object({
+    domain: z.string().min(10)
+  })
+  try {
+    return configSchema.parse(configFromJson)
+  } catch (err) {
+    return null
+  }
 }
