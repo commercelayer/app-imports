@@ -21,7 +21,11 @@ export function RuntimeConfigProvider({
   const [value, setValue] = useState<RuntimeConfigContextValue | null>(null)
 
   useEffect(() => {
-    fetch('/config.json')
+    const basePath =
+      import.meta.env.PUBLIC_PROJECT_PATH != null
+        ? `/${import.meta.env.PUBLIC_PROJECT_PATH}`
+        : ''
+    fetch(`${basePath}/config.json`)
       .then(async (r) => await r.json())
       .then((cfg) => {
         setValue(parseConfig(cfg))

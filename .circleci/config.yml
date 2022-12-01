@@ -28,7 +28,7 @@ jobs:
   build:
     <<: *image
     environment:
-      PROJECT_PATH: imports
+      PUBLIC_PROJECT_PATH: imports
     steps:
       - checkout
       - <<: *setup

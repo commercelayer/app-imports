@@ -4,13 +4,18 @@ import { ErrorNotFound } from '#components/ErrorNotFound'
 import TokenProvider from '#components/TokenProvider'
 import { PageSkeleton } from '#components/ui/PageSkeleton'
 import { appRoutes } from '#data/routes'
-import { Route, Switch } from 'wouter'
+import { Router, Route, Switch } from 'wouter'
 import DetailsPage from './pages/DetailsPage'
 import ListPage from './pages/ListPage'
 import NewImportPage from './pages/NewImportPage'
 import { ResourceSelectorPage } from './pages/ResourceSelectorPage'
 
 function App(): JSX.Element {
+  const basePath =
+    import.meta.env.PUBLIC_PROJECT_PATH != null
+      ? `/${import.meta.env.PUBLIC_PROJECT_PATH}`
+      : undefined
+
   return (
     <ErrorBoundary hasContainer>
       <RuntimeConfigProvider>
@@ -24,23 +29,25 @@ function App(): JSX.Element {
             }}
             loadingElement={<PageSkeleton />}
           >
-            <Switch>
-              <Route path={appRoutes.list.path}>
-                <ListPage />
-              </Route>
-              <Route path={appRoutes.selectResource.path}>
-                <ResourceSelectorPage />
-              </Route>
-              <Route path={appRoutes.newImport.path}>
-                <NewImportPage />
-              </Route>
-              <Route path={appRoutes.details.path}>
-                <DetailsPage />
-              </Route>
-              <Route>
-                <ErrorNotFound />
-              </Route>
-            </Switch>
+            <Router base={basePath}>
+              <Switch>
+                <Route path={appRoutes.list.path}>
+                  <ListPage />
+                </Route>
+                <Route path={appRoutes.selectResource.path}>
+                  <ResourceSelectorPage />
+                </Route>
+                <Route path={appRoutes.newImport.path}>
+                  <NewImportPage />
+                </Route>
+                <Route path={appRoutes.details.path}>
+                  <DetailsPage />
+                </Route>
+                <Route>
+                  <ErrorNotFound />
+                </Route>
+              </Switch>
+            </Router>
           </TokenProvider>
         )}
       </RuntimeConfigProvider>
