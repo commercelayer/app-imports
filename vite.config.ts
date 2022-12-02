@@ -2,7 +2,6 @@ import { defineConfig } from 'vitest/config'
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 import react from '@vitejs/plugin-react'
 import path from 'path'
-import generateReleaseManifestPlugin from './vitePlugins/generateReleaseManifest'
 import { loadEnv } from 'vite'
 
 // https://vitejs.dev/config/
@@ -12,12 +11,7 @@ export default defineConfig(({ mode }) => {
     env.PUBLIC_PROJECT_PATH != null ? `/${env.PUBLIC_PROJECT_PATH}` : ''
 
   return {
-    plugins: [
-      react(),
-      generateReleaseManifestPlugin({
-        fileName: 'release.json'
-      })
-    ],
+    plugins: [react()],
     envPrefix: 'PUBLIC_',
     base: `${basePath}/`,
     build: {
