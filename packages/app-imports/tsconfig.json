@@ -54,6 +54,8 @@
     "src",
     "*.config.ts",
     "*.config.js",
+    "*.config.cjs",
+    ".eslintrc.cjs",
     "@typing/**/*.d.ts"
   ],
   "references": [
