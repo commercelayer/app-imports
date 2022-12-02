@@ -13,7 +13,6 @@ setup: &setup
       name: Setup
       command: |
         sudo npm install -g pnpm
-        pnpm install eslint
         pnpm install
 
 jobs:
