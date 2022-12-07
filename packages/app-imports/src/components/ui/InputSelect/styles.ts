@@ -18,7 +18,7 @@ const selectStyles: StylesConfig<SelectValue> = {
     backgroundColor: isSelected
       ? '#666EFF'
       : isFocused
-      ? 'rgb(248 248 248)'
+      ? 'rgba(102,110,255,0.1)'
       : '#fff',
     color: isSelected ? '#fff' : 'rgb(40 41 41)',
     fontSize: 14,
@@ -56,6 +56,7 @@ const selectStyles: StylesConfig<SelectValue> = {
     cursor: 'pointer',
     '&:hover, &:focus-within': {
       borderColor: '#666EFF',
+      borderWidth: 2,
       outline: 'none',
       boxShadow: 'none'
     }
