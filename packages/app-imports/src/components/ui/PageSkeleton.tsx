@@ -7,15 +7,17 @@ import { Skeleton, SkeletonItem } from './Skeleton'
 interface PageSkeletonProps {
   layout?: 'list' | 'details'
   hasHeaderDescription?: boolean
+  delayMs?: number
 }
 
 export function PageSkeleton({
   layout,
-  hasHeaderDescription
+  hasHeaderDescription,
+  delayMs
 }: PageSkeletonProps): JSX.Element {
   return (
     <Container data-test-id='page-skeleton'>
-      <Skeleton>
+      <Skeleton delayMs={delayMs}>
         {/* PageHeading */}
         <div className='pt-10 pb-14'>
           <div>

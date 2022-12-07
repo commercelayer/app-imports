@@ -1,15 +1,18 @@
 import cn from 'classnames'
 import { ReactNode } from 'react'
+import { DelayShow } from './DelayShow'
 
 export function Skeleton({
   children,
+  delayMs = 500,
   ...rest
 }: {
   children: ReactNode
+  delayMs?: number
 }): JSX.Element {
   return (
     <div {...rest} className='animate-pulse'>
-      {children}
+      <DelayShow delayMs={delayMs}>{children}</DelayShow>
     </div>
   )
 }
@@ -27,8 +30,7 @@ export function SkeletonItem({
   return (
     <div
       {...rest}
-      className={cn(className, {
-        'bg-gray-200': true,
+      className={cn(className, 'bg-gray-50', {
         'rounded-full': type === 'circle',
         rounded: type === 'box'
       })}
