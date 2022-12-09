@@ -12,8 +12,7 @@ import {
   useEffect,
   useReducer,
   useContext,
-  useRef,
-  useState
+  useRef
 } from 'react'
 
 import { initialValues, initialState } from './data'
@@ -37,16 +36,6 @@ export function ListImportProvider({
 }: ListImportProviderProps): JSX.Element {
   const [state, dispatch] = useReducer(reducer, initialState)
   const intervalId = useRef<NodeJS.Timer | null>(null)
-
-  const [deleteQueue, _setDeleteQueue] = useState<Set<string>>(new Set())
-  const addToDeleteQueue = useCallback(
-    (importId: string) => {
-      const newSet = new Set(deleteQueue)
-      newSet.add(importId)
-      _setDeleteQueue(newSet)
-    },
-    [deleteQueue]
-  )
 
   const changePage = useCallback(
     (page: number) => dispatch({ type: 'changePage', payload: page }),
@@ -75,7 +64,6 @@ export function ListImportProvider({
   )
 
   const deleteImport = (importId: string): void => {
-    addToDeleteQueue(importId)
     sdkClient.imports
       .delete(importId)
       .catch(() => {
@@ -133,8 +121,7 @@ export function ListImportProvider({
     state,
     changePage,
     updateFilter,
-    deleteImport,
-    deleteQueue
+    deleteImport
   }
 
   return (

@@ -17,7 +17,6 @@ declare module 'App' {
     changePage: (page: number) => void
     updateFilter: (filter: UpdateFilterOptions) => void
     deleteImport: (importId: string) => void
-    deleteQueue: Set<string>
   }
 
   export type ListImportAllowedStatusType =

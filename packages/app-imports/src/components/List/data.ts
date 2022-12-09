@@ -13,6 +13,5 @@ export const initialValues: ListImportContextValue = {
   state: initialState,
   changePage: () => undefined,
   updateFilter: () => undefined,
-  deleteImport: () => undefined,
-  deleteQueue: new Set()
+  deleteImport: () => undefined
 }
