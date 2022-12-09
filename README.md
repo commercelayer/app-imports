@@ -1,3 +1,5 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/commercelayer/core-app-imports/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/commercelayer/core-app-imports/tree/master)
+
 # core-app-imports
 
 ## Tests and build
@@ -9,13 +11,13 @@ Paramenters are assigned to an env variable in the build section of the `.circle
 
 build section:
 
-```js
+```yaml
     ...
     parameters:
-      public-domain:
+      PUBLIC_PROJECT_PATH:
         type: string
     environment:
-      PUBLIC_DOMAIN: << parameters.public-domain >>
+      PUBLIC_PROJECT_PATH: << parameters.PUBLIC_PROJECT_PATH >>
     ...
 ```
 
@@ -27,5 +29,5 @@ workflows section:
         public-domain: commercelayer.co
         requires:
             - test
-    ...        
+    ...
 ```
