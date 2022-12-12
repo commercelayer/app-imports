@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  aws-s3: circleci/aws-s3@3.0.0
+  aws-s3: circleci/aws-s3@3.1.1
 
 image: &image
   docker:
@@ -22,27 +22,28 @@ jobs:
       - checkout
       - <<: *setup
       - run:
-          name: Test 
+          name: Test
           command: pnpm test
   build:
     <<: *image
+    parameters:
+      public_project_path:
+        type: string
     environment:
-      PUBLIC_PROJECT_PATH: imports
+      PUBLIC_PROJECT_PATH: << parameters.public_project_path >>
     steps:
       - checkout
       - <<: *setup
       - run:
-          name: Build 
+          name: Build
           command: pnpm build
       - aws-s3/sync:
           aws-access-key-id: AWS_ACCESS_KEY
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           from: packages/app-imports/dist
-          to: "s3://$S3_ASSETS_BUCKET/team/fe-static-apps/$PUBLIC_PROJECT_PATH/<<pipeline.git.tag>>"
+          to: "s3://$S3_ASSETS_BUCKET/team/fe-static-apps/$PROJECT/<< pipeline.git.tag >>"
 
 workflows:
-  version: 2
-  
   run-tests:
     jobs:
       - test:
@@ -50,22 +51,43 @@ workflows:
           filters:
             tags:
               ignore: /v.*/
-  
+
   test-build-and-push:
     jobs:
       - test:
           context: commercelayer
           filters:
             tags:
-              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*).*/
+              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)((?!adm).)*/
             branches:
               ignore: /.*/
       - build:
+          public_project_path: $PROJECT
           requires:
             - test
           context: commercelayer
           filters:
             tags:
-              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*).*/
+              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)((?!adm).)*/
+            branches:
+              ignore: /.*/
+
+  test-build-and-push-adm:
+    jobs:
+      - test:
+          context: commercelayer
+          filters:
+            tags:
+              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-adm\.([0-9]\d*)/
+            branches:
+              ignore: /.*/
+      - build:
+          public_project_path: $PROJECT/<< pipeline.git.tag >>
+          requires:
+            - test
+          context: commercelayer
+          filters:
+            tags:
+              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-adm\.([0-9]\d*)/
             branches:
               ignore: /.*/
