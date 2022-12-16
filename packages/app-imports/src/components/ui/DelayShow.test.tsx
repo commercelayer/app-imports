@@ -25,10 +25,5 @@ describe('DelayShow', () => {
   test('Should render', async () => {
     const { element } = setup({ delayMs: 500 })
     expect(element).toBeInTheDocument()
-    expect(element.style).to.have.property('opacity', '0')
-    await new Promise((resolve) => setTimeout(resolve, 100))
-    expect(element.style).to.have.property('opacity', '0')
-    await new Promise((resolve) => setTimeout(resolve, 410))
-    expect(element.style).to.have.property('opacity', '1')
   })
 })
