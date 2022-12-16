@@ -31,6 +31,7 @@ jobs:
         type: string
     environment:
       PUBLIC_PROJECT_PATH: << parameters.public_project_path >>
+      FOLDER: imports
     steps:
       - checkout
       - <<: *setup
@@ -41,7 +42,7 @@ jobs:
           aws-access-key-id: AWS_ACCESS_KEY
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           from: packages/app-imports/dist
-          to: "s3://$S3_ASSETS_BUCKET/team/fe-static-apps/$PROJECT/<< pipeline.git.tag >>"
+          to: "s3://$S3_ASSETS_BUCKET/team/fe-static-apps/$FOLDER/<< pipeline.git.tag >>"
 
 workflows:
   run-tests:
@@ -62,7 +63,7 @@ workflows:
             branches:
               ignore: /.*/
       - build:
-          public_project_path: $PROJECT
+          public_project_path: imports
           requires:
             - test
           context: commercelayer
@@ -82,7 +83,7 @@ workflows:
             branches:
               ignore: /.*/
       - build:
-          public_project_path: $PROJECT/<< pipeline.git.tag >>
+          public_project_path: imports/<< pipeline.git.tag >>
           requires:
             - test
           context: commercelayer
