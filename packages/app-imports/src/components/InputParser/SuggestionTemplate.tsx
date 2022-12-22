@@ -1,7 +1,6 @@
-import { A } from '#components/ui/A'
-import { InputHelperText } from '#components/ui/InputHelperText'
 import { AllowedResourceType } from 'App'
 import { downloadTemplateAsCsvFile } from './templates'
+import { A, InputHelperText } from '@commercelayer/core-app-elements'
 
 interface Props {
   resourceType: AllowedResourceType

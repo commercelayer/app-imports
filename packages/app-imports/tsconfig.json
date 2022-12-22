@@ -43,9 +43,6 @@
       ],
       "#schemas/*": [
         "src/schemas/*"
-      ],
-      "#ui/*": [
-        "src/components/ui/*"
       ]
     },
     "incremental": true

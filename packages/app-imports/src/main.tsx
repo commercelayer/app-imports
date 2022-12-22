@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import '#styles/globals.css'
+// import '#styles/globals.css'
+import '@commercelayer/core-app-elements/style.css'
 
 // init mswjs mock service worker
 if (import.meta.env.PUBLIC_ENABLE_MOCKS === 'true' && import.meta.env.DEV) {

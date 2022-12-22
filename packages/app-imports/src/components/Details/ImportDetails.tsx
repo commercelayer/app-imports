@@ -1,6 +1,8 @@
-import { DetailsList } from '#ui/DetailsList'
-import { DetailsRow } from '#ui/DetailsRow'
-import { formatDate } from '#utils/date'
+import {
+  ListDetailsItem,
+  ListDetails,
+  formatDate
+} from '@commercelayer/core-app-elements'
 import { CommerceLayerClient } from '@commercelayer/sdk'
 import { useImportDetailsContext } from './Provider'
 import { RowParentResource } from './RowParentResource'
@@ -20,23 +22,23 @@ export function ImportDetails({ sdkClient }: Props): JSX.Element | null {
   }
 
   return (
-    <DetailsList title='Details'>
+    <ListDetails title='Details'>
       <RowParentResource sdkClient={sdkClient} />
       {data.status != null ? (
-        <DetailsRow label='Status'>
+        <ListDetailsItem label='Status'>
           <StatusBadge job={data} />
-        </DetailsRow>
+        </ListDetailsItem>
       ) : null}
       {data.completed_at != null ? (
-        <DetailsRow label='Completed at'>
+        <ListDetailsItem label='Completed at'>
           {formatDate(data.completed_at, true)}
-        </DetailsRow>
+        </ListDetailsItem>
       ) : null}
       {data.updated_at != null && data.completed_at == null ? (
-        <DetailsRow label='Last update'>
+        <ListDetailsItem label='Last update'>
           {formatDate(data.updated_at, true)}
-        </DetailsRow>
+        </ListDetailsItem>
       ) : null}
-    </DetailsList>
+    </ListDetails>
   )
 }

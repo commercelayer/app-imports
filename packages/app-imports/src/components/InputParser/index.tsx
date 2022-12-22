@@ -1,5 +1,3 @@
-import { Text } from '#components/ui/Text'
-import { InputFile } from '#ui/InputFile'
 import { ImportCreate } from '@commercelayer/sdk'
 import { AllowedResourceType } from 'App'
 import { isEmpty } from 'lodash-es'
@@ -10,6 +8,7 @@ import { ZodIssue } from 'zod'
 import { adapters } from './adapters'
 import { parsers, isMakeSchemaFn } from './schemas'
 import { SuggestionTemplate } from './SuggestionTemplate'
+import { InputFile, Spacer, Text } from '@commercelayer/core-app-elements'
 
 const importMaxSize = 10_000
 
@@ -113,17 +112,18 @@ export const InputParser: FC<Props> = ({
 
   return (
     <div>
-      <InputFile
-        className='mb-4'
-        label='Select a csv or json to upload'
-        onChange={(e) => {
-          if (e.target.files != null && !isParsing) {
-            setFile(e.target.files[0])
-          }
-        }}
-        disabled={isParsing}
-        progress={file != null ? 100 : 0}
-      />
+      <Spacer bottom='4'>
+        <InputFile
+          label='Select a csv or json to upload'
+          onChange={(e) => {
+            if (e.target.files != null && !isParsing) {
+              setFile(e.target.files[0])
+            }
+          }}
+          disabled={isParsing}
+          progress={file != null ? 100 : 0}
+        />
+      </Spacer>
 
       {file == null ? (
         <SuggestionTemplate resourceType={resourceType} />
@@ -138,10 +138,10 @@ export const InputParser: FC<Props> = ({
 
       <Text variant='danger' size='small'>
         {typeof errorMessage === 'string' && (
-          <div className='mt-2'>{errorMessage}</div>
+          <Spacer top='2'>{errorMessage}</Spacer>
         )}
         {errorList != null && errorList.length > 0 ? (
-          <div className='mt-2'>
+          <Spacer top='2'>
             {errorList.slice(0, 5).map((issue, idx) => (
               <p key={idx}>
                 Row {issue.path[0]} - {issue.message}
@@ -150,7 +150,7 @@ export const InputParser: FC<Props> = ({
             {errorList.length > 5 ? (
               <p>We found other errors not listed here</p>
             ) : null}
-          </div>
+          </Spacer>
         ) : null}
       </Text>
     </div>

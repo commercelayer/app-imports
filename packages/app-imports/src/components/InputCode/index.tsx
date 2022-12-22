@@ -1,15 +1,20 @@
-import { ErrorBoundary } from '#components/ErrorBoundary'
+import { ErrorBoundary, InputJson } from '@commercelayer/core-app-elements'
 import { ImportCreate } from '@commercelayer/sdk'
-import { isEmpty } from 'lodash-es'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+
+type ImportJsonData = ImportCreate['inputs']
 
 interface Props {
-  onDataReady: (jsonInput: ImportCreate['inputs']) => void
+  onDataReady: (jsonInput: ImportJsonData) => void
   onDataResetRequest: () => void
 }
 
-export function InputCode(props: Props): JSX.Element {
+export function InputCode({
+  onDataReady,
+  onDataResetRequest
+}: Props): JSX.Element {
   const [renderKey, setRenderKey] = useState<number | undefined>(undefined)
+
   return (
     <ErrorBoundary
       errorDescription='We could not parse your input. Please try again.'
@@ -18,76 +23,21 @@ export function InputCode(props: Props): JSX.Element {
       }}
       key={renderKey}
     >
-      <InputCodeComponent {...props} />
+      <InputJson<ImportJsonData>
+        placeholder={placehoder}
+        onDataReady={(validInput) => onDataReady(validInput)}
+        onDataResetRequest={onDataResetRequest}
+        validateFn={(maybeJson) => maybeJson.inputs}
+      />
     </ErrorBoundary>
   )
 }
 
-function InputCodeComponent({
-  onDataReady,
-  onDataResetRequest
-}: Props): JSX.Element {
-  const [value, setValue] = useState('')
-  const [errorMessage, setErrorMessage] = useState<string | null>()
-
-  useEffect(
-    function parseValueAsJson() {
-      setErrorMessage(null)
-      if (isEmpty(value)) {
-        onDataResetRequest()
-        return
-      }
-      try {
-        const json = JSON.parse(value)
-        const importCreate = json.inputs as ImportCreate['inputs']
-        onDataReady(importCreate)
-      } catch (e) {
-        onDataResetRequest()
-        setErrorMessage('Invalid JSON')
-      }
-    },
-    [value]
-  )
-
-  return (
-    <div>
-      <textarea
-        data-gramm='false'
-        placeholder={preparePlacehoder()}
-        value={value}
-        onChange={(e) => setValue(e.currentTarget.value)}
-        onBlur={() => {
-          setValue((val) => prettifyJson(val))
-        }}
-        className='bg-black text-white font-semibold text-xs font-mono h-72 p-3 w-full rounded-md outline-none'
-      />
-      {errorMessage !== null ? (
-        <div className='text-sm text-red px-2'>{errorMessage}</div>
-      ) : null}
-    </div>
-  )
-}
-
-function preparePlacehoder(): string {
-  const content = JSON.stringify(
+const placehoder = {
+  inputs: [
     {
-      inputs: [
-        {
-          code: 'ABC',
-          name: 'Foo'
-        }
-      ]
-    },
-    null,
-    2
-  )
-  return `Example: \n${content}`
-}
-
-function prettifyJson(maybeJsonString: string): string {
-  try {
-    return JSON.stringify(JSON.parse(maybeJsonString), null, 2)
-  } catch {
-    return maybeJsonString
-  }
+      code: 'ABC',
+      name: 'Foo'
+    }
+  ]
 }

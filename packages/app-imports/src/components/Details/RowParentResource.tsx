@@ -1,4 +1,4 @@
-import { DetailsRow } from '#ui/DetailsRow'
+import { ListDetailsItem } from '@commercelayer/core-app-elements'
 import {
   getParentResourceIfNeeded,
   showResourceNiceName
@@ -65,11 +65,11 @@ export function RowParentResource({ sdkClient }: Props): JSX.Element | null {
   return (
     <>
       {data.parent_resource_id != null && data.resource_type != null ? (
-        <DetailsRow label='Parent resource' isLoading={isLoading}>
+        <ListDetailsItem label='Parent resource' isLoading={isLoading}>
           <div title={showResourceNiceName(parentResouceType)}>
             {parentResourceName}
           </div>
-        </DetailsRow>
+        </ListDetailsItem>
       ) : null}
     </>
   )

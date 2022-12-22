@@ -1,14 +1,16 @@
 import { RuntimeConfigProvider } from '#components/RuntimeConfigProvider'
-import { ErrorBoundary } from '#components/ErrorBoundary'
 import { ErrorNotFound } from '#components/ErrorNotFound'
-import TokenProvider from '#components/TokenProvider'
-import { PageSkeleton } from '#components/ui/PageSkeleton'
 import { appRoutes } from '#data/routes'
 import { Router, Route, Switch } from 'wouter'
 import DetailsPage from './pages/DetailsPage'
 import ListPage from './pages/ListPage'
 import NewImportPage from './pages/NewImportPage'
 import { ResourceSelectorPage } from './pages/ResourceSelectorPage'
+import {
+  ErrorBoundary,
+  TokenProvider,
+  PageSkeleton
+} from '@commercelayer/core-app-elements'
 
 function App(): JSX.Element {
   const basePath =
@@ -28,6 +30,7 @@ function App(): JSX.Element {
               console.error('invalid callback received: ', reason)
             }}
             loadingElement={<PageSkeleton />}
+            devMode
           >
             <Router base={basePath}>
               <Switch>

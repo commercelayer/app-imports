@@ -1,5 +1,5 @@
 import { useImportDetailsContext } from '#components/Details/Provider'
-import { formatDate } from '#utils/date'
+import { formatDate } from '@commercelayer/core-app-elements'
 
 interface Props extends React.HTMLAttributes<HTMLSpanElement> {
   atType:

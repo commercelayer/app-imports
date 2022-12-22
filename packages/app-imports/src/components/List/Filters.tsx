@@ -2,13 +2,12 @@ import { FC } from 'react'
 
 import { useListContext } from '#components/List/Provider'
 
-export const Filters: FC = () => {
+export const SampleFilters: FC = () => {
   const { updateFilter } = useListContext()
 
   return (
-    <div className='flex gap-2'>
+    <div>
       <button
-        className='btn'
         onClick={() => {
           updateFilter({
             type: 'filterStatus',
@@ -19,7 +18,6 @@ export const Filters: FC = () => {
         view completed only
       </button>
       <button
-        className='btn'
         onClick={() => {
           updateFilter({
             type: 'filterStatus',
@@ -30,7 +28,6 @@ export const Filters: FC = () => {
         view pending only
       </button>
       <button
-        className='btn'
         onClick={() => {
           updateFilter({
             type: 'filterStatus',
@@ -41,7 +38,6 @@ export const Filters: FC = () => {
         view all statuses
       </button>
       <button
-        className='btn'
         onClick={() => {
           updateFilter({
             type: 'filterResourceType',
@@ -52,7 +48,6 @@ export const Filters: FC = () => {
         view skus resource only
       </button>
       <button
-        className='btn'
         onClick={() => {
           updateFilter({
             type: 'filterResourceType',
@@ -63,7 +58,6 @@ export const Filters: FC = () => {
         view prices resource only
       </button>
       <button
-        className='btn'
         onClick={() => {
           updateFilter({
             type: 'filterResourceType',

@@ -1,14 +1,17 @@
 import { ImportDetailsProvider } from '#components/Details/Provider'
 import { ImportedResourceType } from '#components/Details/ImportedResourceType'
 import { ImportDate } from '#components/Details/ImportDate'
-import { useTokenProvider } from '#components/TokenProvider'
 import { appRoutes } from '#data/routes'
 import { useLocation, useRoute } from 'wouter'
-import { PageLayout } from '#ui/PageLayout'
-import { PageSkeleton } from '#ui/PageSkeleton'
 import { ErrorNotFound } from '#components/ErrorNotFound'
 import { ImportReport } from '#components/Details/ImportReport'
 import { ImportDetails } from '#components/Details/ImportDetails'
+import {
+  useTokenProvider,
+  PageSkeleton,
+  PageLayout,
+  Spacer
+} from '@commercelayer/core-app-elements'
 
 const DetailsPage = (): JSX.Element | null => {
   const { sdkClient } = useTokenProvider()
@@ -48,9 +51,9 @@ const DetailsPage = (): JSX.Element | null => {
           >
             <ImportReport />
 
-            <div className='mb-10'>
+            <Spacer bottom='12'>
               <ImportDetails sdkClient={sdkClient} />
-            </div>
+            </Spacer>
           </PageLayout>
         )
       }

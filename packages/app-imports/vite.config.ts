@@ -17,6 +17,11 @@ export default defineConfig(({ mode }) => {
     build: {
       target: 'esnext'
     },
+    server: {
+      fs: {
+        strict: false
+      }
+    },
     resolve: {
       alias: {
         '#styles': path.resolve(__dirname, './src/styles'),
@@ -24,7 +29,6 @@ export default defineConfig(({ mode }) => {
         '#data': path.resolve(__dirname, './src/data'),
         '#utils': path.resolve(__dirname, './src/utils'),
         '#schemas': path.resolve(__dirname, './src/schemas'),
-        '#ui': path.resolve(__dirname, './src/components/ui'),
         // polyfilling builtin node.JS util lib for Rollup build process
         // https://github.com/ionic-team/rollup-plugin-node-polyfills/blob/master/src/modules.ts
         util: 'rollup-plugin-node-polyfills/polyfills/util'

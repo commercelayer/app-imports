@@ -10,18 +10,22 @@ import {
 } from '#data/resources'
 import { appRoutes } from '#data/routes'
 import { Link, useLocation, useRoute } from 'wouter'
-import { useTokenProvider } from '#components/TokenProvider'
-import { Button } from '#ui/Button'
-import { Tab, Tabs } from '#ui/Tabs'
 import { InputCode } from '#components/InputCode'
 import { ImportPreview } from '#components/ImportPreview'
-import { InputToggleBox } from '#ui/InputToggleBox'
-import { PageLayout } from '#ui/PageLayout'
-import { FormFooter } from '#ui/FormFooter'
-import { PageSkeleton } from '#ui/PageSkeleton'
-import { PageError } from '#ui/PageError'
-import { Text } from '#ui/Text'
-import { Label } from '#ui/Label'
+import {
+  Button,
+  FormFooter,
+  InputToggleBox,
+  Label,
+  PageError,
+  PageLayout,
+  PageSkeleton,
+  Spacer,
+  Tab,
+  Tabs,
+  Text,
+  useTokenProvider
+} from '@commercelayer/core-app-elements'
 
 function NewImportPage(): JSX.Element {
   const { sdkClient } = useTokenProvider()
@@ -96,7 +100,7 @@ function NewImportPage(): JSX.Element {
       }}
     >
       {parentResource !== false && (
-        <div className='mb-14'>
+        <Spacer bottom='14'>
           <ResourceFinder
             label={showResourceNiceName(parentResource)}
             placeholder='Type to select parent resource'
@@ -109,36 +113,39 @@ function NewImportPage(): JSX.Element {
               Please select a parent resource
             </Text>
           ) : null}
-        </div>
+        </Spacer>
       )}
 
-      <Tabs id='tab-import-input' className='mb-14' keepAlive>
-        <Tab name='Upload file'>
-          <InputParser
-            resourceType={resourceType}
-            onDataReady={setImportCreateValue}
-            onDataResetRequest={() => setImportCreateValue(undefined)}
-            hasParentResource={Boolean(parentResource)}
-          />
-        </Tab>
-        <Tab name='Paste code'>
-          <InputCode
-            onDataReady={setImportCreateValue}
-            onDataResetRequest={() => setImportCreateValue(undefined)}
-          />
-        </Tab>
-      </Tabs>
+      <Spacer bottom='14'>
+        <Tabs id='tab-import-input' keepAlive>
+          <Tab name='Upload file'>
+            <InputParser
+              resourceType={resourceType}
+              onDataReady={setImportCreateValue}
+              onDataResetRequest={() => setImportCreateValue(undefined)}
+              hasParentResource={Boolean(parentResource)}
+            />
+          </Tab>
+          <Tab name='Paste code'>
+            <InputCode
+              onDataReady={setImportCreateValue}
+              onDataResetRequest={() => setImportCreateValue(undefined)}
+            />
+          </Tab>
+        </Tabs>
+      </Spacer>
 
       {importCreateValue != null && importCreateValue.length > 0 ? (
-        <ImportPreview
-          title='Preview'
-          className='mb-14'
-          data={importCreateValue as []}
-          limit={5}
-        />
+        <Spacer bottom='14'>
+          <ImportPreview
+            title='Preview'
+            data={importCreateValue as []}
+            limit={5}
+          />
+        </Spacer>
       ) : null}
 
-      <div className='mb-14'>
+      <Spacer bottom='14'>
         <Label gap htmlFor='toggle-cleanup'>
           More options
         </Label>
@@ -153,29 +160,29 @@ function NewImportPage(): JSX.Element {
             onToggle={setCleanupRecords}
           />
         </div>
-      </div>
+      </Spacer>
 
-      <FormFooter
-        className='mb-14'
-        buttonSubmit={
-          <Button
-            className='btn'
-            variant='primary'
-            onClick={() => {
-              setIsTouched(true)
-              if (!canCreateImport) {
-                return
-              }
-              void createImportTask(parentResourceId ?? undefined)
-            }}
-            disabled={isLoading}
-          >
-            {isLoading
-              ? 'Importing...'
-              : `Import ${showResourceNiceName(resourceType).toLowerCase()}`}
-          </Button>
-        }
-      />
+      <Spacer bottom='14'>
+        <FormFooter
+          buttonSubmit={
+            <Button
+              variant='primary'
+              onClick={() => {
+                setIsTouched(true)
+                if (!canCreateImport) {
+                  return
+                }
+                void createImportTask(parentResourceId ?? undefined)
+              }}
+              disabled={isLoading}
+            >
+              {isLoading
+                ? 'Importing...'
+                : `Import ${showResourceNiceName(resourceType).toLowerCase()}`}
+            </Button>
+          }
+        />
+      </Spacer>
     </PageLayout>
   )
 }

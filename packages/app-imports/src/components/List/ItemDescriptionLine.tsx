@@ -1,5 +1,5 @@
-import { formatDate } from '#utils/date'
 import { getProgressPercentage } from '#utils/getProgressPercentage'
+import { formatDate } from '@commercelayer/core-app-elements'
 import { Import } from '@commercelayer/sdk'
 
 interface Props {

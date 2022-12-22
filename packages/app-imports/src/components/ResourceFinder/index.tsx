@@ -1,13 +1,13 @@
-import {
-  InputSelect,
-  isSingleValueSelected,
-  SelectValue
-} from '#components/ui/InputSelect'
-import { Label } from '#ui/Label'
 import { CommerceLayerClient } from '@commercelayer/sdk'
 import { AllowedParentResource, AllowedResourceType } from 'App'
 import { useEffect, useState } from 'react'
 import { fetchInitialResources, fetchResourcesByHint } from './utils'
+import {
+  InputSelect,
+  Label,
+  isSingleValueSelected
+} from '@commercelayer/core-app-elements'
+import { SelectValue } from '@commercelayer/core-app-elements/dist/ui/forms/InputSelect'
 
 interface Props {
   /**
@@ -27,10 +27,6 @@ interface Props {
    */
   sdkClient: CommerceLayerClient
   /**
-   * Optional css classes for the outer wrapper
-   */
-  className?: string
-  /**
    * callback function fired when the resource is selected from the list
    */
   onSelect?: (resourceId: string | null) => void
@@ -41,7 +37,6 @@ export function ResourceFinder({
   placeholder,
   resourceType,
   sdkClient,
-  className,
   onSelect
 }: Props): JSX.Element {
   const [isLoading, setIsLoading] = useState(true)
@@ -59,7 +54,7 @@ export function ResourceFinder({
   }, [resourceType])
 
   return (
-    <div className={className}>
+    <div>
       <Label gap htmlFor='parent-resource'>
         {label}
       </Label>

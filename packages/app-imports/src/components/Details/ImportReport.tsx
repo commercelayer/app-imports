@@ -1,7 +1,7 @@
-import { Report } from '#components/ui/Report'
 import { Import } from '@commercelayer/sdk'
 import { ImportCount } from './ImportCount'
 import { useImportDetailsContext } from './Provider'
+import { Report } from '@commercelayer/core-app-elements'
 
 export function ImportReport(): JSX.Element | null {
   const {

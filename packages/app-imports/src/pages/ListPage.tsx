@@ -1,18 +1,20 @@
-import { useTokenProvider } from '#components/TokenProvider'
 import { appRoutes } from '#data/routes'
-import { Button } from '#ui/Button'
 import { Link, useLocation } from 'wouter'
 import { ListImportProvider } from '#components/List/Provider'
-import { EmptyState } from '#components/ui/EmptyState'
 import { getUiStatus } from '#components/List/utils'
-import { ListTask } from '#components/ui/ListTask'
-import { ListTaskItem } from '#components/ui/ListTaskItem'
 import { getProgressPercentage } from '#utils/getProgressPercentage'
 import { showResourceNiceName } from '#data/resources'
 import { DescriptionLine } from '#components/List/ItemDescriptionLine'
-import { PageLayout } from '#components/ui/PageLayout'
-import { PageSkeleton } from '#components/ui/PageSkeleton'
-import { A } from '#components/ui/A'
+import {
+  useTokenProvider,
+  PageSkeleton,
+  PageLayout,
+  EmptyState,
+  Button,
+  A,
+  List,
+  ListItemTask
+} from '@commercelayer/core-app-elements'
 
 function ListPage(): JSX.Element {
   const { sdkClient, dashboardUrl } = useTokenProvider()
@@ -35,7 +37,7 @@ function ListPage(): JSX.Element {
           const { isLoading, currentPage, list } = state
 
           if (isLoading) {
-            return <ListTask isLoading />
+            return <List isLoading />
           }
 
           if (list == null) {
@@ -66,7 +68,7 @@ function ListPage(): JSX.Element {
           const { recordCount, recordsPerPage, pageCount } = list.meta
 
           return (
-            <ListTask
+            <List
               isDisabled={isRefetching}
               title='All Imports'
               actionButton={
@@ -86,7 +88,7 @@ function ListPage(): JSX.Element {
                 const canDelete =
                   job.status === 'pending' || job.status === 'in_progress'
                 return (
-                  <ListTaskItem
+                  <ListItemTask
                     key={job.id}
                     status={getUiStatus(job.status)}
                     progressPercentage={getProgressPercentage(job)?.value}
@@ -101,7 +103,7 @@ function ListPage(): JSX.Element {
                   />
                 )
               })}
-            </ListTask>
+            </List>
           )
         }}
       </ListImportProvider>

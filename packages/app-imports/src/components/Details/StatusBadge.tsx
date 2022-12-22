@@ -1,4 +1,5 @@
-import { Badge, BadgeVariant } from '#components/ui/Badge'
+import { Badge } from '@commercelayer/core-app-elements'
+import { BadgeVariant } from '@commercelayer/core-app-elements/dist/ui/atoms/Badge'
 import { Import } from '@commercelayer/sdk'
 
 interface Props {

@@ -4,6 +4,7 @@
     "preinstall": "npx only-allow pnpm",
     "dev": "pnpm --filter '*' dev",
     "build": "pnpm --filter '*' build",
+    "preview": "pnpm --filter '*' preview",
     "lint": "pnpm --filter '*' lint",
     "lint:fix": "pnpm --filter '*' lint:fix",
     "test": "pnpm --filter '*' test"
