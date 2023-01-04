@@ -13,10 +13,14 @@ import {
 } from '@commercelayer/core-app-elements'
 
 function App(): JSX.Element {
-  const version = window.location.pathname.match(/v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(\-[\w]+\.(0|[1-9]\d*))*/)
+  const version = window.location.pathname.match(
+    /v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-[\w]+\.(0|[1-9]\d*))*/
+  )
   const basePath =
-  import.meta.env.PUBLIC_FOLDER != null
-  ? `/${import.meta.env.PUBLIC_FOLDER}${version ? `/${version[0]}` : ''}`
+    import.meta.env.PUBLIC_FOLDER != null
+      ? `/${import.meta.env.PUBLIC_FOLDER}${
+          version != null ? `/${version[0]}` : ''
+        }`
       : '/'
 
   return (
