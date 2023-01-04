@@ -12,10 +12,9 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     envPrefix: 'PUBLIC_',
-    base: `${basePath}/`,
+    base: `${basePath}/${env.PUBLIC_VERSION}`,
     build: {
-      target: 'esnext',
-      assetsDir: `${env.PUBLIC_VERSION}/assets`
+      target: 'esnext'
     },
     server: {
       fs: {
