@@ -26,12 +26,9 @@ jobs:
           command: pnpm test
   build:
     <<: *image
-    parameters:
-      public_project_path:
-        type: string
     environment:
-      PUBLIC_PROJECT_PATH: << parameters.public_project_path >>
-      FOLDER: imports
+      PUBLIC_FOLDER: imports
+      PUBLIC_VERSION: << pipeline.git.tag >>
     steps:
       - checkout
       - <<: *setup
@@ -42,7 +39,7 @@ jobs:
           aws-access-key-id: AWS_ACCESS_KEY
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           from: packages/app-imports/dist
-          to: "s3://$S3_ASSETS_BUCKET/team/fe-static-apps/$FOLDER/<< pipeline.git.tag >>"
+          to: "s3://$S3_ASSETS_BUCKET/team/fe-static-apps/$PUBLIC_FOLDER/$PUBLIC_VERSION"
 
 workflows:
   run-tests:
@@ -59,36 +56,15 @@ workflows:
           context: commercelayer
           filters:
             tags:
-              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)((?!adm).)*/
+              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(\-[\w]+\.(0|[1-9]\d*))*/
             branches:
               ignore: /.*/
       - build:
-          public_project_path: imports
           requires:
             - test
           context: commercelayer
           filters:
             tags:
-              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)((?!adm).)*/
-            branches:
-              ignore: /.*/
-
-  test-build-and-push-adm:
-    jobs:
-      - test:
-          context: commercelayer
-          filters:
-            tags:
-              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-adm\.([0-9]\d*)/
-            branches:
-              ignore: /.*/
-      - build:
-          public_project_path: imports/<< pipeline.git.tag >>
-          requires:
-            - test
-          context: commercelayer
-          filters:
-            tags:
-              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-adm\.([0-9]\d*)/
+              only: /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(\-[\w]+\.(0|[1-9]\d*))*/
             branches:
               ignore: /.*/

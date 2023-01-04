@@ -1,6 +1,7 @@
 interface ImportMeta {
   env: {
-    PUBLIC_PROJECT_PATH?: string
+    PUBLIC_FOLDER?: string
+    PUBLIC_VERSION?: string
     NODE_ENV?: string
     DEV: boolean
     PUBLIC_ENABLE_MOCKS?: string
