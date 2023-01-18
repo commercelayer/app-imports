@@ -12,7 +12,7 @@ const schema = z
     code: z.string().min(8),
     promotion_rule_id: z.string().min(1),
     usage_limit: zodEnforceInt,
-    customer_single_use: zodEnforceBoolean(true),
+    customer_single_use: zodEnforceBoolean({ optional: true }),
     recipient_email: z.optional(z.string()),
     reference: z.optional(z.string()),
     reference_origin: z.optional(z.string())

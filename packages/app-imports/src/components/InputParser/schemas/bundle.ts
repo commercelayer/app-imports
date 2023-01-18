@@ -16,12 +16,12 @@ const makeSchema = (hasParentResourceId: boolean): ZodType<FlatCsvRow> =>
       currency_code: z.optional(z.string().min(1)),
       description: z.optional(z.string().min(1)),
       image_url: z.optional(z.string().url()),
-      do_not_ship: zodEnforceBoolean(true),
-      do_not_track: zodEnforceBoolean(true),
+      do_not_ship: zodEnforceBoolean({ optional: true }),
+      do_not_track: zodEnforceBoolean({ optional: true }),
       price_amount_cents: zodEnforceInt,
       compare_at_amount_cents: zodEnforceInt,
-      _compute_price_amount: zodEnforceBoolean(true),
-      _compute_compare_at_amount: zodEnforceBoolean(true),
+      _compute_price_amount: zodEnforceBoolean({ optional: true }),
+      _compute_compare_at_amount: zodEnforceBoolean({ optional: true }),
       market_id: z.optional(z.string().min(1)),
       sku_list_id: z.optional(z.string())
     })

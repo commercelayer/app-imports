@@ -29,8 +29,8 @@ enum AllowedStatus {
 const makeSchema = (hasParentResourceId: boolean): ZodType<FlatCsvRow> =>
   z
     .object({
-      autorefresh: zodEnforceBoolean(true),
-      guest: zodEnforceBoolean(true),
+      autorefresh: zodEnforceBoolean({ optional: true }),
+      guest: zodEnforceBoolean({ optional: true }),
       customer_email: z.optional(z.string().email()),
       customer_password: z.optional(z.string().min(1)),
       language_code: z.optional(z.string().min(1).max(2)),
@@ -48,7 +48,7 @@ const makeSchema = (hasParentResourceId: boolean): ZodType<FlatCsvRow> =>
       // some custom definitions to handle importing of orders with status
       // to do so we need to import them as archived
       status: z.optional(zodCaseInsensitiveNativeEnum(AllowedStatus)),
-      _archive: zodEnforceBoolean(true)
+      _archive: zodEnforceBoolean({ optional: true })
     })
     .passthrough()
     .superRefine((data, ctx) => {

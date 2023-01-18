@@ -3,9 +3,11 @@ import { z } from 'zod'
 
 type MaybeBoolean = boolean | undefined
 
-export function zodEnforceBoolean(
+export function zodEnforceBoolean({
+  optional
+}: {
   optional?: boolean
-): z.ZodEffects<
+}): z.ZodEffects<
   z.ZodBoolean | z.ZodOptional<z.ZodBoolean>,
   MaybeBoolean,
   MaybeBoolean

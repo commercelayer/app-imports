@@ -32,8 +32,8 @@ const schema = z
       zodCaseInsensitiveNativeEnum(AllowedUnitOfWeightEnum)
     ),
     hs_tariff_number: z.optional(z.string()),
-    do_not_ship: zodEnforceBoolean(true),
-    do_not_track: zodEnforceBoolean(true),
+    do_not_ship: zodEnforceBoolean({ optional: true }),
+    do_not_track: zodEnforceBoolean({ optional: true }),
     reference: z.optional(z.string()),
     reference_origin: z.optional(z.string())
   })

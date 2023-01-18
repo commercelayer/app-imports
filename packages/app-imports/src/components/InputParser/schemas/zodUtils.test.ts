@@ -10,24 +10,26 @@ import {
 
 describe('check zodEnforceBoolean', () => {
   test('should parse true string text as boolean `true`', () => {
-    expect(zodEnforceBoolean(true).parse('true')).toBe(true)
+    expect(zodEnforceBoolean({ optional: true }).parse('true')).toBe(true)
   })
 
   test('should parse false string text as boolean `false`', () => {
-    expect(zodEnforceBoolean(true).parse('false')).toBe(false)
+    expect(zodEnforceBoolean({ optional: true }).parse('false')).toBe(false)
   })
 
   test('should allow undefined', () => {
-    expect(zodEnforceBoolean(true).parse(undefined)).toBe(undefined)
+    expect(zodEnforceBoolean({ optional: true }).parse(undefined)).toBe(
+      undefined
+    )
   })
 
   test('should parse empty string as undefined', () => {
-    expect(zodEnforceBoolean(true).parse('')).toBe(undefined)
+    expect(zodEnforceBoolean({ optional: true }).parse('')).toBe(undefined)
   })
 
   test('should return ZodError when is not optional and empty string is passed', () => {
     try {
-      zodEnforceBoolean().parse('')
+      zodEnforceBoolean({}).parse('')
     } catch (err) {
       if (err instanceof ZodError) {
         expect(err).toBeInstanceOf(ZodError)

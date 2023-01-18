@@ -9,7 +9,7 @@ type FlatCsvRow = AddressCreate
 const makeSchema = (): ZodTypeAny =>
   z
     .object({
-      business: zodEnforceBoolean(true),
+      business: zodEnforceBoolean({ optional: true }),
       first_name: z.optional(z.string().min(1)),
       last_name: z.optional(z.string().min(1)),
       company: z.optional(z.string().min(1)),
