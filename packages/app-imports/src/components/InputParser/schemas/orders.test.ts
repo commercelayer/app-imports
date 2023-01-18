@@ -75,4 +75,27 @@ describe('Validate csvOrdersSchema', () => {
     ])
     expect(success).toBe(false)
   })
+
+  test('should allow a `status` only if `_archive` is true', () => {
+    const { success } = csvOrdersSchema({
+      hasParentResource: true
+    }).safeParse([
+      {
+        status: 'placed',
+        _archive: true
+      }
+    ])
+    expect(success).toBe(true)
+  })
+
+  test('should return error when `status` is passed without `_archive` as true', () => {
+    const { success } = csvOrdersSchema({
+      hasParentResource: true
+    }).safeParse([
+      {
+        status: 'draft'
+      }
+    ])
+    expect(success).toBe(false)
+  })
 })

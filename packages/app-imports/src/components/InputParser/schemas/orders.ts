@@ -1,7 +1,7 @@
 import { isFalsy } from '#utils/isFalsy'
 import { OrderCreate } from '@commercelayer/sdk'
 import { z, ZodType } from 'zod'
-import { zodEnforceBoolean } from './zodUtils'
+import { zodCaseInsensitiveNativeEnum, zodEnforceBoolean } from './zodUtils'
 
 type FlatCsvRow = Omit<
   OrderCreate,
@@ -13,6 +13,17 @@ type FlatCsvRow = Omit<
   | 'customer'
 > & {
   market_id?: string
+  status?: string
+  _archive?: boolean
+  payment_method_id?: string
+}
+
+enum AllowedStatus {
+  'draft' = 'draft',
+  'pending' = 'pending',
+  'placed' = 'placed',
+  'approved' = 'approved',
+  'cancelled' = 'cancelled'
 }
 
 const makeSchema = (hasParentResourceId: boolean): ZodType<FlatCsvRow> =>
@@ -31,7 +42,13 @@ const makeSchema = (hasParentResourceId: boolean): ZodType<FlatCsvRow> =>
       return_url: z.optional(z.string().min(1)),
       terms_url: z.optional(z.string().min(1)),
       privacy_url: z.optional(z.string().min(1)),
-      market_id: z.optional(z.string())
+      market_id: z.optional(z.string()),
+      payment_method_id: z.optional(z.string()),
+
+      // some custom definitions to handle importing of orders with status
+      // to do so we need to import them as archived
+      status: z.optional(zodCaseInsensitiveNativeEnum(AllowedStatus)),
+      _archive: zodEnforceBoolean(true)
     })
     .passthrough()
     .superRefine((data, ctx) => {
@@ -40,6 +57,15 @@ const makeSchema = (hasParentResourceId: boolean): ZodType<FlatCsvRow> =>
           code: z.ZodIssueCode.custom,
           path: ['market_id'],
           message: 'market_id is required if parent resource is not set'
+        })
+      }
+
+      // validate orders status to allow
+      if (data.status != null && data._archive !== true) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ['status'],
+          message: 'To import a status set `_archive` as true'
         })
       }
     })
