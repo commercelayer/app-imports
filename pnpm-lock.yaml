@@ -10,7 +10,7 @@ importers:
 
   packages/app-imports:
     specifiers:
-      '@commercelayer/core-app-elements': 0.0.1-beta.4
+      '@commercelayer/core-app-elements': 0.0.1-beta.8
       '@commercelayer/eslint-config-ts-react': ^0.1.4
       '@commercelayer/sdk': ^4.16.0
       '@testing-library/jest-dom': ^5.16.5
@@ -38,7 +38,7 @@ importers:
       wouter: ^2.9.0
       zod: 3.17.3
     dependencies:
-      '@commercelayer/core-app-elements': 0.0.1-beta.4_l2iwz5gth2wupm5oruopphiyiq
+      '@commercelayer/core-app-elements': 0.0.1-beta.8_l2iwz5gth2wupm5oruopphiyiq
       '@commercelayer/eslint-config-ts-react': 0.1.4_b7en3qybxvi7kqey6pvu247liq
       '@commercelayer/sdk': 4.20.0
       '@testing-library/jest-dom': 5.16.5
@@ -313,8 +313,8 @@ packages:
       to-fast-properties: 2.0.0
     dev: false
 
-  /@commercelayer/core-app-elements/0.0.1-beta.4_l2iwz5gth2wupm5oruopphiyiq:
-    resolution: {integrity: sha512-4p5bcQ9egPMc2gY+shKGx05ZhHdgqQWkMoS8f4jKH9ocebXjignGMEDTQria0Y2CXK4AsjW2EJ9lqTnEe0FpRA==}
+  /@commercelayer/core-app-elements/0.0.1-beta.8_l2iwz5gth2wupm5oruopphiyiq:
+    resolution: {integrity: sha512-fXi5sb/g8Kn+l2CGPejg64ZnMjKqgNyylqmWHK+YrxE038ur6tO3FcyXikTA52hIJ1YM+zirSwc+47S3xFiXZg==}
     engines: {node: '>=18', pnpm: '>=7'}
     peerDependencies:
       '@commercelayer/sdk': ^4.x
@@ -323,7 +323,7 @@ packages:
       '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.4
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
-      '@types/lodash-es': 4.17.6
+      '@types/lodash': 4.14.191
       '@types/react': 18.0.26
       '@types/react-datepicker': 4.8.0_biqbaboplfbrettd7655fr4n2y
       '@types/react-dom': 18.0.9
@@ -333,7 +333,7 @@ packages:
       classnames: 2.3.2
       jsdom: 20.0.3
       jwt-decode: 3.1.2
-      lodash-es: 4.17.21
+      lodash: 4.17.21
       phosphor-react: 1.4.1_react@18.2.0
       polished: 4.2.2
       postcss: 8.4.20

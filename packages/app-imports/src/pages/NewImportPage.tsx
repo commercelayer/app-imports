@@ -14,6 +14,7 @@ import { InputCode } from '#components/InputCode'
 import { ImportPreview } from '#components/ImportPreview'
 import {
   Button,
+  EmptyState,
   FormFooter,
   InputToggleBox,
   Label,
@@ -28,7 +29,7 @@ import {
 } from '@commercelayer/core-app-elements'
 
 function NewImportPage(): JSX.Element {
-  const { sdkClient } = useTokenProvider()
+  const { sdkClient, canUser, mode } = useTokenProvider()
 
   const [_match, params] = useRoute(appRoutes.newImport.path)
   const [_location, setLocation] = useLocation()
@@ -44,6 +45,27 @@ function NewImportPage(): JSX.Element {
   if (sdkClient == null) {
     console.warn('Waiting for SDK client')
     return <PageSkeleton />
+  }
+
+  if (!canUser('create', 'imports')) {
+    return (
+      <PageLayout
+        title='Imports'
+        mode={mode}
+        onGoBack={() => {
+          setLocation(appRoutes.list.makePath())
+        }}
+      >
+        <EmptyState
+          title='You are not authorized'
+          action={
+            <Link href={appRoutes.list.makePath()}>
+              <Button variant='primary'>Go back</Button>
+            </Link>
+          }
+        />
+      </PageLayout>
+    )
   }
 
   const resourceType =
@@ -95,6 +117,7 @@ function NewImportPage(): JSX.Element {
   return (
     <PageLayout
       title={`Import ${showResourceNiceName(resourceType).toLowerCase()}`}
+      mode={mode}
       onGoBack={() => {
         setLocation(appRoutes.selectResource.makePath())
       }}

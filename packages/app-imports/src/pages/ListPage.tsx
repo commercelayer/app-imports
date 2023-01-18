@@ -17,7 +17,7 @@ import {
 } from '@commercelayer/core-app-elements'
 
 function ListPage(): JSX.Element {
-  const { sdkClient, dashboardUrl } = useTokenProvider()
+  const { sdkClient, dashboardUrl, mode, canUser } = useTokenProvider()
   const [_location, setLocation] = useLocation()
 
   if (sdkClient == null) {
@@ -28,6 +28,7 @@ function ListPage(): JSX.Element {
   return (
     <PageLayout
       title='Imports'
+      mode={mode}
       onGoBack={() => {
         window.location.href = dashboardUrl != null ? dashboardUrl : '/'
       }}
@@ -55,9 +56,11 @@ function ListPage(): JSX.Element {
                   title='No imports yet!'
                   description='Create your first import'
                   action={
-                    <Link href={appRoutes.selectResource.makePath()}>
-                      <Button variant='primary'>New import</Button>
-                    </Link>
+                    canUser('create', 'imports') ? (
+                      <Link href={appRoutes.selectResource.makePath()}>
+                        <Button variant='primary'>New import</Button>
+                      </Link>
+                    ) : undefined
                   }
                 />
               </div>
@@ -86,7 +89,8 @@ function ListPage(): JSX.Element {
             >
               {list.map((job) => {
                 const canDelete =
-                  job.status === 'pending' || job.status === 'in_progress'
+                  (job.status === 'pending' || job.status === 'in_progress') &&
+                  canUser('destroy', 'imports')
                 return (
                   <ListItemTask
                     key={job.id}
