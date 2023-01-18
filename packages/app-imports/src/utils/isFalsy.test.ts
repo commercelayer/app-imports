@@ -1,4 +1,4 @@
-import { isFalsy } from '#utils/isFalsy'
+import { isFalsy } from './isFalsy'
 
 test('Check falsy values', () => {
   expect(isFalsy(null)).toBe(true)
@@ -8,6 +8,7 @@ test('Check falsy values', () => {
   expect(isFalsy(false)).toBe(true)
 
   expect(isFalsy(1)).toBe(false)
+  expect(isFalsy('0')).toBe(false)
   expect(isFalsy('  ')).toBe(false)
   expect(isFalsy('hello')).toBe(false)
   expect(isFalsy(true)).toBe(false)
