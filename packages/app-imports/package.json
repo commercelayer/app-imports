@@ -29,7 +29,7 @@
   "dependencies": {
     "@commercelayer/core-app-elements": "0.0.1-beta.8",
     "@commercelayer/eslint-config-ts-react": "^0.1.4",
-    "@commercelayer/sdk": "^4.16.0",
+    "@commercelayer/sdk": "^4.21.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@types/lodash-es": "^4.17.6",

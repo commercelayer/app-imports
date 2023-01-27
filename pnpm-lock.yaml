@@ -12,7 +12,7 @@ importers:
     specifiers:
       '@commercelayer/core-app-elements': 0.0.1-beta.8
       '@commercelayer/eslint-config-ts-react': ^0.1.4
-      '@commercelayer/sdk': ^4.16.0
+      '@commercelayer/sdk': ^4.21.0
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/react': ^13.4.0
       '@types/lodash-es': ^4.17.6
@@ -38,9 +38,9 @@ importers:
       wouter: ^2.9.0
       zod: 3.17.3
     dependencies:
-      '@commercelayer/core-app-elements': 0.0.1-beta.8_l2iwz5gth2wupm5oruopphiyiq
+      '@commercelayer/core-app-elements': 0.0.1-beta.8_lamsn43rnpq6tvkfmctb3jkq5e
       '@commercelayer/eslint-config-ts-react': 0.1.4_b7en3qybxvi7kqey6pvu247liq
-      '@commercelayer/sdk': 4.20.0
+      '@commercelayer/sdk': 4.21.0
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
       '@types/lodash-es': 4.17.6
@@ -313,13 +313,13 @@ packages:
       to-fast-properties: 2.0.0
     dev: false
 
-  /@commercelayer/core-app-elements/0.0.1-beta.8_l2iwz5gth2wupm5oruopphiyiq:
+  /@commercelayer/core-app-elements/0.0.1-beta.8_lamsn43rnpq6tvkfmctb3jkq5e:
     resolution: {integrity: sha512-fXi5sb/g8Kn+l2CGPejg64ZnMjKqgNyylqmWHK+YrxE038ur6tO3FcyXikTA52hIJ1YM+zirSwc+47S3xFiXZg==}
     engines: {node: '>=18', pnpm: '>=7'}
     peerDependencies:
       '@commercelayer/sdk': ^4.x
     dependencies:
-      '@commercelayer/sdk': 4.20.0
+      '@commercelayer/sdk': 4.21.0
       '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.4
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -411,11 +411,11 @@ packages:
       - supports-color
     dev: false
 
-  /@commercelayer/sdk/4.20.0:
-    resolution: {integrity: sha512-jPTv6YML4DM6UvucXwsSazWOjhuYzHbHeQLe3nSgHrQy4zL6cE4YTo0N87+mARa45w+rKZL6DwKyn1lN66Qf7g==}
+  /@commercelayer/sdk/4.21.0:
+    resolution: {integrity: sha512-eZI80LcME5qY2HgD/iuVGRED38LVpjrFWW3ghNKomH2z0zHusx0saLEL6V/g9EmJBMq0i9MAIh4zA7SkDpemIw==}
     engines: {node: '>=16 || ^14.17'}
     dependencies:
-      axios: 1.2.0
+      axios: 1.1.3
     transitivePeerDependencies:
       - debug
     dev: false
@@ -2716,6 +2716,16 @@ packages:
     engines: {node: '>= 0.4'}
     dev: false
 
+  /axios/1.1.3:
+    resolution: {integrity: sha512-00tXVRwKx/FZr/IDVFt4C+f9FYairX517WoGCL6dpOntqLkZofjhu43F/Xl44UOpqa+9sLFDrG/XAnFsUYgkDA==}
+    dependencies:
+      follow-redirects: 1.15.2
+      form-data: 4.0.0
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /axios/1.2.0:
     resolution: {integrity: sha512-zT7wZyNYu3N5Bu0wuZ6QccIf93Qk1eV8LOewxgjOZFd2DenOs98cJ7+Y6703d0wkaXGY6/nZd4EweJaHz9uzQw==}
     dependencies:
@@ -2724,6 +2734,7 @@ packages:
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
+    dev: true
 
   /babel-plugin-macros/3.1.0:
     resolution: {integrity: sha512-Cg7TFGpIr01vOQNODXOOaGz2NpCU5gl8x1qJFbb6hbZxR7XrcE2vtbAsTAbJ7/xwJtUuJEw8K8Zr/AE0LHlesg==}
