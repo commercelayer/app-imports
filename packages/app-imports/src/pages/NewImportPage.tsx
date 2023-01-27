@@ -27,6 +27,7 @@ import {
   Text,
   useTokenProvider
 } from '@commercelayer/core-app-elements'
+import { unparse } from 'papaparse'
 
 function NewImportPage(): JSX.Element {
   const { sdkClient, canUser, mode } = useTokenProvider()
@@ -38,6 +39,7 @@ function NewImportPage(): JSX.Element {
   const [isLoading, setIsLoading] = useState(false)
   const [cleanupRecords, setCleanupRecords] = useState(false)
   const [parentResourceId, setParentResourceId] = useState<string | null>()
+  const [format, setFormat] = useState<'csv' | 'json'>()
   const [importCreateValue, setImportCreateValue] = useState<
     ImportCreate['inputs'] | undefined
   >(undefined)
@@ -100,7 +102,12 @@ function NewImportPage(): JSX.Element {
         resource_type: resourceType,
         cleanup_records: cleanupRecords,
         parent_resource_id: parentResourceId,
-        inputs: importCreateValue
+        format,
+        inputs:
+          format === 'csv'
+            ? // This forced cast need to be removed once sdk updates input type to accept string values
+              (unparse(importCreateValue) as unknown as object[])
+            : importCreateValue
       })
       setLocation(appRoutes.list.makePath())
     } catch {
@@ -144,14 +151,20 @@ function NewImportPage(): JSX.Element {
           <Tab name='Upload file'>
             <InputParser
               resourceType={resourceType}
-              onDataReady={setImportCreateValue}
+              onDataReady={(input, format) => {
+                setImportCreateValue(input)
+                setFormat(format)
+              }}
               onDataResetRequest={() => setImportCreateValue(undefined)}
               hasParentResource={Boolean(parentResource)}
             />
           </Tab>
           <Tab name='Paste code'>
             <InputCode
-              onDataReady={setImportCreateValue}
+              onDataReady={(input) => {
+                setImportCreateValue(input)
+                setFormat('json')
+              }}
               onDataResetRequest={() => setImportCreateValue(undefined)}
             />
           </Tab>

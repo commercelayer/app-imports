@@ -14,7 +14,10 @@ const importMaxSize = 10_000
 
 interface Props {
   hasParentResource?: boolean
-  onDataReady: (inputs?: ImportCreate['inputs']) => void
+  onDataReady: (
+    inputs?: ImportCreate['inputs'],
+    format?: 'csv' | 'json'
+  ) => void
   onDataResetRequest: () => void
   resourceType: AllowedResourceType
 }
@@ -65,7 +68,9 @@ export const InputParser: FC<Props> = ({
           setIsParsing(false)
           return
         }
-        onDataReady(adapters[resourceType](parsedResources.data))
+        const inputAsJson = adapters[resourceType](parsedResources.data)
+        // we want to keep json around so we can preview data and handle the json to csv conversion later
+        onDataReady(inputAsJson, 'csv')
         setIsParsing(false)
       }
     })
@@ -76,7 +81,7 @@ export const InputParser: FC<Props> = ({
     setErrorMessage(null)
     try {
       const json = JSON.parse(await file.text())
-      onDataReady(json as ImportCreate['inputs'])
+      onDataReady(json as ImportCreate['inputs'], 'json')
     } catch {
       setErrorMessage('Invalid JSON file')
     } finally {
