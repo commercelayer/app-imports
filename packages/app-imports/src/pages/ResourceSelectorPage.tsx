@@ -5,6 +5,7 @@ import {
   List,
   ListItem,
   PageLayout,
+  Spacer,
   useTokenProvider
 } from '@commercelayer/core-app-elements'
 
@@ -20,13 +21,15 @@ export function ResourceSelectorPage(): JSX.Element {
         setLocation(appRoutes.list.makePath())
       }}
     >
-      <List>
-        {availableResources.sort().map((resource) => (
-          <Link key={resource} href={appRoutes.newImport.makePath(resource)}>
-            <ListItem label={showResourceNiceName(resource)} />
-          </Link>
-        ))}
-      </List>
+      <Spacer bottom='12'>
+        <List>
+          {availableResources.sort().map((resource) => (
+            <Link key={resource} href={appRoutes.newImport.makePath(resource)}>
+              <ListItem label={showResourceNiceName(resource)} />
+            </Link>
+          ))}
+        </List>
+      </Spacer>
     </PageLayout>
   )
 }
