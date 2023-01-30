@@ -10,7 +10,6 @@ export const csvPricesTemplate: Array<
 > = [
   'amount_cents',
   'compare_at_amount_cents',
-  'price_list_id',
   'sku_code',
   'reference',
   'reference_origin',

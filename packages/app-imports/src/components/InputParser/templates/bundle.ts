@@ -9,6 +9,5 @@ export const csvBundleTemplate: Array<keyof BundleCreate | 'market_id'> = [
   'price_amount_cents',
   'compare_at_amount_cents',
   '_compute_price_amount',
-  '_compute_compare_at_amount',
-  'market_id'
+  '_compute_compare_at_amount'
 ]

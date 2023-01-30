@@ -13,6 +13,5 @@ export const csvOrdersTemplate: Array<keyof OrderCreate | 'market_id'> = [
   'cart_url',
   'return_url',
   'terms_url',
-  'privacy_url',
-  'market_id'
+  'privacy_url'
 ]

@@ -14,6 +14,5 @@ export const csvGiftCardsTemplate: Array<
   'recipient_email',
   'reference',
   'reference_origin',
-  'market_id',
   'gift_card_recipient_id'
 ]
