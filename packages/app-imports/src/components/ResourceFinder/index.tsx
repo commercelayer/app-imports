@@ -1,7 +1,7 @@
 import { CommerceLayerClient } from '@commercelayer/sdk'
 import { AllowedParentResource, AllowedResourceType } from 'App'
 import { useEffect, useState } from 'react'
-import { fetchInitialResources, fetchResourcesByHint } from './utils'
+import { fetchResources } from './utils'
 import {
   InputSelect,
   Label,
@@ -46,7 +46,7 @@ export function ResourceFinder({
       return
     }
     setIsLoading(true)
-    fetchInitialResources(sdkClient, resourceType)
+    fetchResources({ sdkClient, resourceType })
       .then(setInitialValues)
       .finally(() => {
         setIsLoading(false)
@@ -70,7 +70,7 @@ export function ResourceFinder({
           }
         }}
         loadAsyncValues={async (hint) => {
-          return await fetchResourcesByHint(sdkClient, hint, resourceType)
+          return await fetchResources({ sdkClient, resourceType, hint })
         }}
       />
     </div>
