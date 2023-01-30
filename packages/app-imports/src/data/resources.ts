@@ -51,7 +51,7 @@ const resourceNiceName: Record<AllowedResourceType, string> = {
  */
 const parentResourceNiceName: Record<AllowedParentResource, string> = {
   markets: 'Market',
-  promotion_rules: 'Promotion rule',
+  promotions: 'Promotion',
   price_lists: 'Price list',
   stock_locations: 'Stock location',
   tax_calculators: 'Tax calculator',
@@ -98,13 +98,16 @@ export function showResourceNiceName(resource?: string): string {
  */
 const resourcesWithParent: Record<ResourceWithParent, AllowedParentResource> = {
   bundles: 'markets',
-  coupons: 'promotion_rules',
   gift_cards: 'markets',
   orders: 'markets',
   prices: 'price_lists',
   sku_options: 'markets',
   stock_items: 'stock_locations',
-  tax_categories: 'tax_calculators'
+  tax_categories: 'tax_calculators',
+  // direct parent resource for `coupons` is `promotion_rules` but since they don't have a name
+  // and won't be searchable for users, we allow to search from `promotions` and implicitly we then provide to
+  // api the related `promotion_rules` id.
+  coupons: 'promotions'
 }
 
 /**

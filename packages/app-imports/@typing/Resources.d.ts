@@ -27,7 +27,7 @@ declare module 'App' {
 
   export type AllowedParentResource =
     | 'markets'
-    | 'promotion_rules'
+    | 'promotions'
     | 'price_lists'
     | 'stock_locations'
     | 'tax_calculators'

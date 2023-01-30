@@ -17,7 +17,7 @@ describe('showResourceNiceName', () => {
 describe('getParentResourceIfNeeded', () => {
   test('Should return the parent resource type', () => {
     expect(getParentResourceIfNeeded('bundles')).toBe('markets')
-    expect(getParentResourceIfNeeded('coupons')).toBe('promotion_rules')
+    expect(getParentResourceIfNeeded('coupons')).toBe('promotions')
     expect(getParentResourceIfNeeded('gift_cards')).toBe('markets')
     expect(getParentResourceIfNeeded('orders')).toBe('markets')
     expect(getParentResourceIfNeeded('prices')).toBe('price_lists')
