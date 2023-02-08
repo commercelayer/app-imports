@@ -24,10 +24,11 @@ function App(): JSX.Element {
         {({ domain }) => (
           <TokenProvider
             currentApp='imports'
-            clientKind='integration'
+            clientKind={import.meta.env.TOKEN_KIND ?? 'webapp'}
             domain={domain ?? ''}
-            onInvalidAuth={({ reason }) => {
-              console.error('invalid callback received: ', reason)
+            onInvalidAuth={({ reason, dashboardUrl }) => {
+              console.warn('redirect to dashboard: ', reason)
+              window.location.href = dashboardUrl
             }}
             loadingElement={<PageSkeleton />}
             devMode
