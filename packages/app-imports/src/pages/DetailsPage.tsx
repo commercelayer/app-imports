@@ -12,11 +12,16 @@ import {
   PageSkeleton,
   PageLayout,
   Spacer,
-  EmptyState
+  EmptyState,
+  useCoreSdkProvider
 } from '@commercelayer/core-app-elements'
 
 const DetailsPage = (): JSX.Element | null => {
-  const { sdkClient, canUser, mode } = useTokenProvider()
+  const {
+    canUser,
+    settings: { mode }
+  } = useTokenProvider()
+  const { sdkClient } = useCoreSdkProvider()
   const [_, setLocation] = useLocation()
   const [_match, params] = useRoute(appRoutes.details.path)
   const importId = params == null ? null : params.importId
@@ -43,7 +48,6 @@ const DetailsPage = (): JSX.Element | null => {
   }
 
   if (sdkClient == null) {
-    console.warn('Waiting for SDK client')
     return <PageSkeleton layout='details' hasHeaderDescription />
   }
 

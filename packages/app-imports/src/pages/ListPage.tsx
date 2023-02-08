@@ -13,15 +13,21 @@ import {
   Button,
   A,
   List,
-  ListItemTask
+  ListItemTask,
+  useCoreSdkProvider
 } from '@commercelayer/core-app-elements'
 
 function ListPage(): JSX.Element {
-  const { sdkClient, dashboardUrl, mode, canUser } = useTokenProvider()
+  const {
+    dashboardUrl,
+    settings: { mode },
+    canUser
+  } = useTokenProvider()
+  const { sdkClient } = useCoreSdkProvider()
+
   const [_location, setLocation] = useLocation()
 
   if (sdkClient == null) {
-    console.warn('Waiting for SDK client')
     return <PageSkeleton />
   }
 

@@ -1,4 +1,4 @@
-import { Table, ErrorBoundary } from '@commercelayer/core-app-elements'
+import { TableData, ErrorBoundary } from '@commercelayer/core-app-elements'
 
 interface Props {
   title: string
@@ -12,7 +12,7 @@ export function ImportPreview({ title, data, limit }: Props): JSX.Element {
       errorTitle='We were unable to show the preview'
       errorDescription='Try to upload a different file'
     >
-      <Table title={title} data={data} limit={limit} showTotal />
+      <TableData title={title} data={data} limit={limit} showTotal />
     </ErrorBoundary>
   )
 }

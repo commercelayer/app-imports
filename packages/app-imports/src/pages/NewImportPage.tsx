@@ -25,12 +25,17 @@ import {
   Tab,
   Tabs,
   Text,
+  useCoreSdkProvider,
   useTokenProvider
 } from '@commercelayer/core-app-elements'
 import { unparse } from 'papaparse'
 
 function NewImportPage(): JSX.Element {
-  const { sdkClient, canUser, mode } = useTokenProvider()
+  const {
+    canUser,
+    settings: { mode }
+  } = useTokenProvider()
+  const { sdkClient } = useCoreSdkProvider()
 
   const [_match, params] = useRoute(appRoutes.newImport.path)
   const [_location, setLocation] = useLocation()
@@ -45,7 +50,6 @@ function NewImportPage(): JSX.Element {
   >(undefined)
 
   if (sdkClient == null) {
-    console.warn('Waiting for SDK client')
     return <PageSkeleton />
   }
 
