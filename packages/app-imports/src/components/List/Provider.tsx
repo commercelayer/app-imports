@@ -15,9 +15,18 @@ import { initialValues, initialState } from './data'
 import { reducer } from './reducer'
 
 interface ListImportProviderProps {
+  /**
+   * Number of items to fetch/load per page.
+   */
   pageSize: number
-  children: ((props: ListImportContextValue) => ReactNode) | ReactNode
+  /**
+   * a valid SDK client
+   */
   sdkClient: CommerceLayerClient
+  /**
+   * Inner content where context exists
+   */
+  children: ((props: ListImportContextValue) => ReactNode) | ReactNode
 }
 const POLLING_INTERVAL = 4000
 
@@ -66,7 +75,7 @@ export function ListImportProvider({
   )
 
   useEffect(
-    function startPolling() {
+    function init() {
       void fetchList()
       if (!state.isPolling) {
         return
