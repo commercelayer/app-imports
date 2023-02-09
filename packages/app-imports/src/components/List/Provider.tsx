@@ -1,10 +1,6 @@
 import { CommerceLayerClient, Import } from '@commercelayer/sdk'
 import { ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
-import {
-  ListImportContextValue,
-  UpdateFilterOptions,
-  ListImportContextState
-} from 'App'
+import { ListImportContextValue, ListImportContextState } from 'App'
 import {
   createContext,
   ReactNode,
@@ -42,70 +38,42 @@ export function ListImportProvider({
     []
   )
 
-  const updateFilter = useCallback((filter: UpdateFilterOptions) => {
-    dispatch(filter)
-  }, [])
-
-  const fetchList = useCallback(
-    async ({ handleLoadingState }: { handleLoadingState: boolean }) => {
-      handleLoadingState && dispatch({ type: 'setLoading', payload: true })
-      try {
-        const list = await getAllImports({
-          cl: sdkClient,
-          state,
-          pageSize
-        })
-        dispatch({ type: 'setList', payload: list })
-      } finally {
-        handleLoadingState && dispatch({ type: 'setLoading', payload: false })
-      }
-    },
-    [state.currentPage, state.filters]
-  )
+  const fetchList = useCallback(async () => {
+    const list = await getAllImports({
+      cl: sdkClient,
+      state,
+      pageSize
+    })
+    dispatch({ type: 'loadData', payload: list })
+  }, [state.currentPage])
 
   const deleteImport = (importId: string): void => {
     sdkClient.imports
       .delete(importId)
+      .then(fetchList)
       .catch(() => {
         console.error('Import not found')
-      })
-      .finally(() => {
-        void fetchList({ handleLoadingState: false })
       })
   }
 
   useEffect(
-    function handleChangePageSkippingFirstRender() {
+    function handleChangePageIgnoringFirstRender() {
       if (state.list?.meta.currentPage != null) {
-        void fetchList({ handleLoadingState: false })
+        void fetchList()
       }
     },
     [state.currentPage]
   )
 
   useEffect(
-    function handlePollingState() {
-      if (state.list == null || state.list.length === 0) {
-        return
-      }
-
-      const shouldPoll = state.list.some((job) =>
-        statusForPolling.includes(job.status)
-      )
-      dispatch({ type: 'togglePolling', payload: shouldPoll })
-    },
-    [state.list]
-  )
-
-  useEffect(
     function startPolling() {
-      void fetchList({ handleLoadingState: true })
+      void fetchList()
       if (!state.isPolling) {
         return
       }
       // start polling
       intervalId.current = setInterval(() => {
-        void fetchList({ handleLoadingState: false })
+        void fetchList()
       }, POLLING_INTERVAL)
 
       return () => {
@@ -120,7 +88,6 @@ export function ListImportProvider({
   const value: ListImportContextValue = {
     state,
     changePage,
-    updateFilter,
     deleteImport
   }
 
@@ -140,22 +107,9 @@ const getAllImports = async ({
   state: ListImportContextState
   pageSize: number
 }): Promise<ListResponse<Import>> => {
-  // we need to remove undefined properties from filters, since SDK won't ignore them
-  const filters = { ...state.filters }
-  const filtersKey = Object.keys(filters) as Array<keyof typeof filters>
-  filtersKey.forEach((f) => {
-    if (filters[f] === undefined) {
-      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-      delete filters[f]
-    }
-  })
-
   return await cl.imports.list({
     pageNumber: state.currentPage,
     pageSize,
-    sort: state.sort,
-    filters
+    sort: { created_at: 'desc' }
   })
 }
-
-const statusForPolling: Array<Import['status']> = ['pending', 'in_progress']
