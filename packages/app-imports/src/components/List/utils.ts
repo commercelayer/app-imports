@@ -1,3 +1,5 @@
+import { Import } from '@commercelayer/sdk'
+import { ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
 import { StatusUI } from '@commercelayer/core-app-elements/dist/ui/atoms/StatusIcon'
 
 /**
@@ -19,4 +21,11 @@ export function getUiStatus(apiStatus?: string): StatusUI {
   }
 
   return 'pending'
+}
+
+export function listHasProgressingItems(list: ListResponse<Import>): boolean {
+  return list.some(
+    (job) =>
+      job.status != null && ['pending', 'in_progress'].includes(job.status)
+  )
 }

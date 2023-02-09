@@ -1,6 +1,7 @@
 import { Import } from '@commercelayer/sdk'
 import { ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
 import { ListImportContextState } from 'App'
+import { listHasProgressingItems } from './utils'
 
 type Action =
   | { type: 'loadData'; payload: ListResponse<Import> }
@@ -15,7 +16,7 @@ export const reducer = (
       return {
         ...state,
         isLoading: false,
-        isPolling: shouldPoll(action.payload),
+        isPolling: listHasProgressingItems(action.payload),
         list: action.payload
       }
     case 'changePage':
@@ -28,8 +29,3 @@ export const reducer = (
       return state
   }
 }
-
-function shouldPoll(list: ListResponse<Import>): boolean {
-  return list.some((job) => statusForPolling.includes(job.status))
-}
-const statusForPolling: Array<Import['status']> = ['pending', 'in_progress']

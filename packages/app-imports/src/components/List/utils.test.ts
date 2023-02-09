@@ -1,4 +1,6 @@
-import { getUiStatus } from './utils'
+import { Import } from '@commercelayer/sdk'
+import { ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
+import { getUiStatus, listHasProgressingItems } from './utils'
 
 // getUiStatus
 describe('getUiStatus', () => {
@@ -24,3 +26,52 @@ describe('getUiStatus', () => {
     expect(getUiStatus('some-not-recognized-text')).toBe('pending')
   })
 })
+
+describe('shouldPoll', () => {
+  test('no poll when list is empty', () => {
+    expect(listHasProgressingItems([] as any)).toBe(false)
+  })
+
+  test('poll when at least one pending is found', () => {
+    expect(
+      listHasProgressingItems([
+        interrupted,
+        completed,
+        completed,
+        pending,
+        completed
+      ] as ListResponse<Import>)
+    ).toBe(true)
+  })
+
+  test('poll when at least one in_progress is found', () => {
+    expect(
+      listHasProgressingItems([
+        interrupted,
+        progress,
+        completed
+      ] as ListResponse<Import>)
+    ).toBe(true)
+  })
+
+  test('no poll when no pending and  in_progress', () => {
+    expect(
+      listHasProgressingItems([
+        interrupted,
+        completed,
+        completed
+      ] as ListResponse<Import>)
+    ).toBe(false)
+  })
+
+  test('list contains empty job status', () => {
+    expect(
+      listHasProgressingItems([completed, {}] as ListResponse<Import>)
+    ).toBe(false)
+  })
+})
+
+const pending = { status: 'pending' } as unknown as Import
+const progress = { status: 'in_progress' } as unknown as Import
+const completed = { status: 'completed' } as unknown as Import
+const interrupted = { status: 'interrupted' } as unknown as Import
