@@ -1,7 +1,7 @@
 {
   "name": "core-app-imports",
   "description": "A Commerce Layer Single Page Application to import resources with a nice GUI.",
-  "version": "0.0.3-stg.2",
+  "version": "0.0.3-stg.3",
   "private": true,
   "author": {
     "name": "Giuseppe Ciotola",
