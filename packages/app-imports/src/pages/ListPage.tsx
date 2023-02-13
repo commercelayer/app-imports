@@ -36,7 +36,8 @@ function ListPage(): JSX.Element {
       title='Imports'
       mode={mode}
       onGoBack={() => {
-        window.location.href = dashboardUrl != null ? dashboardUrl : '/'
+        window.location.href =
+          dashboardUrl != null ? `${dashboardUrl}/hub` : '/'
       }}
     >
       <ListImportProvider sdkClient={sdkClient} pageSize={25}>
