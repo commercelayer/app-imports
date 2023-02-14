@@ -1,5 +1,3 @@
-![https://dl.circleci.com/status-badge/redirect/gh/commercelayer/core-app-imports/tree/master](https://dl.circleci.com/status-badge/img/gh/commercelayer/core-app-imports/tree/master.svg)
-
 # Commerce Layer App Imports
 
 The Commerce Layer imports application (React) provides you with a simple GUI to handle [imports](https://docs.commercelayer.io/core/importing-resources).
