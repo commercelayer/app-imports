@@ -12,7 +12,6 @@ The Commerce Layer imports application (React) provides you with a simple GUI to
 
 - [Getting started](#getting-started)
 - [Environments](#environments)
-- [Build and Test in CI](#build-and-test-in-ci)
 - [Help and support](#need-help)
 - [License](#license)
 
@@ -42,28 +41,6 @@ Configure environment variables in your `.env`, `.env.local` or `.env.production
 | PUBLIC_TOKEN_KIND   | integration  | (Optional) Defines the kind of token to be used and validated. <br />Possible values: `integration` or `webapp`. <br />Default value is `webapp`.                                                                                                                    |
 | PUBLIC_PROJECT_PATH | imports      | (Optional) Defines the base root path where the app will be served.<br/> `https://<slug>.commercelayer.app/<PUBLIC_PROJECT_PATH>`<br /> It's used at build time to reference assets folder and at runtime as base router path. <br />No leading or trailing slashes. |
 | PUBLIC_ENABLE_MOCKS | false        | (Optional) Enables mock server when set to `true`.<br /> Mocks are defined in `./src/mocks/handlers.ts`                                                                                                                                                              |
-
-## Build and Test in CI
-
-A git tag `vX.Y.Z` triggers the CI pipeline which executes tests, build and push on a s3 bucket `s3://infra-cl-static-assets/core-app-imports/vX.Y.Z`
-Adding `-stg.k` suffix let you specify different parameters for the build.
-When adding `[skip ci]` in commit message, pipeline will not run.
-
-Paramenters are assigned to an env variable in the build section of the `.circleci/config.yaml` and passed in the workflow section:
-
-build section:
-
-```yaml
-    ...
-    parameters:
-      PUBLIC_PROJECT_PATH:
-        type: string
-    environment:
-      PUBLIC_PROJECT_PATH: << parameters.PUBLIC_PROJECT_PATH >>
-    ...
-```
-
-Use `pnpm bumpver` or `pnpm lerna version` to generate a new tag and automatically keep package.json synched. Lerna will automatically push on remote the new tag and it will trigger the CI pipeline.
 
 ## Need help?
 
