@@ -1,4 +1,4 @@
-![https://dl.circleci.com/status-badge/redirect/gh/commercelayer/core-app-imports/tree/master](https://dl.circleci.com/status-badge/img/gh/commercelayer/core-app-imports/tree/master.svg?style=svg)
+![https://dl.circleci.com/status-badge/redirect/gh/commercelayer/core-app-imports/tree/master](https://dl.circleci.com/status-badge/img/gh/commercelayer/core-app-imports/tree/master.svg)
 
 # Commerce Layer App Imports
 
@@ -37,11 +37,9 @@ pnpm dev
 
 ## Environments
 
-PUBLIC_TOKEN_KIND=integration
-PUBLIC_PROJECT_PATH=imports
-PUBLIC_ENABLE_MOCKS=false
+Configure environment variables in your `.env`, `.env.local` or `.env.production` file as followings:
 
-| env name            | sample vaule | description                                                                                                                                                                                                                                                          |
+| Var name            | Sample vaule | Description                                                                                                                                                                                                                                                          |
 | ------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | PUBLIC_TOKEN_KIND   | integration  | (Optional) Defines the kind of token to be used and validated. <br />Possible values: `integration` or `webapp`. <br />Default value is `webapp`.                                                                                                                    |
 | PUBLIC_PROJECT_PATH | imports      | (Optional) Defines the base root path where the app will be served.<br/> `https://<slug>.commercelayer.app/<PUBLIC_PROJECT_PATH>`<br /> It's used at build time to reference assets folder and at runtime as base router path. <br />No leading or trailing slashes. |
