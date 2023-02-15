@@ -196,8 +196,10 @@ function NewImportPage(): JSX.Element {
               resourceType
             ).toLowerCase()} that are not in the import`}
             description='Be careful, this action cannot be undone.'
-            isChecked={cleanupRecords}
-            onToggle={setCleanupRecords}
+            checked={cleanupRecords}
+            onChange={() => {
+              setCleanupRecords((p) => !p)
+            }}
           />
         </div>
       </Spacer>
