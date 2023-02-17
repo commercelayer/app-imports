@@ -1,6 +1,6 @@
 import { AllowedResourceType } from 'App'
 import { downloadTemplateAsCsvFile } from './templates'
-import { A, InputHelperText } from '@commercelayer/core-app-elements'
+import { A, Hint } from '@commercelayer/core-app-elements'
 
 interface Props {
   resourceType: AllowedResourceType
@@ -8,7 +8,7 @@ interface Props {
 
 export function SuggestionTemplate({ resourceType }: Props): JSX.Element {
   return (
-    <InputHelperText icon='bulb'>
+    <Hint icon='bulb'>
       Use our{' '}
       <A
         onClick={() => {
@@ -20,6 +20,6 @@ export function SuggestionTemplate({ resourceType }: Props): JSX.Element {
         CSV template
       </A>{' '}
       to avoid formatting errors.
-    </InputHelperText>
+    </Hint>
   )
 }

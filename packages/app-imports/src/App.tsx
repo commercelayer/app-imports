@@ -29,12 +29,7 @@ function App(): JSX.Element {
             currentApp='imports'
             clientKind={import.meta.env.PUBLIC_TOKEN_KIND ?? 'webapp'}
             domain={domain ?? ''}
-            onInvalidAuth={({ reason, dashboardUrl }) => {
-              if (!isDev) {
-                console.warn('redirect to dashboard: ', reason)
-                window.location.href = dashboardUrl
-              }
-            }}
+            reauthenticateOnInvalidAuth={!isDev}
             loadingElement={<PageSkeleton />}
             devMode={isDev}
           >

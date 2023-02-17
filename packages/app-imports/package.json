@@ -1,7 +1,7 @@
 {
-  "name": "core-app-imports",
+  "name": "app-imports",
   "description": "A Commerce Layer Single Page Application to import resources with a nice GUI.",
-  "version": "0.0.3-stg.4",
+  "version": "0.0.3-stg.5",
   "private": true,
   "author": {
     "name": "Giuseppe Ciotola",
@@ -27,7 +27,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@commercelayer/core-app-elements": "0.0.1-beta.17",
+    "@commercelayer/core-app-elements": "0.0.1-beta.21",
     "@commercelayer/eslint-config-ts-react": "^0.1.4",
     "@commercelayer/sdk": "^4.21.0",
     "@testing-library/jest-dom": "^5.16.5",

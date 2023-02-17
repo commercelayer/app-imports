@@ -1,5 +1,5 @@
 import { useImportDetailsContext } from '#components/Details/Provider'
-import { formatDate } from '@commercelayer/core-app-elements'
+import { formatDate, useTokenProvider } from '@commercelayer/core-app-elements'
 
 interface Props extends React.HTMLAttributes<HTMLSpanElement> {
   atType:
@@ -22,12 +22,16 @@ export function ImportDate({
     state: { data }
   } = useImportDetailsContext()
 
+  const {
+    settings: { timezone }
+  } = useTokenProvider()
+
   if (data == null) {
     return null
   }
   return (
     <span {...props}>
-      {prefixText} {formatDate(data[atType], includeTime)}
+      {prefixText} {formatDate(data[atType], includeTime, timezone)}
     </span>
   )
 }

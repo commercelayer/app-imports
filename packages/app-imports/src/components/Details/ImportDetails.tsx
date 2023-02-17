@@ -1,7 +1,8 @@
 import {
   ListDetailsItem,
   ListDetails,
-  formatDate
+  formatDate,
+  useTokenProvider
 } from '@commercelayer/core-app-elements'
 import { CommerceLayerClient } from '@commercelayer/sdk'
 import { useImportDetailsContext } from './Provider'
@@ -17,6 +18,10 @@ export function ImportDetails({ sdkClient }: Props): JSX.Element | null {
     state: { data }
   } = useImportDetailsContext()
 
+  const {
+    settings: { timezone }
+  } = useTokenProvider()
+
   if (data == null) {
     return null
   }
@@ -31,12 +36,12 @@ export function ImportDetails({ sdkClient }: Props): JSX.Element | null {
       ) : null}
       {data.completed_at != null ? (
         <ListDetailsItem label='Completed at'>
-          {formatDate(data.completed_at, true)}
+          {formatDate(data.completed_at, true, timezone)}
         </ListDetailsItem>
       ) : null}
       {data.updated_at != null && data.completed_at == null ? (
         <ListDetailsItem label='Last update'>
-          {formatDate(data.updated_at, true)}
+          {formatDate(data.updated_at, true, timezone)}
         </ListDetailsItem>
       ) : null}
     </ListDetails>
