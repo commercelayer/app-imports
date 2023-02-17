@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/commercelayer/monorepo-starter.git"
+    "url": "https://github.com/commercelayer/app-imports.git"
   },
   "license": "MIT",
   "engines": {

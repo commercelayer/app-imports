@@ -46,7 +46,7 @@ Configure environment variables in your `.env`, `.env.local` or `.env.production
 
 1. Join [Commerce Layer's Slack community](https://slack.commercelayer.app).
 
-2. Create an [issue](https://github.com/commercelayer/commercelayer-cart/issues) in this repository.
+2. Create an [issue](https://github.com/commercelayer/app-imports/issues) in this repository.
 
 3. Ping us [on Twitter](https://twitter.com/commercelayer).
 
