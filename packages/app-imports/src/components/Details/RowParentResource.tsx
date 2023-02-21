@@ -1,4 +1,4 @@
-import { ListDetailsItem } from '@commercelayer/core-app-elements'
+import { ListDetailsItem } from '@commercelayer/app-elements'
 import {
   getParentResourceIfNeeded,
   showResourceNiceName

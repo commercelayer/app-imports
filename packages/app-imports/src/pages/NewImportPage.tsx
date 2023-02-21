@@ -27,7 +27,7 @@ import {
   Text,
   useCoreSdkProvider,
   useTokenProvider
-} from '@commercelayer/core-app-elements'
+} from '@commercelayer/app-elements'
 import { unparse } from 'papaparse'
 
 function NewImportPage(): JSX.Element {

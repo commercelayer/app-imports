@@ -7,7 +7,7 @@ import {
   PageLayout,
   Spacer,
   useTokenProvider
-} from '@commercelayer/core-app-elements'
+} from '@commercelayer/app-elements'
 
 export function ResourceSelectorPage(): JSX.Element {
   const {

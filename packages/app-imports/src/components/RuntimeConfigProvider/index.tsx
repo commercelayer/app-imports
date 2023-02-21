@@ -1,4 +1,4 @@
-import { PageError } from '@commercelayer/core-app-elements'
+import { PageError } from '@commercelayer/app-elements'
 import { createContext, ReactNode, useEffect, useState } from 'react'
 import { z, ZodType } from 'zod'
 

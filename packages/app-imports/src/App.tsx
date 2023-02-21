@@ -11,7 +11,7 @@ import {
   TokenProvider,
   PageSkeleton,
   CoreSdkProvider
-} from '@commercelayer/core-app-elements'
+} from '@commercelayer/app-elements'
 
 const isDev = Boolean(import.meta.env.DEV)
 

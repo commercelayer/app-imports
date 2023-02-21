@@ -1,6 +1,6 @@
 import { Import } from '@commercelayer/sdk'
 import { ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
-import { StatusUI } from '@commercelayer/core-app-elements/dist/ui/atoms/StatusIcon'
+import { StatusUI } from '@commercelayer/app-elements/dist/ui/atoms/StatusIcon'
 
 /**
  * Get the relative status Union Type from the api status {@link https://docs.commercelayer.io/core/v/api-reference/imports/object}

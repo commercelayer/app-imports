@@ -15,7 +15,7 @@ import {
   List,
   ListItemTask,
   useCoreSdkProvider
-} from '@commercelayer/core-app-elements'
+} from '@commercelayer/app-elements'
 
 function ListPage(): JSX.Element {
   const {

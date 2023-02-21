@@ -1,6 +1,6 @@
 import { AllowedResourceType } from 'App'
 import { downloadTemplateAsCsvFile } from './templates'
-import { A, Hint } from '@commercelayer/core-app-elements'
+import { A, Hint } from '@commercelayer/app-elements'
 
 interface Props {
   resourceType: AllowedResourceType

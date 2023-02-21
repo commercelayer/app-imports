@@ -8,7 +8,7 @@ import { ZodIssue } from 'zod'
 import { adapters } from './adapters'
 import { parsers, isMakeSchemaFn } from './schemas'
 import { SuggestionTemplate } from './SuggestionTemplate'
-import { InputFile, Spacer, Text } from '@commercelayer/core-app-elements'
+import { InputFile, Spacer, Text } from '@commercelayer/app-elements'
 
 const importMaxSize = 10_000
 

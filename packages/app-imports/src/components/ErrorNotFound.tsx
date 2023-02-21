@@ -1,9 +1,5 @@
 import { appRoutes } from '#data/routes'
-import {
-  PageLayout,
-  EmptyState,
-  Button
-} from '@commercelayer/core-app-elements'
+import { PageLayout, EmptyState, Button } from '@commercelayer/app-elements'
 import { Link, useLocation } from 'wouter'
 
 export function ErrorNotFound(): JSX.Element {
