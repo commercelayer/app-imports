@@ -36,12 +36,20 @@ export function ImportDetails({ sdkClient }: Props): JSX.Element | null {
       ) : null}
       {data.completed_at != null ? (
         <ListDetailsItem label='Completed at'>
-          {formatDate(data.completed_at, true, timezone)}
+          {formatDate({
+            isoDate: data.completed_at,
+            includeTime: true,
+            timezone
+          })}
         </ListDetailsItem>
       ) : null}
       {data.updated_at != null && data.completed_at == null ? (
         <ListDetailsItem label='Last update'>
-          {formatDate(data.updated_at, true, timezone)}
+          {formatDate({
+            isoDate: data.updated_at,
+            includeTime: true,
+            timezone
+          })}
         </ListDetailsItem>
       ) : null}
     </ListDetails>

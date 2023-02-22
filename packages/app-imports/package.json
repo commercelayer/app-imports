@@ -27,7 +27,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@commercelayer/app-elements": "0.0.2",
+    "@commercelayer/app-elements": "0.0.3",
     "@commercelayer/eslint-config-ts-react": "^0.1.4",
     "@commercelayer/sdk": "^4.21.0",
     "@testing-library/jest-dom": "^5.16.5",
