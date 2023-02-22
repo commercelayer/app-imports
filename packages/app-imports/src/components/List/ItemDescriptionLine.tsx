@@ -29,7 +29,7 @@ export function DescriptionLine({ job }: Props): JSX.Element {
         )
       ) : job.status === 'interrupted' ? (
         <div>
-          Import failed on {formatDate(job.updated_at, false, timezone)}
+          Import failed on {formatDate({ isoDate: job.updated_at, timezone })}
         </div>
       ) : job.status === 'completed' ? (
         errorsCount != null ? (
@@ -37,7 +37,9 @@ export function DescriptionLine({ job }: Props): JSX.Element {
             Imported with {errorsCount} error{errorsCount > 1 ? 's' : ''}
           </div>
         ) : (
-          <div>Imported on {formatDate(job.completed_at, false, timezone)}</div>
+          <div>
+            Imported on {formatDate({ isoDate: job.completed_at, timezone })}
+          </div>
         )
       ) : (
         '-'
