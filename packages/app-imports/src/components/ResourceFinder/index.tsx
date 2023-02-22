@@ -6,8 +6,8 @@ import {
   InputSelect,
   Label,
   isSingleValueSelected
-} from '@commercelayer/core-app-elements'
-import { SelectValue } from '@commercelayer/core-app-elements/dist/ui/forms/InputSelect'
+} from '@commercelayer/app-elements'
+import { SelectValue } from '@commercelayer/app-elements/dist/ui/forms/InputSelect'
 
 interface Props {
   /**

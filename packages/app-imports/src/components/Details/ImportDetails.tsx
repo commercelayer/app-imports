@@ -3,7 +3,7 @@ import {
   ListDetails,
   formatDate,
   useTokenProvider
-} from '@commercelayer/core-app-elements'
+} from '@commercelayer/app-elements'
 import { CommerceLayerClient } from '@commercelayer/sdk'
 import { useImportDetailsContext } from './Provider'
 import { RowParentResource } from './RowParentResource'

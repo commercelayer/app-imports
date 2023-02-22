@@ -1,4 +1,4 @@
-import { TableData, ErrorBoundary } from '@commercelayer/core-app-elements'
+import { TableData, ErrorBoundary } from '@commercelayer/app-elements'
 
 interface Props {
   title: string

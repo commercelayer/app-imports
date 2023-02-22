@@ -1,4 +1,4 @@
-import { ErrorBoundary, InputJson } from '@commercelayer/core-app-elements'
+import { ErrorBoundary, InputJson } from '@commercelayer/app-elements'
 import { ImportCreate } from '@commercelayer/sdk'
 import { useState } from 'react'
 

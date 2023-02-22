@@ -14,7 +14,7 @@ import {
   Spacer,
   EmptyState,
   useCoreSdkProvider
-} from '@commercelayer/core-app-elements'
+} from '@commercelayer/app-elements'
 
 const DetailsPage = (): JSX.Element | null => {
   const {
