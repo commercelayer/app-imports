@@ -105,14 +105,11 @@ function NewImportPage(): JSX.Element {
 
     setIsLoading(true)
     try {
-      const parentResourceId =
-        selectedParentResourceId != null
-          ? await validateParentResource({
-              sdkClient,
-              resourceType,
-              parentResourceId: selectedParentResourceId
-            })
-          : undefined
+      const parentResourceId = await validateParentResource({
+        sdkClient,
+        resourceType,
+        parentResourceId: selectedParentResourceId
+      })
 
       await sdkClient.imports.create({
         resource_type: resourceType,

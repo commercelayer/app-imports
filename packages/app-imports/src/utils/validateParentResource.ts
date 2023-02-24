@@ -1,6 +1,5 @@
 import {
   CommerceLayerClient,
-  CouponCodesPromotionRule,
   CouponCodesPromotionRuleCreate,
   Promotion
 } from '@commercelayer/sdk'
@@ -12,24 +11,24 @@ export async function validateParentResource({
   parentResourceId
 }: {
   resourceType: AllowedResourceType
-  parentResourceId: string
+  parentResourceId?: string
   sdkClient: CommerceLayerClient
-}): Promise<string> {
-  // in case of coupons, the UI will show `promotions` as parent resources
-  // while we need to have `coupon_codes_promotion_rule`
-  // se let's check if current promotion has a `coupon_codes_promotion_rule` already
-  // if not we create a new one and always return a coupon_codes_promotion_rule's ID
-  // to generate the import task
+}): Promise<string | undefined> {
+  if (parentResourceId == null) {
+    return undefined
+  }
+
+  // In case of coupons, the UI will show `promotions` as parent resources
+  // but API requires `coupon_codes_promotion_rule` as real parent resource.
+  // So we need to check if selected promotion has a `coupon_codes_promotion_rule`
+  // otherwise we need to create it.
+  // Anyway the `parentResourceId` to returns must be of a `coupon_codes_promotion_rule`.
   if (resourceType === 'coupons') {
     const promotion = await fetchPromotionWithCouponPromotionRule(
       sdkClient,
       parentResourceId
     )
-    const couponCodePromotionRuleId =
-      promotion.coupon_codes_promotion_rule?.id ??
-      (await createCouponCodePromotionRuleId(sdkClient, promotion)).id
-
-    return couponCodePromotionRuleId
+    return await getOrCreateCouponCodePromotionRuleId(sdkClient, promotion)
   }
 
   return parentResourceId
@@ -48,14 +47,21 @@ async function fetchPromotionWithCouponPromotionRule(
   })
 }
 
-async function createCouponCodePromotionRuleId(
+async function getOrCreateCouponCodePromotionRuleId(
   sdkClient: CommerceLayerClient,
   promotion: Promotion
-): Promise<CouponCodesPromotionRule> {
-  return await sdkClient.coupon_codes_promotion_rules.create({
-    promotion: {
-      id: promotion.id,
-      type: promotion.type as CouponCodesPromotionRuleCreate['promotion']['type']
-    }
-  })
+): Promise<string> {
+  const existingPromotionRuleId = promotion.coupon_codes_promotion_rule?.id
+  if (existingPromotionRuleId != null) {
+    return existingPromotionRuleId
+  }
+
+  const newCouponCodePromotionRule =
+    await sdkClient.coupon_codes_promotion_rules.create({
+      promotion: {
+        id: promotion.id,
+        type: promotion.type as CouponCodesPromotionRuleCreate['promotion']['type']
+      }
+    })
+  return newCouponCodePromotionRule.id
 }
