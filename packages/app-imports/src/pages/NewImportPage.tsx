@@ -29,6 +29,7 @@ import {
   useTokenProvider
 } from '@commercelayer/app-elements'
 import { unparse } from 'papaparse'
+import { validateParentResource } from '#utils/validateParentResource'
 
 function NewImportPage(): JSX.Element {
   const {
@@ -95,13 +96,24 @@ function NewImportPage(): JSX.Element {
     )
   }
 
-  const createImportTask = async (parentResourceId?: string): Promise<void> => {
+  const createImportTask = async (
+    selectedParentResourceId?: string
+  ): Promise<void> => {
     if (importCreateValue == null) {
       return
     }
 
     setIsLoading(true)
     try {
+      const parentResourceId =
+        selectedParentResourceId != null
+          ? await validateParentResource({
+              sdkClient,
+              resourceType,
+              parentResourceId: selectedParentResourceId
+            })
+          : undefined
+
       await sdkClient.imports.create({
         resource_type: resourceType,
         cleanup_records: cleanupRecords,
@@ -137,7 +149,7 @@ function NewImportPage(): JSX.Element {
         <Spacer bottom='14'>
           <ResourceFinder
             label={showResourceNiceName(parentResource)}
-            placeholder='Type to select parent resource'
+            placeholder='Type to search parent resource'
             resourceType={parentResource}
             sdkClient={sdkClient}
             onSelect={setParentResourceId}
