@@ -60,6 +60,7 @@ export function ResourceFinder({
       </Label>
       <InputSelect
         initialValues={initialValues}
+        isClearable
         placeholder={placeholder}
         isLoading={isLoading}
         onSelect={(selected) => {

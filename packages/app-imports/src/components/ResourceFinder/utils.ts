@@ -2,7 +2,6 @@ import { SelectValue } from '@commercelayer/app-elements/dist/ui/forms/InputSele
 import { CommerceLayerClient } from '@commercelayer/sdk'
 import { ListResponse, Resource } from '@commercelayer/sdk/lib/cjs/resource'
 import { AllowedParentResource, AllowedResourceType } from 'App'
-import { isEmpty } from 'lodash-es'
 
 /**
  * Retrieve a list of resources from api filtered by hint if provided.
@@ -20,60 +19,22 @@ export const fetchResources = async ({
   resourceType: AllowedResourceType | AllowedParentResource
   hint?: string
 }): Promise<SelectValue[]> => {
-  const fieldRules = getFieldsRulesByResource(resourceType)
   const fetchedResources = await sdkClient[resourceType].list({
-    fields: fieldRules.fields,
-    include: fieldRules.include,
+    fields: {
+      [resourceType]: ['id', 'name']
+    },
     filters:
       hint != null
         ? {
-            [fieldRules.searchBy]: hint
+            name_cont: hint
           }
         : undefined,
-    pageSize: hint != null ? 25 : 5
+    sort: {
+      created_at: 'desc'
+    },
+    pageSize: 5
   })
-  return fieldRules.include != null && fieldRules.include.length > 0
-    ? adaptApiToSuggestionsForResourceWithIncludes(
-        fetchedResources,
-        fieldRules.include[0]
-      )
-    : adaptApiToSuggestions(fetchedResources)
-}
-
-/**
- * Almost all resurces contains `id` and `name` fields, and need to be searched/filtered by name
- * but we need to handle some exceptions.
- * For instance `promotion_rules` object does not have a `name` attribute, but only `id`.
- * @param resourceType the name of the resource we need to list
- * @returns an object containing `fieldsToList` to be used to populate the data and a `searchBy` property
- * to be used to filter the list when hint is provided.
- */
-function getFieldsRulesByResource(
-  resourceType: AllowedResourceType | AllowedParentResource
-): {
-  fields: Record<string, string[]>
-  include?: string[]
-  searchBy: string
-} {
-  switch (resourceType) {
-    case 'promotions':
-      return {
-        fields: {
-          [resourceType]: ['id', 'name', 'coupon_codes_promotion_rule'],
-          coupon_codes_promotion_rule: ['id']
-        },
-        include: ['coupon_codes_promotion_rule'],
-        searchBy: 'name_cont'
-      }
-
-    default:
-      return {
-        fields: {
-          [resourceType]: ['id', 'name']
-        },
-        searchBy: 'name_cont'
-      }
-  }
+  return adaptApiToSuggestions(fetchedResources)
 }
 
 /**
@@ -93,30 +54,3 @@ function adaptApiToSuggestions(
     }
   })
 }
-
-/**
- * Custom adapter to make SelectValue for resource with relationship include
- * and use as `value` the id relationship but as `label` the name of the primary resource
- * @param fetchedResources resource with included relationship
- * @param includeName the type of the included resource to get the `id` from
- * @returns an array of objects containing `value` and `label` keys
- */
-function adaptApiToSuggestionsForResourceWithIncludes(
-  fetchedResources: ListResponse<Resource & { name?: string }>,
-  includeName: string
-): SelectValue[] {
-  return (
-    fetchedResources
-      .map((r) => {
-        const label = 'name' in r && r.name != null ? r.name : r.id
-        const value = (r as unknown as ResourceWithSomeInclude)[includeName]?.id
-        return {
-          label,
-          value
-        }
-      })
-      // excluding item where relationship was nullish
-      .filter((r) => !isEmpty(r.value))
-  )
-}
-type ResourceWithSomeInclude = Record<string, { id: string }>
