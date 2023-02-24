@@ -1,6 +1,7 @@
 import {
   CommerceLayerClient,
   CouponCodesPromotionRule,
+  CouponCodesPromotionRuleCreate,
   Promotion
 } from '@commercelayer/sdk'
 import { AllowedResourceType } from 'App'
@@ -54,7 +55,7 @@ async function createCouponCodePromotionRuleId(
   return await sdkClient.coupon_codes_promotion_rules.create({
     promotion: {
       id: promotion.id,
-      type: 'promotions'
+      type: promotion.type as CouponCodesPromotionRuleCreate['promotion']['type']
     }
   })
 }
