@@ -96,8 +96,7 @@ function ListPage(): JSX.Element {
             >
               {list.map((job) => {
                 const canDelete =
-                  (job.status === 'pending' || job.status === 'in_progress') &&
-                  canUser('destroy', 'imports')
+                  job.status === 'pending' && canUser('destroy', 'imports')
                 return (
                   <ListItemTask
                     key={job.id}
