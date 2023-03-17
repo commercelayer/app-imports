@@ -32,6 +32,7 @@ importers:
       react: ^18.2.0
       react-dom: ^18.2.0
       react-select: ^5.6.1
+      type-fest: ^3.6.1
       typescript: 4.9.4
       vite: ^4.0.4
       vitest: ^0.26.3
@@ -66,6 +67,7 @@ importers:
       zod: 3.17.3
     devDependencies:
       dotenv: 16.0.3
+      type-fest: 3.6.1
 
 packages:
 
@@ -7588,6 +7590,11 @@ packages:
     resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
     engines: {node: '>=12.20'}
     dev: false
+
+  /type-fest/3.6.1:
+    resolution: {integrity: sha512-htXWckxlT6U4+ilVgweNliPqlsVSSucbxVexRYllyMVJDtf5rTjv6kF/s+qAd4QSL1BZcnJPEJavYBPQiWuZDA==}
+    engines: {node: '>=14.16'}
+    dev: true
 
   /typedarray-to-buffer/3.1.5:
     resolution: {integrity: sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==}

@@ -55,7 +55,8 @@
     "zod": "3.17.3"
   },
   "devDependencies": {
-    "dotenv": "^16.0.1"
+    "dotenv": "^16.0.1",
+    "type-fest": "^3.6.1"
   },
   "engines": {
     "node": ">=18"
