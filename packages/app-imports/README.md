@@ -28,7 +28,7 @@ pnpm dev
 
 2. Set your environment with `.env.local` starting from `.env.local.sample`.
 
-3. Configure your `/public/config.json` with the runtime configuration required
+3. Configure your `/public/config.local.js` with the runtime configuration required
 
 4. Open [http://localhost:5173](http://localhost:5173) with your browser to see the result. You can use the following format to open the app: `http://localhost:5173/imports?accessToken=<your-access-token>`
 
