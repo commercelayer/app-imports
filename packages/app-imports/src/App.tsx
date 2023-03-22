@@ -1,4 +1,3 @@
-import { RuntimeConfigProvider } from '#components/RuntimeConfigProvider'
 import { ErrorNotFound } from '#components/ErrorNotFound'
 import { appRoutes } from '#data/routes'
 import { Router, Route, Switch } from 'wouter'
@@ -23,40 +22,36 @@ function App(): JSX.Element {
 
   return (
     <ErrorBoundary hasContainer>
-      <RuntimeConfigProvider>
-        {({ domain }) => (
-          <TokenProvider
-            currentApp='imports'
-            clientKind={import.meta.env.PUBLIC_TOKEN_KIND ?? 'webapp'}
-            domain={domain ?? ''}
-            reauthenticateOnInvalidAuth={!isDev}
-            loadingElement={<PageSkeleton />}
-            devMode={isDev}
-          >
-            <CoreSdkProvider>
-              <Router base={basePath}>
-                <Switch>
-                  <Route path={appRoutes.list.path}>
-                    <ListPage />
-                  </Route>
-                  <Route path={appRoutes.selectResource.path}>
-                    <ResourceSelectorPage />
-                  </Route>
-                  <Route path={appRoutes.newImport.path}>
-                    <NewImportPage />
-                  </Route>
-                  <Route path={appRoutes.details.path}>
-                    <DetailsPage />
-                  </Route>
-                  <Route>
-                    <ErrorNotFound />
-                  </Route>
-                </Switch>
-              </Router>
-            </CoreSdkProvider>
-          </TokenProvider>
-        )}
-      </RuntimeConfigProvider>
+      <TokenProvider
+        currentApp='imports'
+        clientKind={import.meta.env.PUBLIC_TOKEN_KIND ?? 'webapp'}
+        domain={window.clAppConfig.domain}
+        reauthenticateOnInvalidAuth={!isDev}
+        loadingElement={<PageSkeleton />}
+        devMode={isDev}
+      >
+        <CoreSdkProvider>
+          <Router base={basePath}>
+            <Switch>
+              <Route path={appRoutes.list.path}>
+                <ListPage />
+              </Route>
+              <Route path={appRoutes.selectResource.path}>
+                <ResourceSelectorPage />
+              </Route>
+              <Route path={appRoutes.newImport.path}>
+                <NewImportPage />
+              </Route>
+              <Route path={appRoutes.details.path}>
+                <DetailsPage />
+              </Route>
+              <Route>
+                <ErrorNotFound />
+              </Route>
+            </Switch>
+          </Router>
+        </CoreSdkProvider>
+      </TokenProvider>
     </ErrorBoundary>
   )
 }

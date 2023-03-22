@@ -1,7 +1,7 @@
 {
   "name": "app-imports",
   "description": "A Commerce Layer Single Page Application to import resources with a nice GUI.",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "author": {
     "name": "Giuseppe Ciotola",
@@ -24,7 +24,8 @@
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "test": "pnpm run lint && vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepare": "touch ./public/config.local.js"
   },
   "dependencies": {
     "@commercelayer/app-elements": "0.0.3",
