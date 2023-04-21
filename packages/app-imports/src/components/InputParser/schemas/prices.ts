@@ -3,8 +3,12 @@ import { z } from 'zod'
 
 import { zodEnforceInt } from './zodUtils'
 import { isFalsy } from '#utils/isFalsy'
+import { SetOptional } from 'type-fest'
 
-type FlatCsvRow = Omit<PriceCreate, 'price_tiers' | 'sku' | 'price_list'> & {
+type FlatCsvRow = Omit<
+  SetOptional<PriceCreate, 'compare_at_amount_cents'>,
+  'price_tiers' | 'sku' | 'price_list'
+> & {
   price_list_id?: string
   'price_tiers.type'?: 'PriceVolumeTier'
   'price_tiers.name'?: string
@@ -16,7 +20,7 @@ const makeSchema = (hasParentResourceId: boolean): z.ZodType<FlatCsvRow> =>
   z
     .object({
       amount_cents: zodEnforceInt,
-      compare_at_amount_cents: zodEnforceInt,
+      compare_at_amount_cents: z.optional(zodEnforceInt),
       price_list_id: z.optional(z.string().min(1)),
       sku_code: z.optional(z.string()),
       reference: z.optional(z.string()),
