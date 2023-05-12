@@ -19,7 +19,7 @@ interface Props {
   job: Import
 }
 
-export function ListItemTask({ job }: Props): JSX.Element {
+export function Item({ job }: Props): JSX.Element {
   const { canUser } = useTokenProvider()
   const { deleteImport } = useListContext()
 

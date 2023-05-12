@@ -1,4 +1,4 @@
-import { ListItemTask } from '#components/List/ListItemTask'
+import { Item } from '#components/List/Item'
 import { ListImportProvider } from '#components/List/Provider'
 import { appRoutes } from '#data/routes'
 import {
@@ -89,7 +89,7 @@ function ListPage(): JSX.Element {
               }}
             >
               {list.map((job) => (
-                <ListItemTask key={job.id} job={job} />
+                <Item key={job.id} job={job} />
               ))}
             </List>
           )
