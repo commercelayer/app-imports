@@ -1,4 +1,4 @@
-import { ListImportContextValue, ListImportContextState } from 'App'
+import { type ListImportContextValue, type ListImportContextState } from 'App'
 
 export const initialState: ListImportContextState = {
   isLoading: true,

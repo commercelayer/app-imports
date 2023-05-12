@@ -1,4 +1,4 @@
-import { CustomerCreate } from '@commercelayer/sdk'
+import { type CustomerCreate } from '@commercelayer/sdk'
 
 export const csvCustomersTemplate: Array<
   keyof CustomerCreate | 'customer_group_id'

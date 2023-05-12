@@ -1,4 +1,4 @@
-import { TaxCategoryCreate } from '@commercelayer/sdk'
+import { type TaxCategoryCreate } from '@commercelayer/sdk'
 
 export const csvTaxCategoryTemplate: Array<
   keyof TaxCategoryCreate | 'tax_calculator_id'

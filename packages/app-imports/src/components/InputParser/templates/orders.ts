@@ -1,4 +1,4 @@
-import { OrderCreate } from '@commercelayer/sdk'
+import { type OrderCreate } from '@commercelayer/sdk'
 
 export const csvOrdersTemplate: Array<keyof OrderCreate | 'market_id'> = [
   'autorefresh',

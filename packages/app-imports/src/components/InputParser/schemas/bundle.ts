@@ -1,6 +1,6 @@
 import { isFalsy } from '#utils/isFalsy'
-import { BundleCreate } from '@commercelayer/sdk'
-import { z, ZodType } from 'zod'
+import { type BundleCreate } from '@commercelayer/sdk'
+import { z, type ZodType } from 'zod'
 import { zodEnforceBoolean, zodEnforceInt } from './zodUtils'
 
 type FlatCsvRow = Omit<BundleCreate, 'market' | 'sku_list'> & {

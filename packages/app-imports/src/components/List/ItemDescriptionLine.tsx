@@ -1,15 +1,13 @@
 import { getProgressPercentage } from '#utils/getProgressPercentage'
 import { formatDate, useTokenProvider } from '@commercelayer/app-elements'
-import { Import } from '@commercelayer/sdk'
+import { type Import } from '@commercelayer/sdk'
 
 interface Props {
   job: Import
 }
 
 export function DescriptionLine({ job }: Props): JSX.Element {
-  const {
-    settings: { timezone }
-  } = useTokenProvider()
+  const { user } = useTokenProvider()
 
   const errorsCount =
     job.errors_count != null && job.errors_count > 0
@@ -29,7 +27,8 @@ export function DescriptionLine({ job }: Props): JSX.Element {
         )
       ) : job.status === 'interrupted' ? (
         <div>
-          Import failed on {formatDate({ isoDate: job.updated_at, timezone })}
+          Import failed on{' '}
+          {formatDate({ isoDate: job.updated_at, timezone: user?.timezone })}
         </div>
       ) : job.status === 'completed' ? (
         errorsCount != null ? (
@@ -38,7 +37,12 @@ export function DescriptionLine({ job }: Props): JSX.Element {
           </div>
         ) : (
           <div>
-            Imported on {formatDate({ isoDate: job.completed_at, timezone })}
+            Imported on{' '}
+            {job.completed_at != null &&
+              formatDate({
+                isoDate: job.completed_at,
+                timezone: user?.timezone
+              })}
           </div>
         )
       ) : (

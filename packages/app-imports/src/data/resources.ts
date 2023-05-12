@@ -1,7 +1,7 @@
 import {
-  AllowedResourceType,
-  AllowedParentResource,
-  ResourceWithParent
+  type AllowedResourceType,
+  type AllowedParentResource,
+  type ResourceWithParent
 } from 'App'
 
 type VisibleInUI = boolean

@@ -1,4 +1,4 @@
-import { GiftCardCreate } from '@commercelayer/sdk'
+import { type GiftCardCreate } from '@commercelayer/sdk'
 
 export const csvGiftCardsTemplate: Array<
   keyof GiftCardCreate | 'market_id' | 'gift_card_recipient_id'

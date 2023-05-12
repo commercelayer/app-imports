@@ -1,5 +1,5 @@
-import { AddressCreate } from '@commercelayer/sdk'
-import { z, ZodTypeAny } from 'zod'
+import { type AddressCreate } from '@commercelayer/sdk'
+import { z, type ZodTypeAny } from 'zod'
 
 import { zodEnforceBoolean } from './zodUtils'
 import { isFalsy } from '#utils/isFalsy'

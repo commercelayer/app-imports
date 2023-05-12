@@ -1,6 +1,6 @@
 import { isFalsy } from '#utils/isFalsy'
-import { OrderCreate } from '@commercelayer/sdk'
-import { z, ZodType } from 'zod'
+import { type OrderCreate } from '@commercelayer/sdk'
+import { z, type ZodType } from 'zod'
 import { zodCaseInsensitiveNativeEnum, zodEnforceBoolean } from './zodUtils'
 
 type FlatCsvRow = Omit<

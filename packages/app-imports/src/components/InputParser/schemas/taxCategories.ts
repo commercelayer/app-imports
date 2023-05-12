@@ -1,5 +1,5 @@
 import { isFalsy } from '#utils/isFalsy'
-import { TaxCategoryCreate } from '@commercelayer/sdk'
+import { type TaxCategoryCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 
 type FlatCsvRow = Omit<TaxCategoryCreate, 'code' | 'sku' | 'tax_calculator'> & {

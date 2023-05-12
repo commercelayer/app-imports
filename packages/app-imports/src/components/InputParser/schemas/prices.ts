@@ -1,9 +1,9 @@
-import { PriceCreate } from '@commercelayer/sdk'
+import { type PriceCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 
 import { zodEnforceInt } from './zodUtils'
 import { isFalsy } from '#utils/isFalsy'
-import { SetOptional } from 'type-fest'
+import { type SetOptional } from 'type-fest'
 
 type FlatCsvRow = Omit<
   SetOptional<PriceCreate, 'compare_at_amount_cents'>,

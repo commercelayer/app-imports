@@ -1,4 +1,4 @@
-import { SkuOptionCreate } from '@commercelayer/sdk'
+import { type SkuOptionCreate } from '@commercelayer/sdk'
 
 export const csvSkuOptionTemplate: Array<keyof SkuOptionCreate | 'market_id'> =
   [

@@ -1,4 +1,4 @@
-import { StockItemCreate } from '@commercelayer/sdk'
+import { type StockItemCreate } from '@commercelayer/sdk'
 
 export const csvStockItemTemplate: Array<
   keyof StockItemCreate | 'stock_location_id'

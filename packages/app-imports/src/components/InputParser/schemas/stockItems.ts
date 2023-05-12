@@ -1,5 +1,5 @@
 import { isFalsy } from '#utils/isFalsy'
-import { StockItemCreate } from '@commercelayer/sdk'
+import { type StockItemCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 
 import { zodEnforceInt } from './zodUtils'

@@ -3,7 +3,7 @@ import {
   getParentResourceIfNeeded,
   showResourceNiceName
 } from '#data/resources'
-import { CommerceLayerClient } from '@commercelayer/sdk'
+import { type CommerceLayerClient } from '@commercelayer/sdk'
 import { useEffect, useState } from 'react'
 import { useImportDetailsContext } from './Provider'
 
@@ -18,7 +18,7 @@ export function RowParentResource({ sdkClient }: Props): JSX.Element | null {
 
   const [isLoading, setIsLoading] = useState(true)
   const [parentResourceName, setParentResourceName] = useState('')
-  const parentResouceType =
+  const parentResourceType =
     data?.resource_type != null
       ? getParentResourceIfNeeded(data.resource_type)
       : false
@@ -26,17 +26,17 @@ export function RowParentResource({ sdkClient }: Props): JSX.Element | null {
 
   useEffect(
     function fetchResourceAndSetName() {
-      if (parentResourceId === false || parentResouceType === false) {
+      if (parentResourceId === false || parentResourceType === false) {
         return
       }
 
       const canFetch =
         sdkClient != null &&
-        parentResouceType != null &&
-        parentResouceType != null
+        parentResourceType != null &&
+        parentResourceType != null
 
       if (canFetch) {
-        sdkClient[parentResouceType]
+        sdkClient[parentResourceType]
           .retrieve(parentResourceId)
           .then((res) => {
             const resourceName =
@@ -48,16 +48,18 @@ export function RowParentResource({ sdkClient }: Props): JSX.Element | null {
           .catch(() => {
             setParentResourceName(parentResourceId)
           })
-          .finally(() => setIsLoading(false))
+          .finally(() => {
+            setIsLoading(false)
+          })
       }
     },
-    [parentResourceId, parentResouceType, sdkClient]
+    [parentResourceId, parentResourceType, sdkClient]
   )
 
   if (
     data == null ||
     data.parent_resource_id == null ||
-    parentResouceType === false
+    parentResourceType === false
   ) {
     return null
   }
@@ -66,7 +68,7 @@ export function RowParentResource({ sdkClient }: Props): JSX.Element | null {
     <>
       {data.parent_resource_id != null && data.resource_type != null ? (
         <ListDetailsItem label='Parent resource' isLoading={isLoading}>
-          <div title={showResourceNiceName(parentResouceType)}>
+          <div title={showResourceNiceName(parentResourceType)}>
             {parentResourceName}
           </div>
         </ListDetailsItem>

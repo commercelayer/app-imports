@@ -1,6 +1,7 @@
-import { Import } from '@commercelayer/sdk'
-import { ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
-import { StatusUI } from '@commercelayer/app-elements/dist/ui/atoms/StatusIcon'
+import { type Import } from '@commercelayer/sdk'
+import { type ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
+
+type StatusUI = 'progress' | 'success' | 'danger' | 'pending'
 
 /**
  * Get the relative status Union Type from the api status {@link https://docs.commercelayer.io/core/v/api-reference/imports/object}

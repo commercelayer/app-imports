@@ -1,9 +1,9 @@
-import { ImportCreate } from '@commercelayer/sdk'
-import { AllowedResourceType } from 'App'
+import { type ImportCreate } from '@commercelayer/sdk'
+import { type AllowedResourceType } from 'App'
 import { isEmpty } from 'lodash-es'
 import { parse } from 'papaparse'
-import { FC, useState, useEffect } from 'react'
-import { ZodIssue } from 'zod'
+import { type FC, useState, useEffect } from 'react'
+import { type ZodIssue } from 'zod'
 
 import { adapters } from './adapters'
 import { parsers, isMakeSchemaFn } from './schemas'

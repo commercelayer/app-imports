@@ -1,4 +1,4 @@
-import { AddressCreate } from '@commercelayer/sdk'
+import { type AddressCreate } from '@commercelayer/sdk'
 
 export const csvAddressTemplate: Array<keyof AddressCreate> = [
   'business',

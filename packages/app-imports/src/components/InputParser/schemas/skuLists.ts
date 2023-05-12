@@ -1,5 +1,5 @@
 import { isFalsy } from '#utils/isFalsy'
-import { SkuListCreate } from '@commercelayer/sdk'
+import { type SkuListCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 
 import { zodEnforceBoolean } from './zodUtils'

@@ -1,4 +1,4 @@
-import { GiftCardCreate } from '@commercelayer/sdk'
+import { type GiftCardCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 
 import {

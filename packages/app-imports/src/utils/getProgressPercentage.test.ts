@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Import } from '@commercelayer/sdk'
+import { type Import } from '@commercelayer/sdk'
 import { getProgressPercentage } from './getProgressPercentage'
 
 const mockImportTask = (
@@ -80,7 +80,7 @@ describe('getProgressPercentage', () => {
   })
 
   test('should not throw errors, but return 0%, when values are null or undefined', () => {
-    // @ts-expect-error
+    // @ts-expect-error testing with no args
     const item = mockImportTask(null, undefined)
     expect(getProgressPercentage(item)).toMatchObject({
       value: 0,

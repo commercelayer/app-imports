@@ -1,5 +1,5 @@
-import { ImportCreate } from '@commercelayer/sdk'
-import { AllowedResourceType } from 'App'
+import { type ImportCreate } from '@commercelayer/sdk'
+import { type AllowedResourceType } from 'App'
 import { useState } from 'react'
 import { InputParser } from '#components/InputParser'
 import { ResourceFinder } from '#components/ResourceFinder'
@@ -15,7 +15,6 @@ import { ImportPreview } from '#components/ImportPreview'
 import {
   Button,
   EmptyState,
-  FormFooter,
   InputToggleBox,
   Label,
   PageError,
@@ -168,7 +167,9 @@ function NewImportPage(): JSX.Element {
                 setImportCreateValue(input)
                 setFormat(format)
               }}
-              onDataResetRequest={() => setImportCreateValue(undefined)}
+              onDataResetRequest={() => {
+                setImportCreateValue(undefined)
+              }}
               hasParentResource={Boolean(parentResource)}
             />
           </Tab>
@@ -178,7 +179,9 @@ function NewImportPage(): JSX.Element {
                 setImportCreateValue(input)
                 setFormat('json')
               }}
-              onDataResetRequest={() => setImportCreateValue(undefined)}
+              onDataResetRequest={() => {
+                setImportCreateValue(undefined)
+              }}
             />
           </Tab>
         </Tabs>
@@ -214,25 +217,21 @@ function NewImportPage(): JSX.Element {
       </Spacer>
 
       <Spacer bottom='14'>
-        <FormFooter
-          buttonSubmit={
-            <Button
-              variant='primary'
-              onClick={() => {
-                setIsTouched(true)
-                if (!canCreateImport) {
-                  return
-                }
-                void createImportTask(parentResourceId ?? undefined)
-              }}
-              disabled={isLoading}
-            >
-              {isLoading
-                ? 'Importing...'
-                : `Import ${showResourceNiceName(resourceType).toLowerCase()}`}
-            </Button>
-          }
-        />
+        <Button
+          variant='primary'
+          onClick={() => {
+            setIsTouched(true)
+            if (!canCreateImport) {
+              return
+            }
+            void createImportTask(parentResourceId ?? undefined)
+          }}
+          disabled={isLoading}
+        >
+          {isLoading
+            ? 'Importing...'
+            : `Import ${showResourceNiceName(resourceType).toLowerCase()}`}
+        </Button>
       </Spacer>
     </PageLayout>
   )

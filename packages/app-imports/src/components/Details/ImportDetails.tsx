@@ -4,7 +4,7 @@ import {
   formatDate,
   useTokenProvider
 } from '@commercelayer/app-elements'
-import { CommerceLayerClient } from '@commercelayer/sdk'
+import { type CommerceLayerClient } from '@commercelayer/sdk'
 import { useImportDetailsContext } from './Provider'
 import { RowParentResource } from './RowParentResource'
 import { StatusBadge } from './StatusBadge'
@@ -18,9 +18,7 @@ export function ImportDetails({ sdkClient }: Props): JSX.Element | null {
     state: { data }
   } = useImportDetailsContext()
 
-  const {
-    settings: { timezone }
-  } = useTokenProvider()
+  const { user } = useTokenProvider()
 
   if (data == null) {
     return null
@@ -38,8 +36,8 @@ export function ImportDetails({ sdkClient }: Props): JSX.Element | null {
         <ListDetailsItem label='Completed at'>
           {formatDate({
             isoDate: data.completed_at,
-            includeTime: true,
-            timezone
+            format: 'fullWithSeconds',
+            timezone: user?.timezone
           })}
         </ListDetailsItem>
       ) : null}
@@ -47,8 +45,8 @@ export function ImportDetails({ sdkClient }: Props): JSX.Element | null {
         <ListDetailsItem label='Last update'>
           {formatDate({
             isoDate: data.updated_at,
-            includeTime: true,
-            timezone
+            format: 'fullWithSeconds',
+            timezone: user?.timezone
           })}
         </ListDetailsItem>
       ) : null}

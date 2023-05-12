@@ -1,4 +1,4 @@
-import { CustomerSubscriptionCreate } from '@commercelayer/sdk'
+import { type CustomerSubscriptionCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 
 type FlatCsvRow = CustomerSubscriptionCreate

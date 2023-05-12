@@ -6,7 +6,8 @@ import {
   ListItem,
   PageLayout,
   Spacer,
-  useTokenProvider
+  useTokenProvider,
+  Icon
 } from '@commercelayer/app-elements'
 
 export function ResourceSelectorPage(): JSX.Element {
@@ -27,7 +28,10 @@ export function ResourceSelectorPage(): JSX.Element {
         <List>
           {availableResources.sort().map((resource) => (
             <Link key={resource} href={appRoutes.newImport.makePath(resource)}>
-              <ListItem label={showResourceNiceName(resource)} />
+              <ListItem tag='a'>
+                <div>{showResourceNiceName(resource)}</div>
+                <Icon name='caretRight' />
+              </ListItem>
             </Link>
           ))}
         </List>

@@ -1,4 +1,4 @@
-import { CustomerCreate } from '@commercelayer/sdk'
+import { type CustomerCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 
 type FlatCsvRow = Omit<CustomerCreate, 'customer_group'> & {

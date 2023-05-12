@@ -1,4 +1,4 @@
-import { SkuCreate } from '@commercelayer/sdk'
+import { type SkuCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 
 import {

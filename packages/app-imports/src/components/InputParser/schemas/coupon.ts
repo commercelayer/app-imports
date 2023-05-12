@@ -1,6 +1,6 @@
-import { CouponCreate } from '@commercelayer/sdk'
+import { type CouponCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
-import { SetOptional } from 'type-fest'
+import { type SetOptional } from 'type-fest'
 import { zodEnforceInt, zodEnforceBoolean } from './zodUtils'
 
 type FlatCsvRow = Omit<

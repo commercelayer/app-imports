@@ -1,6 +1,6 @@
-import { ImportCreate } from '@commercelayer/sdk'
-import { AllowedResourceType } from 'App'
-import { ZodSchema } from 'zod'
+import { type ImportCreate } from '@commercelayer/sdk'
+import { type AllowedResourceType } from 'App'
+import { type ZodSchema } from 'zod'
 
 type ImportInputs = ImportCreate['inputs']
 

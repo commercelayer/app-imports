@@ -1,8 +1,8 @@
-import { CommerceLayerClient, Import } from '@commercelayer/sdk'
-import { ImportDetailsContextValue } from 'App'
+import { type CommerceLayerClient, type Import } from '@commercelayer/sdk'
+import { type ImportDetailsContextValue } from 'App'
 import {
   createContext,
-  ReactNode,
+  type ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -92,7 +92,9 @@ export function ImportDetailsProvider({
 
   const value: ImportDetailsContextValue = {
     state,
-    refetch: async () => await fetchImport({ handleLoadingState: false }),
+    refetch: async () => {
+      await fetchImport({ handleLoadingState: false })
+    },
     deleteImport
   }
 

@@ -1,4 +1,4 @@
-import { ShippingCategoryCreate } from '@commercelayer/sdk'
+import { type ShippingCategoryCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 
 type FlatCsvRow = Omit<ShippingCategoryCreate, 'metadata'>

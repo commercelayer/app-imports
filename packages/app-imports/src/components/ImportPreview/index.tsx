@@ -2,7 +2,7 @@ import { TableData, ErrorBoundary } from '@commercelayer/app-elements'
 
 interface Props {
   title: string
-  data: Array<Record<string, string | Object>>
+  data: Array<Record<string, string | Record<string, unknown>>>
   limit: number
 }
 

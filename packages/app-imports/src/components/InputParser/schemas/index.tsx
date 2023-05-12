@@ -1,5 +1,5 @@
-import { AllowedResourceType } from 'App'
-import { ZodSchema } from 'zod'
+import { type AllowedResourceType } from 'App'
+import { type ZodSchema } from 'zod'
 import { csvAddressSchema } from './address'
 import { csvBundleSchema } from './bundle'
 import { csvCouponsSchema } from './coupon'
