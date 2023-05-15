@@ -73,7 +73,9 @@ const DetailsPage = (): JSX.Element | null => {
               setLocation(appRoutes.list.makePath())
             }}
           >
-            <ImportReport />
+            <Spacer bottom='12'>
+              <ImportReport />
+            </Spacer>
 
             <Spacer bottom='12'>
               <ImportDetails sdkClient={sdkClient} />
