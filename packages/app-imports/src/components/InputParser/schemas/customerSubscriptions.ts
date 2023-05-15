@@ -1,7 +1,4 @@
-import { type CustomerSubscriptionCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
-
-type FlatCsvRow = CustomerSubscriptionCreate
 
 const schema = z
   .object({
@@ -11,5 +8,4 @@ const schema = z
   })
   .passthrough()
 
-export const csvCustomerSubscriptionsSchema: z.ZodType<FlatCsvRow[]> =
-  z.array(schema)
+export const csvCustomerSubscriptionsSchema = z.array(schema)

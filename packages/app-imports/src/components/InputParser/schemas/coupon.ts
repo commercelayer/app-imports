@@ -1,14 +1,5 @@
-import { type CouponCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
-import { type SetOptional } from 'type-fest'
-import { zodEnforceInt, zodEnforceBoolean } from './zodUtils'
-
-type FlatCsvRow = Omit<
-  SetOptional<CouponCreate, 'usage_limit'>,
-  'promotion_rule'
-> & {
-  promotion_rule_id?: string
-}
+import { zodEnforceBoolean, zodEnforceInt } from './zodUtils'
 
 const schema = z
   .object({
@@ -22,4 +13,4 @@ const schema = z
   })
   .passthrough()
 
-export const csvCouponsSchema: z.ZodType<FlatCsvRow[]> = z.array(schema)
+export const csvCouponsSchema = z.array(schema)

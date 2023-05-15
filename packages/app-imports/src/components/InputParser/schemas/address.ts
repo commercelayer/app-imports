@@ -1,10 +1,7 @@
-import { type AddressCreate } from '@commercelayer/sdk'
 import { z, type ZodTypeAny } from 'zod'
 
-import { zodEnforceBoolean } from './zodUtils'
 import { isFalsy } from '#utils/isFalsy'
-
-type FlatCsvRow = AddressCreate
+import { zodEnforceBoolean } from './zodUtils'
 
 const makeSchema = (): ZodTypeAny =>
   z
@@ -52,4 +49,4 @@ const makeSchema = (): ZodTypeAny =>
       }
     })
 
-export const csvAddressSchema: z.ZodType<FlatCsvRow[]> = z.array(makeSchema())
+export const csvAddressSchema = z.array(makeSchema())

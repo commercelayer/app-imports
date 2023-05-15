@@ -1,4 +1,3 @@
-import { type SkuCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 
 import {
@@ -12,11 +11,6 @@ enum AllowedUnitOfWeightEnum {
   'grams' = 'gr',
   'libra' = 'lb',
   'ounce' = 'oz'
-}
-
-type FlatCsvRow = Omit<SkuCreate, 'unit_of_weight' | 'shipping_category'> & {
-  unit_of_weight?: AllowedUnitOfWeightEnum
-  shipping_category_id: string
 }
 
 const schema = z
@@ -39,4 +33,4 @@ const schema = z
   })
   .passthrough()
 
-export const csvSkusSchema: z.ZodType<FlatCsvRow[]> = z.array(schema)
+export const csvSkusSchema = z.array(schema)

@@ -1,12 +1,5 @@
 import { isFalsy } from '#utils/isFalsy'
-import { type TaxCategoryCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
-
-type FlatCsvRow = Omit<TaxCategoryCreate, 'code' | 'sku' | 'tax_calculator'> & {
-  code?: string
-  sku_id?: string
-  tax_calculator_id: string
-}
 
 const schema = z
   .object({
@@ -26,4 +19,4 @@ const schema = z
     }
   })
 
-export const csvTaxCategoriesSchema: z.ZodType<FlatCsvRow[]> = z.array(schema)
+export const csvTaxCategoriesSchema = z.array(schema)

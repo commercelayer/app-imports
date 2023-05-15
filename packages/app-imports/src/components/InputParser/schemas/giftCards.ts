@@ -1,20 +1,10 @@
-import { type GiftCardCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 
 import {
-  zodEnforceInt,
   zodEnforceBoolean,
-  zodEnforceDateString
+  zodEnforceDateString,
+  zodEnforceInt
 } from './zodUtils'
-
-type FlatCsvRow = Omit<
-  GiftCardCreate,
-  'expires_at' | 'market' | 'gift_card_recipient'
-> & {
-  expires_at?: string
-  market_id?: string
-  gift_card_recipient_id?: string
-}
 
 const schema = z
   .object({
@@ -34,4 +24,4 @@ const schema = z
   })
   .passthrough()
 
-export const csvGiftCardsSchema: z.ZodType<FlatCsvRow[]> = z.array(schema)
+export const csvGiftCardsSchema = z.array(schema)

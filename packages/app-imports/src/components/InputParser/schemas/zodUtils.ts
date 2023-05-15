@@ -10,7 +10,7 @@ export function zodEnforceBoolean({
 }): z.ZodEffects<
   z.ZodBoolean | z.ZodOptional<z.ZodBoolean>,
   MaybeBoolean,
-  MaybeBoolean
+  unknown
 > {
   return z.preprocess(
     (value) =>
@@ -46,7 +46,7 @@ interface DefaultEnumLike {
 
 export function zodCaseInsensitiveNativeEnum<T extends DefaultEnumLike>(
   enumValue: T
-): z.ZodEffects<z.ZodNativeEnum<T>> {
+): z.ZodEffects<z.ZodNativeEnum<T>, T[keyof T], unknown> {
   return z.preprocess(
     (enumValue) => String(enumValue).toLowerCase(),
     z.nativeEnum(enumValue)

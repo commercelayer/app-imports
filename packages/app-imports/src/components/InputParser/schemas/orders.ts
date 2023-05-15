@@ -1,22 +1,7 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { isFalsy } from '#utils/isFalsy'
-import { type OrderCreate } from '@commercelayer/sdk'
-import { z, type ZodType } from 'zod'
+import { z } from 'zod'
 import { zodCaseInsensitiveNativeEnum, zodEnforceBoolean } from './zodUtils'
-
-type FlatCsvRow = Omit<
-  OrderCreate,
-  | 'shipping_address'
-  | 'billing_address'
-  | 'payment_method'
-  | 'payment_source'
-  | 'market'
-  | 'customer'
-> & {
-  market_id?: string
-  status?: string
-  _archive?: boolean
-  payment_method_id?: string
-}
 
 enum AllowedStatus {
   'draft' = 'draft',
@@ -26,7 +11,7 @@ enum AllowedStatus {
   'cancelled' = 'cancelled'
 }
 
-const makeSchema = (hasParentResourceId: boolean): ZodType<FlatCsvRow> =>
+const makeSchema = (hasParentResourceId: boolean) =>
   z
     .object({
       autorefresh: zodEnforceBoolean({ optional: true }),
@@ -74,4 +59,4 @@ export const csvOrdersSchema = ({
   hasParentResource
 }: {
   hasParentResource: boolean
-}): z.ZodType<FlatCsvRow[]> => z.array(makeSchema(hasParentResource))
+}) => z.array(makeSchema(hasParentResource))
