@@ -24,7 +24,7 @@ function App(): JSX.Element {
     <ErrorBoundary hasContainer>
       <TokenProvider
         appSlug='imports'
-        kind={import.meta.env.PUBLIC_TOKEN_KIND ?? 'webapp'}
+        kind='webapp'
         domain={window.clAppConfig.domain}
         reauthenticateOnInvalidAuth={!isDev}
         loadingElement={<PageSkeleton />}

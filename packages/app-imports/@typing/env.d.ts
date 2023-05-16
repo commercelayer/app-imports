@@ -4,6 +4,5 @@ interface ImportMeta {
     NODE_ENV?: string
     DEV: boolean
     PUBLIC_ENABLE_MOCKS?: string
-    PUBLIC_TOKEN_KIND?: 'webapp' | 'integration'
   }
 }
