@@ -21,7 +21,7 @@ export function ImportReport(): JSX.Element | null {
           label: 'Record imported',
           count: <ImportCount type='processed_count' />,
           linkUrl: getSourceFileUrl(data),
-          linkLabel: 'Download CSV file'
+          linkLabel: 'Download file'
         },
         {
           label: 'Errors',

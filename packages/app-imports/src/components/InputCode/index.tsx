@@ -29,17 +29,15 @@ export function InputCode({
           onDataReady(validInput)
         }}
         onDataResetRequest={onDataResetRequest}
-        validateFn={(maybeJson) => maybeJson.inputs}
+        validateFn={(maybeJson) => maybeJson}
       />
     </ErrorBoundary>
   )
 }
 
-const placehoder = {
-  inputs: [
-    {
-      code: 'ABC',
-      name: 'Foo'
-    }
-  ]
-}
+const placehoder = [
+  {
+    code: 'ABC',
+    name: 'Foo'
+  }
+]
