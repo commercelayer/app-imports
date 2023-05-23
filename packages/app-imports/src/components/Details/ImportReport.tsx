@@ -1,4 +1,4 @@
-import { Import } from '@commercelayer/sdk'
+import { type Import } from '@commercelayer/sdk'
 import { ImportCount } from './ImportCount'
 import { useImportDetailsContext } from './Provider'
 import { Report } from '@commercelayer/app-elements'
@@ -21,7 +21,7 @@ export function ImportReport(): JSX.Element | null {
           label: 'Record imported',
           count: <ImportCount type='processed_count' />,
           linkUrl: getSourceFileUrl(data),
-          linkLabel: 'Download CSV file'
+          linkLabel: 'Download file'
         },
         {
           label: 'Errors',

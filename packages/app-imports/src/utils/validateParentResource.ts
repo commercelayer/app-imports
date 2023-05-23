@@ -1,9 +1,9 @@
 import {
-  CommerceLayerClient,
-  CouponCodesPromotionRuleCreate,
-  Promotion
+  type CommerceLayerClient,
+  type CouponCodesPromotionRuleCreate,
+  type Promotion
 } from '@commercelayer/sdk'
-import { AllowedResourceType } from 'App'
+import { type AllowedResourceType } from 'App'
 
 export async function validateParentResource({
   sdkClient,

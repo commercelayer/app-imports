@@ -1,4 +1,4 @@
-import { BundleCreate } from '@commercelayer/sdk'
+import { type BundleCreate } from '@commercelayer/sdk'
 
 export const csvBundleTemplate: Array<keyof BundleCreate | 'market_id'> = [
   'code',

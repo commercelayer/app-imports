@@ -1,4 +1,4 @@
-import { AllowedResourceType } from 'App'
+import { type AllowedResourceType } from 'App'
 import { csvAddressTemplate } from './address'
 import { csvBundleTemplate } from './bundle'
 import { csvCouponTemplate } from './coupon'

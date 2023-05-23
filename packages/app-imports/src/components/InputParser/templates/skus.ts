@@ -1,4 +1,4 @@
-import { SkuCreate } from '@commercelayer/sdk'
+import { type SkuCreate } from '@commercelayer/sdk'
 
 export const csvSkusTemplate: Array<keyof SkuCreate | 'shipping_category_id'> =
   [

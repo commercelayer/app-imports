@@ -1,9 +1,9 @@
-import { CommerceLayerClient, Import } from '@commercelayer/sdk'
-import { ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
-import { ListImportContextValue, ListImportContextState } from 'App'
+import { type CommerceLayerClient, type Import } from '@commercelayer/sdk'
+import { type ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
+import { type ListImportContextValue, type ListImportContextState } from 'App'
 import {
   createContext,
-  ReactNode,
+  type ReactNode,
   useCallback,
   useEffect,
   useReducer,
@@ -42,10 +42,9 @@ export function ListImportProvider({
   const [state, dispatch] = useReducer(reducer, initialState)
   const intervalId = useRef<NodeJS.Timer | null>(null)
 
-  const changePage = useCallback(
-    (page: number) => dispatch({ type: 'changePage', payload: page }),
-    []
-  )
+  const changePage = useCallback((page: number) => {
+    dispatch({ type: 'changePage', payload: page })
+  }, [])
 
   const fetchList = useCallback(async () => {
     const list = await getAllImports({

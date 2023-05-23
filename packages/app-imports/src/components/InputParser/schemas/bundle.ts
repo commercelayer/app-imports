@@ -1,14 +1,9 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { isFalsy } from '#utils/isFalsy'
-import { BundleCreate } from '@commercelayer/sdk'
-import { z, ZodType } from 'zod'
+import { z } from 'zod'
 import { zodEnforceBoolean, zodEnforceInt } from './zodUtils'
 
-type FlatCsvRow = Omit<BundleCreate, 'market' | 'sku_list'> & {
-  market_id?: string
-  sku_list_id?: string
-}
-
-const makeSchema = (hasParentResourceId: boolean): ZodType<FlatCsvRow> =>
+const makeSchema = (hasParentResourceId: boolean) =>
   z
     .object({
       code: z.string(),
@@ -47,4 +42,4 @@ export const csvBundleSchema = ({
   hasParentResource
 }: {
   hasParentResource: boolean
-}): z.ZodType<FlatCsvRow[]> => z.array(makeSchema(hasParentResource))
+}) => z.array(makeSchema(hasParentResource))

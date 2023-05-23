@@ -1,7 +1,4 @@
-import { ShippingCategoryCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
-
-type FlatCsvRow = Omit<ShippingCategoryCreate, 'metadata'>
 
 const schema = z
   .object({
@@ -11,5 +8,4 @@ const schema = z
   })
   .passthrough()
 
-export const csvShippingCategorySchema: z.ZodType<FlatCsvRow[]> =
-  z.array(schema)
+export const csvShippingCategorySchema = z.array(schema)

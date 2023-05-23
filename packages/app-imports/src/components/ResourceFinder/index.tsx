@@ -1,5 +1,5 @@
-import { CommerceLayerClient } from '@commercelayer/sdk'
-import { AllowedParentResource, AllowedResourceType } from 'App'
+import { type CommerceLayerClient } from '@commercelayer/sdk'
+import { type AllowedParentResource, type AllowedResourceType } from 'App'
 import { useEffect, useState } from 'react'
 import { fetchResources } from './utils'
 import {
@@ -7,7 +7,7 @@ import {
   Label,
   isSingleValueSelected
 } from '@commercelayer/app-elements'
-import { SelectValue } from '@commercelayer/app-elements/dist/ui/forms/InputSelect'
+import { type SelectValue } from '@commercelayer/app-elements/dist/ui/forms/InputSelect'
 
 interface Props {
   /**

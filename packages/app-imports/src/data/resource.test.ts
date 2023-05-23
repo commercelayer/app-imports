@@ -33,9 +33,9 @@ describe('getParentResourceIfNeeded', () => {
 
   test('Should also return false when resource passed as argument is invalid', () => {
     expect(getParentResourceIfNeeded('skuuuu')).toBe(false)
-    // @ts-expect-error
+    // @ts-expect-error testing without argument
     expect(getParentResourceIfNeeded(undefined)).toBe(false)
-    // @ts-expect-error
+    // @ts-expect-error testing with invalid argument
     expect(getParentResourceIfNeeded(42)).toBe(false)
   })
 })

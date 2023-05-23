@@ -1,4 +1,4 @@
-import { SkuListCreate } from '@commercelayer/sdk'
+import { type SkuListCreate } from '@commercelayer/sdk'
 
 export const csvSkuListTemplate: Array<
   keyof SkuListCreate | 'sku_list_items.sku_code'

@@ -1,9 +1,4 @@
-import { CustomerCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
-
-type FlatCsvRow = Omit<CustomerCreate, 'customer_group'> & {
-  customer_group_id?: string
-}
 
 const schema = z
   .object({
@@ -17,4 +12,4 @@ const schema = z
   })
   .passthrough()
 
-export const csvCustomersSchema: z.ZodType<FlatCsvRow[]> = z.array(schema)
+export const csvCustomersSchema = z.array(schema)

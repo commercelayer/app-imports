@@ -9,7 +9,11 @@
     "lint:fix": "pnpm --filter '*' lint:fix",
     "test": "pnpm --filter '*' test",
     "test:watch": "pnpm --filter '*' test:watch",
-    "bumpver": "pnpm lerna version -m '%s [skip ci]'"
+    "bumpver": "pnpm lerna version -m '%s [skip ci]'",
+    "dep:upgrade:major": "pnpm -r exec npm-check-updates -u",
+    "dep:upgrade:minor": "pnpm dep:upgrade:major -t minor",
+    "dep:self-upgrade:major": "pnpm exec npm-check-updates -u",
+    "dep:self-upgrade:minor": "pnpm dep:self-upgrade:major -t minor"
   },
   "keywords": [],
   "author": {
@@ -29,6 +33,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "lerna": "^6.1.0"
+    "lerna": "^6.6.2",
+    "npm-check-updates": "^16.10.12"
   }
 }

@@ -1,4 +1,7 @@
-import { ImportDetailsContextState, ImportDetailsContextValue } from 'App'
+import {
+  type ImportDetailsContextState,
+  type ImportDetailsContextValue
+} from 'App'
 
 export const initialState: ImportDetailsContextState = {
   isLoading: true,

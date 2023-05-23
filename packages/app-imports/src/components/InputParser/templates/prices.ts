@@ -1,4 +1,4 @@
-import { PriceCreate } from '@commercelayer/sdk'
+import { type PriceCreate } from '@commercelayer/sdk'
 
 export const csvPricesTemplate: Array<
   | keyof PriceCreate

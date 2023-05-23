@@ -1,13 +1,9 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { isFalsy } from '#utils/isFalsy'
-import { SkuOptionCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 import { zodEnforceInt } from './zodUtils'
 
-type FlatCsvRow = Omit<SkuOptionCreate, 'metadata' | 'market'> & {
-  market_id?: string
-}
-
-const makeSchema = (hasParentResourceId: boolean): z.ZodType<FlatCsvRow> =>
+const makeSchema = (hasParentResourceId: boolean) =>
   z
     .object({
       name: z.string().min(1),
@@ -37,4 +33,4 @@ export const csvSkuOptionSchema = ({
   hasParentResource
 }: {
   hasParentResource: boolean
-}): z.ZodType<FlatCsvRow[]> => z.array(makeSchema(hasParentResource))
+}) => z.array(makeSchema(hasParentResource))

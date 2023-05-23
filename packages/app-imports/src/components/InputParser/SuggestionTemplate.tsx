@@ -1,4 +1,4 @@
-import { AllowedResourceType } from 'App'
+import { type AllowedResourceType } from 'App'
 import { downloadTemplateAsCsvFile } from './templates'
 import { A, Hint } from '@commercelayer/app-elements'
 

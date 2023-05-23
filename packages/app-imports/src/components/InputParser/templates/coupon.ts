@@ -1,4 +1,4 @@
-import { CouponCreate } from '@commercelayer/sdk'
+import { type CouponCreate } from '@commercelayer/sdk'
 
 export const csvCouponTemplate: Array<
   keyof CouponCreate | 'promotion_rule_id'

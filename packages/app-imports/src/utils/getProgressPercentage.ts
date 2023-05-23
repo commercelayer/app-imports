@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Import } from '@commercelayer/sdk'
+import { type Import } from '@commercelayer/sdk'
 
 /**
  * Extract, if available, the progress percentage from the import job object.

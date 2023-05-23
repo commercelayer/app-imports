@@ -1,7 +1,10 @@
-import { SelectValue } from '@commercelayer/app-elements/dist/ui/forms/InputSelect'
-import { CommerceLayerClient } from '@commercelayer/sdk'
-import { ListResponse, Resource } from '@commercelayer/sdk/lib/cjs/resource'
-import { AllowedParentResource, AllowedResourceType } from 'App'
+import { type SelectValue } from '@commercelayer/app-elements/dist/ui/forms/InputSelect'
+import { type CommerceLayerClient } from '@commercelayer/sdk'
+import {
+  type ListResponse,
+  type Resource
+} from '@commercelayer/sdk/lib/cjs/resource'
+import { type AllowedParentResource, type AllowedResourceType } from 'App'
 
 /**
  * Retrieve a list of resources from api filtered by hint if provided.
@@ -44,7 +47,7 @@ export const fetchResources = async ({
  * @returns an array of objects containing `value` and `label` keys
  */
 function adaptApiToSuggestions(
-  fetchedResources: ListResponse<Resource & { name?: string }>
+  fetchedResources: ListResponse<Resource & { name?: string | null }>
 ): SelectValue[] {
   return fetchedResources.map((r) => {
     const label = 'name' in r && r.name != null ? r.name : r.id

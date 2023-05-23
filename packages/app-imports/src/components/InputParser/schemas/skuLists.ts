@@ -1,12 +1,7 @@
 import { isFalsy } from '#utils/isFalsy'
-import { SkuListCreate } from '@commercelayer/sdk'
 import { z } from 'zod'
 
 import { zodEnforceBoolean } from './zodUtils'
-
-type FlatCsvRow = SkuListCreate & {
-  'sku_list_items.sku_code'?: string
-}
 
 const schema = z
   .object({
@@ -30,4 +25,4 @@ const schema = z
     }
   })
 
-export const csvSkuListSchema: z.ZodType<FlatCsvRow[]> = z.array(schema)
+export const csvSkuListSchema = z.array(schema)

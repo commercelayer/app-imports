@@ -1,5 +1,5 @@
 import { ErrorBoundary, InputJson } from '@commercelayer/app-elements'
-import { ImportCreate } from '@commercelayer/sdk'
+import { type ImportCreate } from '@commercelayer/sdk'
 import { useState } from 'react'
 
 type ImportJsonData = ImportCreate['inputs']
@@ -25,19 +25,19 @@ export function InputCode({
     >
       <InputJson<ImportJsonData>
         placeholder={placehoder}
-        onDataReady={(validInput) => onDataReady(validInput)}
+        onDataReady={(validInput) => {
+          onDataReady(validInput)
+        }}
         onDataResetRequest={onDataResetRequest}
-        validateFn={(maybeJson) => maybeJson.inputs}
+        validateFn={(maybeJson) => maybeJson}
       />
     </ErrorBoundary>
   )
 }
 
-const placehoder = {
-  inputs: [
-    {
-      code: 'ABC',
-      name: 'Foo'
-    }
-  ]
-}
+const placehoder = [
+  {
+    code: 'ABC',
+    name: 'Foo'
+  }
+]

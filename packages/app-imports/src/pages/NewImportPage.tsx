@@ -1,6 +1,5 @@
-import { ImportCreate } from '@commercelayer/sdk'
-import { AllowedResourceType } from 'App'
-import { useState } from 'react'
+import { ImportPreview } from '#components/ImportPreview'
+import { InputCode } from '#components/InputCode'
 import { InputParser } from '#components/InputParser'
 import { ResourceFinder } from '#components/ResourceFinder'
 import {
@@ -9,13 +8,11 @@ import {
   showResourceNiceName
 } from '#data/resources'
 import { appRoutes } from '#data/routes'
-import { Link, useLocation, useRoute } from 'wouter'
-import { InputCode } from '#components/InputCode'
-import { ImportPreview } from '#components/ImportPreview'
+import { validateParentResource } from '#utils/validateParentResource'
 import {
   Button,
   EmptyState,
-  FormFooter,
+  InputFeedback,
   InputToggleBox,
   Label,
   PageError,
@@ -28,8 +25,11 @@ import {
   useCoreSdkProvider,
   useTokenProvider
 } from '@commercelayer/app-elements'
+import { CommerceLayerStatic, type ImportCreate } from '@commercelayer/sdk'
+import { type AllowedResourceType } from 'App'
 import { unparse } from 'papaparse'
-import { validateParentResource } from '#utils/validateParentResource'
+import { useState } from 'react'
+import { Link, useLocation, useRoute } from 'wouter'
 
 function NewImportPage(): JSX.Element {
   const {
@@ -43,6 +43,7 @@ function NewImportPage(): JSX.Element {
 
   const [isTouched, setIsTouched] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [apiError, setApiError] = useState<string | undefined>()
   const [cleanupRecords, setCleanupRecords] = useState(false)
   const [parentResourceId, setParentResourceId] = useState<string | null>()
   const [format, setFormat] = useState<'csv' | 'json'>()
@@ -103,11 +104,12 @@ function NewImportPage(): JSX.Element {
       return
     }
 
+    setApiError(undefined)
     setIsLoading(true)
     try {
       const parentResourceId = await validateParentResource({
         sdkClient,
-        resourceType,
+        resourceType: 'addresses',
         parentResourceId: selectedParentResourceId
       })
 
@@ -123,7 +125,11 @@ function NewImportPage(): JSX.Element {
             : importCreateValue
       })
       setLocation(appRoutes.list.makePath())
-    } catch {
+    } catch (e) {
+      const errorMessage = CommerceLayerStatic.isApiError(e)
+        ? e.errors.map(({ detail }) => detail).join(', ')
+        : 'Could not create import'
+      setApiError(errorMessage)
       setIsLoading(false)
     }
   }
@@ -168,7 +174,9 @@ function NewImportPage(): JSX.Element {
                 setImportCreateValue(input)
                 setFormat(format)
               }}
-              onDataResetRequest={() => setImportCreateValue(undefined)}
+              onDataResetRequest={() => {
+                setImportCreateValue(undefined)
+              }}
               hasParentResource={Boolean(parentResource)}
             />
           </Tab>
@@ -178,7 +186,9 @@ function NewImportPage(): JSX.Element {
                 setImportCreateValue(input)
                 setFormat('json')
               }}
-              onDataResetRequest={() => setImportCreateValue(undefined)}
+              onDataResetRequest={() => {
+                setImportCreateValue(undefined)
+              }}
             />
           </Tab>
         </Tabs>
@@ -214,25 +224,24 @@ function NewImportPage(): JSX.Element {
       </Spacer>
 
       <Spacer bottom='14'>
-        <FormFooter
-          buttonSubmit={
-            <Button
-              variant='primary'
-              onClick={() => {
-                setIsTouched(true)
-                if (!canCreateImport) {
-                  return
-                }
-                void createImportTask(parentResourceId ?? undefined)
-              }}
-              disabled={isLoading}
-            >
-              {isLoading
-                ? 'Importing...'
-                : `Import ${showResourceNiceName(resourceType).toLowerCase()}`}
-            </Button>
-          }
-        />
+        <Button
+          variant='primary'
+          onClick={() => {
+            setIsTouched(true)
+            if (!canCreateImport) {
+              return
+            }
+            void createImportTask(parentResourceId ?? undefined)
+          }}
+          disabled={isLoading}
+        >
+          {isLoading
+            ? 'Importing...'
+            : `Import ${showResourceNiceName(resourceType).toLowerCase()}`}
+        </Button>
+        {apiError != null ? (
+          <InputFeedback variant='danger' message={apiError} />
+        ) : null}
       </Spacer>
     </PageLayout>
   )

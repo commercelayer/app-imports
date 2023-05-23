@@ -1,21 +1,17 @@
-import { appRoutes } from '#data/routes'
-import { Link, useLocation } from 'wouter'
+import { Item } from '#components/List/Item'
 import { ListImportProvider } from '#components/List/Provider'
-import { getUiStatus } from '#components/List/utils'
-import { getProgressPercentage } from '#utils/getProgressPercentage'
-import { showResourceNiceName } from '#data/resources'
-import { DescriptionLine } from '#components/List/ItemDescriptionLine'
+import { appRoutes } from '#data/routes'
 import {
-  useTokenProvider,
-  PageSkeleton,
-  PageLayout,
-  EmptyState,
-  Button,
   A,
+  Button,
+  EmptyState,
   List,
-  ListItemTask,
-  useCoreSdkProvider
+  PageLayout,
+  PageSkeleton,
+  useCoreSdkProvider,
+  useTokenProvider
 } from '@commercelayer/app-elements'
+import { Link } from 'wouter'
 
 function ListPage(): JSX.Element {
   const {
@@ -24,8 +20,6 @@ function ListPage(): JSX.Element {
     canUser
   } = useTokenProvider()
   const { sdkClient } = useCoreSdkProvider()
-
-  const [_location, setLocation] = useLocation()
 
   if (sdkClient == null) {
     return <PageSkeleton />
@@ -41,7 +35,7 @@ function ListPage(): JSX.Element {
       }}
     >
       <ListImportProvider sdkClient={sdkClient} pageSize={25}>
-        {({ state, changePage, deleteImport }) => {
+        {({ state, changePage }) => {
           const { isLoading, currentPage, list } = state
 
           if (isLoading) {
@@ -94,26 +88,9 @@ function ListPage(): JSX.Element {
                 pageCount
               }}
             >
-              {list.map((job) => {
-                const canDelete =
-                  (job.status === 'pending' || job.status === 'in_progress') &&
-                  canUser('destroy', 'imports')
-                return (
-                  <ListItemTask
-                    key={job.id}
-                    status={getUiStatus(job.status)}
-                    progressPercentage={getProgressPercentage(job)?.value}
-                    onClick={() => {
-                      setLocation(appRoutes.details.makePath(job.id))
-                    }}
-                    title={showResourceNiceName(job.resource_type)}
-                    onCancelRequest={
-                      canDelete ? () => deleteImport(job.id) : undefined
-                    }
-                    description={<DescriptionLine job={job} />}
-                  />
-                )
-              })}
+              {list.map((job) => (
+                <Item key={job.id} job={job} />
+              ))}
             </List>
           )
         }}

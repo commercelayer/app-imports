@@ -1,22 +1,9 @@
-import { PriceCreate } from '@commercelayer/sdk'
-import { z } from 'zod'
-
-import { zodEnforceInt } from './zodUtils'
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { isFalsy } from '#utils/isFalsy'
-import { SetOptional } from 'type-fest'
+import { z } from 'zod'
+import { zodEnforceInt } from './zodUtils'
 
-type FlatCsvRow = Omit<
-  SetOptional<PriceCreate, 'compare_at_amount_cents'>,
-  'price_tiers' | 'sku' | 'price_list'
-> & {
-  price_list_id?: string
-  'price_tiers.type'?: 'PriceVolumeTier'
-  'price_tiers.name'?: string
-  'price_tiers.up_to'?: number
-  'price_tiers.price_amount_cents'?: number
-}
-
-const makeSchema = (hasParentResourceId: boolean): z.ZodType<FlatCsvRow> =>
+const makeSchema = (hasParentResourceId: boolean) =>
   z
     .object({
       amount_cents: zodEnforceInt,
@@ -69,4 +56,4 @@ export const csvPricesSchema = ({
   hasParentResource
 }: {
   hasParentResource: boolean
-}): z.ZodType<FlatCsvRow[]> => z.array(makeSchema(hasParentResource))
+}) => z.array(makeSchema(hasParentResource))
