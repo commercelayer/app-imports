@@ -1,13 +1,16 @@
 import { type CommerceLayerClient } from '@commercelayer/sdk'
 import { type AllowedParentResource, type AllowedResourceType } from 'App'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { fetchResources } from './utils'
 import {
   InputSelect,
   Label,
   isSingleValueSelected
 } from '@commercelayer/app-elements'
-import { type SelectValue } from '@commercelayer/app-elements/dist/ui/forms/InputSelect'
+import {
+  type InputSelectProps,
+  type SelectValue
+} from '@commercelayer/app-elements/dist/ui/forms/InputSelect'
 
 interface Props {
   /**
@@ -30,6 +33,10 @@ interface Props {
    * callback function fired when the resource is selected from the list
    */
   onSelect?: (resourceId: string | null) => void
+  /**
+   * Validation feedback
+   */
+  feedback?: InputSelectProps['feedback']
 }
 
 export function ResourceFinder({
@@ -37,10 +44,13 @@ export function ResourceFinder({
   placeholder,
   resourceType,
   sdkClient,
+  feedback,
   onSelect
 }: Props): JSX.Element {
   const [isLoading, setIsLoading] = useState(true)
   const [initialValues, setInitialValues] = useState<SelectValue[]>([])
+  const element = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     if (resourceType == null) {
       return
@@ -53,14 +63,28 @@ export function ResourceFinder({
       })
   }, [resourceType])
 
+  useEffect(() => {
+    if (
+      feedback != null &&
+      feedback.variant === 'danger' &&
+      element.current != null
+    ) {
+      element.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      })
+    }
+  }, [feedback])
+
   return (
-    <div>
+    <div ref={element}>
       <Label gap htmlFor='parent-resource'>
         {label}
       </Label>
       <InputSelect
         initialValues={initialValues}
         isClearable
+        feedback={feedback}
         placeholder={placeholder}
         isLoading={isLoading}
         onSelect={(selected) => {
