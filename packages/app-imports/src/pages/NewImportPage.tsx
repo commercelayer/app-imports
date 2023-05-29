@@ -109,7 +109,7 @@ function NewImportPage(): JSX.Element {
     try {
       const parentResourceId = await validateParentResource({
         sdkClient,
-        resourceType: 'addresses',
+        resourceType,
         parentResourceId: selectedParentResourceId
       })
 
