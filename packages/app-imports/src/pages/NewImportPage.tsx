@@ -21,7 +21,6 @@ import {
   Spacer,
   Tab,
   Tabs,
-  Text,
   useCoreSdkProvider,
   useTokenProvider
 } from '@commercelayer/app-elements'
@@ -109,7 +108,7 @@ function NewImportPage(): JSX.Element {
     try {
       const parentResourceId = await validateParentResource({
         sdkClient,
-        resourceType: 'addresses',
+        resourceType,
         parentResourceId: selectedParentResourceId
       })
 
@@ -156,12 +155,15 @@ function NewImportPage(): JSX.Element {
             resourceType={parentResource}
             sdkClient={sdkClient}
             onSelect={setParentResourceId}
+            feedback={
+              parentResourceId == null && isTouched
+                ? {
+                    message: 'Please select a parent resource',
+                    variant: 'danger'
+                  }
+                : undefined
+            }
           />
-          {parentResourceId == null && isTouched ? (
-            <Text variant='danger' size='small'>
-              Please select a parent resource
-            </Text>
-          ) : null}
         </Spacer>
       )}
 
