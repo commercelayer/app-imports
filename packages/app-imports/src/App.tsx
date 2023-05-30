@@ -28,7 +28,7 @@ function App(): JSX.Element {
         domain={window.clAppConfig.domain}
         reauthenticateOnInvalidAuth={!isDev}
         loadingElement={<PageSkeleton />}
-        devMode={isDev}
+        devMode
       >
         <CoreSdkProvider>
           <Router base={basePath}>
