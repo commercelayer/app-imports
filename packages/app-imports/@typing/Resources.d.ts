@@ -15,6 +15,7 @@ declare module 'App' {
     | 'sku_options'
     | 'orders'
     | 'line_items'
+    | 'tags'
 
   export type ResourceWithParent =
     | 'bundles'

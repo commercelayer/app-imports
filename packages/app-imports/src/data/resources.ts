@@ -24,7 +24,8 @@ const resources: Record<AllowedResourceType, VisibleInUI> = {
   tax_categories: true,
   shipping_categories: true,
   orders: true,
-  line_items: true
+  line_items: true,
+  tags: true
 }
 
 /**
@@ -45,7 +46,8 @@ const resourceNiceName: Record<AllowedResourceType, string> = {
   tax_categories: 'Tax categories',
   shipping_categories: 'Shipping categories',
   orders: 'Orders',
-  line_items: 'Line items'
+  line_items: 'Line items',
+  tags: 'Tags'
 }
 
 /**
