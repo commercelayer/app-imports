@@ -23,7 +23,8 @@ export const adapters: Record<
   shipping_categories: (...args) => fromCsvSchemaToImportInputs(...args),
   orders: (...args) => fromCsvSchemaToImportInputs(...args),
   line_items: (...args) => fromCsvSchemaToImportInputs(...args),
-  tags: (...args) => fromCsvSchemaToImportInputs(...args)
+  tags: (...args) => fromCsvSchemaToImportInputs(...args),
+  sku_list_items: (...args) => fromCsvSchemaToImportInputs(...args)
 }
 
 const fromCsvSchemaToImportInputs = (csvSchema: ZodSchema[]): ImportInputs =>

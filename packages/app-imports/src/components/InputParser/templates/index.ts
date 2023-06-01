@@ -15,6 +15,7 @@ import { csvStockItemTemplate } from './stockItems'
 import { csvTaxCategoryTemplate } from './taxCategories'
 import { csvLineItemsTemplate } from './lineItems'
 import { csvTagsTemplate } from './tags'
+import { csvSkuListItemsTemplate } from './skuListItems'
 
 const templates: Record<AllowedResourceType, string[]> = {
   addresses: csvAddressTemplate,
@@ -32,7 +33,8 @@ const templates: Record<AllowedResourceType, string[]> = {
   shipping_categories: csvShippingCategoryTemplate,
   orders: csvOrdersTemplate,
   line_items: csvLineItemsTemplate,
-  tags: csvTagsTemplate
+  tags: csvTagsTemplate,
+  sku_list_items: csvSkuListItemsTemplate
 }
 
 export function downloadTemplateAsCsvFile({
