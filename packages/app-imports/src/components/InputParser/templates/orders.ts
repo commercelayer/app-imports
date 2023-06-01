@@ -1,6 +1,9 @@
 import { type OrderCreate } from '@commercelayer/sdk'
+import { type CsvTagsColumn, csvTagsColumns } from './_tags'
 
-export const csvOrdersTemplate: Array<keyof OrderCreate | 'market_id'> = [
+export const csvOrdersTemplate: Array<
+  keyof OrderCreate | 'market_id' | CsvTagsColumn
+> = [
   'autorefresh',
   'guest',
   'customer_email',
@@ -13,5 +16,6 @@ export const csvOrdersTemplate: Array<keyof OrderCreate | 'market_id'> = [
   'cart_url',
   'return_url',
   'terms_url',
-  'privacy_url'
+  'privacy_url',
+  ...csvTagsColumns
 ]

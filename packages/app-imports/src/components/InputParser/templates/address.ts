@@ -1,6 +1,10 @@
 import { type AddressCreate } from '@commercelayer/sdk'
+import {
+  type CsvTagsColumn,
+  csvTagsColumns
+} from '#components/InputParser/templates/_tags'
 
-export const csvAddressTemplate: Array<keyof AddressCreate> = [
+export const csvAddressTemplate: Array<keyof AddressCreate | CsvTagsColumn> = [
   'business',
   'first_name',
   'last_name',
@@ -16,5 +20,6 @@ export const csvAddressTemplate: Array<keyof AddressCreate> = [
   'notes',
   'lat',
   'lng',
-  'billing_info'
+  'billing_info',
+  ...csvTagsColumns
 ]
