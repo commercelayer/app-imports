@@ -14,6 +14,7 @@ declare module 'App' {
     | 'shipping_categories'
     | 'sku_options'
     | 'orders'
+    | 'line_items'
 
   export type ResourceWithParent =
     | 'bundles'

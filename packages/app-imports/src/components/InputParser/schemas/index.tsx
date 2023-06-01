@@ -14,6 +14,7 @@ import { csvSkuOptionSchema } from './skuOptions'
 import { csvSkusSchema } from './skus'
 import { csvStockItemsSchema } from './stockItems'
 import { csvTaxCategoriesSchema } from './taxCategories'
+import { csvLineItemsSchema } from './lineItems'
 
 type MakeSchemaFn = ({
   hasParentResource
@@ -40,5 +41,6 @@ export const parsers: Record<AllowedResourceType, SchemaOrMakeSchemaFn> = {
   tax_categories: csvTaxCategoriesSchema,
   stock_items: csvStockItemsSchema,
   shipping_categories: csvShippingCategorySchema,
-  orders: csvOrdersSchema
+  orders: csvOrdersSchema,
+  line_items: csvLineItemsSchema
 }

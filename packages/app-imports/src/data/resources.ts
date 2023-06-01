@@ -23,7 +23,8 @@ const resources: Record<AllowedResourceType, VisibleInUI> = {
   stock_items: true,
   tax_categories: true,
   shipping_categories: true,
-  orders: true
+  orders: true,
+  line_items: true
 }
 
 /**
@@ -43,7 +44,8 @@ const resourceNiceName: Record<AllowedResourceType, string> = {
   stock_items: 'Stock items',
   tax_categories: 'Tax categories',
   shipping_categories: 'Shipping categories',
-  orders: 'Orders'
+  orders: 'Orders',
+  line_items: 'Line items'
 }
 
 /**
