@@ -1,7 +1,8 @@
 import { type GiftCardCreate } from '@commercelayer/sdk'
+import { type CsvTagsColumn, csvTagsColumns } from './_tags'
 
 export const csvGiftCardsTemplate: Array<
-  keyof GiftCardCreate | 'market_id' | 'gift_card_recipient_id'
+  keyof GiftCardCreate | 'market_id' | 'gift_card_recipient_id' | CsvTagsColumn
 > = [
   'code',
   'currency_code',
@@ -14,5 +15,6 @@ export const csvGiftCardsTemplate: Array<
   'recipient_email',
   'reference',
   'reference_origin',
-  'gift_card_recipient_id'
+  'gift_card_recipient_id',
+  ...csvTagsColumns
 ]
