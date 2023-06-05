@@ -149,7 +149,7 @@ export const InputParser: FC<Props> = ({
           <Spacer top='2'>
             {errorList.slice(0, 5).map((issue, idx) => (
               <p key={idx}>
-                Row {issue.path[0]} - {issue.message}
+                Row {issue.path.join(' - ')} - {issue.message}
               </p>
             ))}
             {errorList.length > 5 ? (
