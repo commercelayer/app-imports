@@ -41,7 +41,10 @@ export function Item({ job }: Props): JSX.Element {
         {canDelete ? (
           <Button
             variant='danger'
-            onClick={() => {
+            type='button'
+            onClick={(e) => {
+              e.stopPropagation()
+              e.preventDefault()
               deleteImport(job.id)
             }}
           >
