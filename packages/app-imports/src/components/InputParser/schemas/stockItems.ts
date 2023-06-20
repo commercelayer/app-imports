@@ -2,13 +2,13 @@
 import { isFalsy } from '#utils/isFalsy'
 import { z } from 'zod'
 
-import { zodEnforceInt } from './zodUtils'
+import { zodEnforcePositiveInt } from './zodUtils'
 
 const makeSchema = (hasParentResourceId: boolean) =>
   z
     .object({
       sku_code: z.optional(z.string().min(1)),
-      quantity: zodEnforceInt,
+      quantity: zodEnforcePositiveInt,
       reference: z.optional(z.string()),
       reference_origin: z.optional(z.string()),
       stock_location_id: z.optional(z.string().min(1)),

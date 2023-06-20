@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { isFalsy } from '#utils/isFalsy'
 import { z } from 'zod'
-import { zodEnforceInt } from './zodUtils'
+import { zodEnforcePositiveInt } from './zodUtils'
 
 const makeSchema = (hasParentResourceId: boolean) =>
   z
     .object({
-      amount_cents: zodEnforceInt,
-      compare_at_amount_cents: z.optional(zodEnforceInt),
+      amount_cents: zodEnforcePositiveInt,
+      compare_at_amount_cents: z.optional(zodEnforcePositiveInt),
       price_list_id: z.optional(z.string().min(1)),
       sku_code: z.optional(z.string()),
       reference: z.optional(z.string()),
@@ -15,8 +15,8 @@ const makeSchema = (hasParentResourceId: boolean) =>
       // price_tiers relationship
       'price_tiers.type': z.optional(z.literal('PriceVolumeTier')),
       'price_tiers.name': z.optional(z.string().min(1)),
-      'price_tiers.up_to': z.optional(zodEnforceInt),
-      'price_tiers.price_amount_cents': z.optional(zodEnforceInt)
+      'price_tiers.up_to': z.optional(zodEnforcePositiveInt),
+      'price_tiers.price_amount_cents': z.optional(zodEnforcePositiveInt)
     })
     .passthrough()
     .superRefine((data, ctx) => {

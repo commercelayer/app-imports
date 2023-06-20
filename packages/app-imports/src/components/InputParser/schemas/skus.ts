@@ -1,9 +1,9 @@
 import { z } from 'zod'
 
 import {
-  zodEnforceInt,
+  zodEnforcePositiveInt,
   zodEnforceBoolean,
-  zodEnforceFloat,
+  zodEnforcePositiveFloat,
   zodCaseInsensitiveNativeEnum
 } from './zodUtils'
 
@@ -20,8 +20,8 @@ const schema = z
     shipping_category_id: z.string().min(1),
     description: z.optional(z.string()),
     image_url: z.optional(z.string().url()),
-    pieces_per_pack: z.optional(zodEnforceInt),
-    weight: z.optional(zodEnforceFloat),
+    pieces_per_pack: z.optional(zodEnforcePositiveInt),
+    weight: z.optional(zodEnforcePositiveFloat),
     unit_of_weight: z.optional(
       zodCaseInsensitiveNativeEnum(AllowedUnitOfWeightEnum)
     ),

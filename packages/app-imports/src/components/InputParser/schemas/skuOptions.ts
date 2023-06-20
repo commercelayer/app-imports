@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { isFalsy } from '#utils/isFalsy'
 import { z } from 'zod'
-import { zodEnforceInt } from './zodUtils'
+import { zodEnforcePositiveInt } from './zodUtils'
 
 const makeSchema = (hasParentResourceId: boolean) =>
   z
@@ -10,8 +10,8 @@ const makeSchema = (hasParentResourceId: boolean) =>
       currency_code: z.optional(z.string().min(1)), // Required, unless inherited by market
       market_id: z.optional(z.string().min(1)),
       description: z.optional(z.string().min(1)),
-      price_amount_cents: z.optional(zodEnforceInt),
-      delay_hours: z.optional(zodEnforceInt),
+      price_amount_cents: z.optional(zodEnforcePositiveInt),
+      delay_hours: z.optional(zodEnforcePositiveInt),
       sku_code_regex: z.optional(z.string().min(1)),
       reference: z.optional(z.string()),
       reference_origin: z.optional(z.string())

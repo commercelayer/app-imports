@@ -2,11 +2,12 @@ import { ZodError } from 'zod'
 
 import {
   zodEnforceBoolean,
-  zodEnforceInt,
-  zodEnforceFloat,
+  zodEnforcePositiveInt,
+  zodEnforcePositiveFloat,
   zodEnforceDateString,
   zodCaseInsensitiveNativeEnum
 } from './zodUtils'
+import { zodEnforceNonNegativeInt } from '#components/InputParser/schemas/zodUtils'
 
 describe('check zodEnforceBoolean', () => {
   test('should parse true string text as boolean `true`', () => {
@@ -38,47 +39,63 @@ describe('check zodEnforceBoolean', () => {
   })
 })
 
-describe('check zodEnforceInt', () => {
+describe('check zodEnforcePositiveInt', () => {
   test('should allow int ', () => {
-    expect(zodEnforceInt.parse(13)).toBe(13)
+    expect(zodEnforcePositiveInt.parse(13)).toBe(13)
   })
 
   test('should parse string number ', () => {
-    expect(zodEnforceInt.parse('13')).toBe(13)
+    expect(zodEnforcePositiveInt.parse('13')).toBe(13)
   })
 
   test('should reject negative ', () => {
-    expect(zodEnforceInt.safeParse(0).success).toBe(false)
-    expect(zodEnforceInt.safeParse(-4).success).toBe(false)
-    expect(zodEnforceInt.safeParse('-7').success).toBe(false)
+    expect(zodEnforcePositiveInt.safeParse(0).success).toBe(false)
+    expect(zodEnforcePositiveInt.safeParse(-4).success).toBe(false)
+    expect(zodEnforcePositiveInt.safeParse('-7').success).toBe(false)
   })
 
   test('should reject string float ', () => {
-    expect(zodEnforceInt.safeParse('13.5').success).toBe(false)
+    expect(zodEnforcePositiveInt.safeParse('13.5').success).toBe(false)
   })
 })
 
-describe('check zodEnforceFloat', () => {
-  test('should allow int', () => {
-    expect(zodEnforceFloat.parse(13)).toBe(13)
+describe('check zodEnforceNonNegativeInt', () => {
+  test('should allow non negative int ', () => {
+    expect(zodEnforceNonNegativeInt.parse(13)).toBe(13)
+    expect(zodEnforceNonNegativeInt.parse(0)).toBe(0)
   })
 
-  test('should allow float', () => {
-    expect(zodEnforceFloat.parse(13.99)).toBe(13.99)
-  })
-
-  test('should parse string number', () => {
-    expect(zodEnforceFloat.parse('13')).toBe(13)
-  })
-
-  test('should allow string float', () => {
-    expect(zodEnforceFloat.parse('13.5')).toBe(13.5)
+  test('should parse string number ', () => {
+    expect(zodEnforceNonNegativeInt.parse('0')).toBe(0)
   })
 
   test('should reject negative', () => {
-    expect(zodEnforceFloat.safeParse(0).success).toBe(false)
-    expect(zodEnforceFloat.safeParse(-4).success).toBe(false)
-    expect(zodEnforceFloat.safeParse('-7.54').success).toBe(false)
+    expect(zodEnforceNonNegativeInt.safeParse(-4).success).toBe(false)
+    expect(zodEnforceNonNegativeInt.safeParse('-7').success).toBe(false)
+  })
+})
+
+describe('check zodEnforcePositiveFloat', () => {
+  test('should allow int', () => {
+    expect(zodEnforcePositiveFloat.parse(13)).toBe(13)
+  })
+
+  test('should allow float', () => {
+    expect(zodEnforcePositiveFloat.parse(13.99)).toBe(13.99)
+  })
+
+  test('should parse string number', () => {
+    expect(zodEnforcePositiveFloat.parse('13')).toBe(13)
+  })
+
+  test('should allow string float', () => {
+    expect(zodEnforcePositiveFloat.parse('13.5')).toBe(13.5)
+  })
+
+  test('should reject negative', () => {
+    expect(zodEnforcePositiveFloat.safeParse(0).success).toBe(false)
+    expect(zodEnforcePositiveFloat.safeParse(-4).success).toBe(false)
+    expect(zodEnforcePositiveFloat.safeParse('-7.54').success).toBe(false)
   })
 })
 
