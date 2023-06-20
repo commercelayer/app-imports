@@ -1,13 +1,14 @@
 import { z } from 'zod'
 
-import { zodEnforcePositiveInt, zodEnforceNonNegativeInt } from './zodUtils'
+import { zodEnforcePositiveInt } from './zodUtils'
+import { zodEnforceInt } from '#components/InputParser/schemas/zodUtils'
 
 const schema = z
   .object({
     sku_code: z.optional(z.string().min(1)),
     bundle_code: z.optional(z.string().min(1)),
     quantity: zodEnforcePositiveInt,
-    unit_amount_cents: z.optional(zodEnforceNonNegativeInt),
+    unit_amount_cents: z.optional(zodEnforceInt),
     name: z.optional(z.string().min(1)),
     image_url: z.optional(z.string().url()),
     item_type: z.optional(z.string().min(1)),
