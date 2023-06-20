@@ -15,6 +15,19 @@ describe('Validate csvLineItemsSchema', () => {
           quantity: 5,
           unit_amount_cents: 200,
           order_id: 'ORDER123'
+        },
+        {
+          sku_code: 'ABC002',
+          quantity: 1,
+          unit_amount_cents: 0,
+          order_id: 'ORDER123'
+        },
+
+        {
+          sku_code: 'ABC003',
+          quantity: 1,
+          unit_amount_cents: '-100',
+          order_id: 'ORDER123'
         }
       ])
     ).toStrictEqual([
@@ -28,6 +41,18 @@ describe('Validate csvLineItemsSchema', () => {
         bundle_code: 'BUNDLE001',
         quantity: 5,
         unit_amount_cents: 200,
+        order_id: 'ORDER123'
+      },
+      {
+        sku_code: 'ABC002',
+        quantity: 1,
+        unit_amount_cents: 0,
+        order_id: 'ORDER123'
+      },
+      {
+        sku_code: 'ABC003',
+        quantity: 1,
+        unit_amount_cents: -100,
         order_id: 'ORDER123'
       }
     ])

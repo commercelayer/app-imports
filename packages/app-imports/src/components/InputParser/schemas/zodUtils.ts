@@ -23,12 +23,32 @@ export function zodEnforceBoolean({
 
 export const zodEnforceInt = z.preprocess(
   (value) => parseFloat(String(value)),
+  z.number().int()
+)
+
+export const zodEnforcePositiveInt = z.preprocess(
+  (value) => parseFloat(String(value)),
   z.number().int().positive()
+)
+
+export const zodEnforceNonNegativeInt = z.preprocess(
+  (value) => parseFloat(String(value)),
+  z.number().int().nonnegative()
 )
 
 export const zodEnforceFloat = z.preprocess(
   (value) => parseFloat(String(value)),
+  z.number()
+)
+
+export const zodEnforcePositiveFloat = z.preprocess(
+  (value) => parseFloat(String(value)),
   z.number().positive()
+)
+
+export const zodEnforceNonNegativeFloat = z.preprocess(
+  (value) => parseFloat(String(value)),
+  z.number().nonnegative()
 )
 
 export const zodEnforceDateString = z.preprocess((value: unknown) => {

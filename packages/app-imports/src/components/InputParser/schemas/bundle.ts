@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { isFalsy } from '#utils/isFalsy'
 import { z } from 'zod'
-import { zodEnforceBoolean, zodEnforceInt } from './zodUtils'
+import { zodEnforceBoolean, zodEnforcePositiveInt } from './zodUtils'
 
 const makeSchema = (hasParentResourceId: boolean) =>
   z
@@ -13,8 +13,8 @@ const makeSchema = (hasParentResourceId: boolean) =>
       image_url: z.optional(z.string().url()),
       do_not_ship: zodEnforceBoolean({ optional: true }),
       do_not_track: zodEnforceBoolean({ optional: true }),
-      price_amount_cents: zodEnforceInt,
-      compare_at_amount_cents: zodEnforceInt,
+      price_amount_cents: zodEnforcePositiveInt,
+      compare_at_amount_cents: zodEnforcePositiveInt,
       _compute_price_amount: zodEnforceBoolean({ optional: true }),
       _compute_compare_at_amount: zodEnforceBoolean({ optional: true }),
       market_id: z.optional(z.string().min(1)),
