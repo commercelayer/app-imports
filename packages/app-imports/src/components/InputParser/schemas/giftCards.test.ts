@@ -28,6 +28,11 @@ describe('Validate csvGiftCardsSchema', () => {
           currency_code: 'EUR',
           balance_cents: 30000,
           expires_at: '2022-07-22'
+        },
+        {
+          code: 'XXXX123125',
+          currency_code: 'EUR',
+          balance_cents: '0'
         }
       ])
     ).toStrictEqual([
@@ -55,6 +60,11 @@ describe('Validate csvGiftCardsSchema', () => {
         currency_code: 'EUR',
         balance_cents: 30000,
         expires_at: '2022-07-22T00:00:00.000Z'
+      },
+      {
+        code: 'XXXX123125',
+        currency_code: 'EUR',
+        balance_cents: 0
       }
     ])
   })

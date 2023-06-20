@@ -3,14 +3,14 @@ import { z } from 'zod'
 import {
   zodEnforceBoolean,
   zodEnforceDateString,
-  zodEnforcePositiveInt
+  zodEnforceNonNegativeInt
 } from './zodUtils'
 
 const schema = z
   .object({
     code: z.optional(z.string()),
     currency_code: z.string().min(1),
-    balance_cents: zodEnforcePositiveInt,
+    balance_cents: zodEnforceNonNegativeInt,
     balance_max_cents: z.optional(z.string()),
     single_use: zodEnforceBoolean({ optional: true }),
     rechargeable: zodEnforceBoolean({ optional: true }),
