@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { isFalsy } from '#utils/isFalsy'
 import { z } from 'zod'
-import { zodEnforcePositiveInt } from './zodUtils'
+import { zodEnforcePositiveInt, zodEnforceNonNegativeInt } from './zodUtils'
 
 const makeSchema = (hasParentResourceId: boolean) =>
   z
     .object({
-      amount_cents: zodEnforcePositiveInt,
-      compare_at_amount_cents: z.optional(zodEnforcePositiveInt),
+      amount_cents: zodEnforceNonNegativeInt,
+      compare_at_amount_cents: z.optional(zodEnforceNonNegativeInt),
       price_list_id: z.optional(z.string().min(1)),
       sku_code: z.optional(z.string()),
       reference: z.optional(z.string()),
