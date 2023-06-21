@@ -6,7 +6,7 @@ const schema = z
     position: z.optional(zodEnforcePositiveInt),
     sku_code: z.optional(z.string().min(1)),
     quantity: z.optional(zodEnforcePositiveInt),
-    sku_list_id: z.string().min(1),
+    sku_list_id: z.optional(z.string().min(1)),
     sku_id: z.string().min(1)
   })
   .passthrough()
