@@ -25,6 +25,7 @@ declare module 'App' {
     | 'orders'
     | 'prices'
     | 'sku_options'
+    | 'sku_list_items'
     | 'stock_items'
     | 'tax_categories'
 

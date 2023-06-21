@@ -108,6 +108,7 @@ const resourcesWithParent: Record<ResourceWithParent, AllowedParentResource> = {
   orders: 'markets',
   prices: 'price_lists',
   sku_options: 'markets',
+  sku_list_items: 'sku_lists',
   stock_items: 'stock_locations',
   tax_categories: 'tax_calculators',
   // direct parent resource for `coupons` is `promotion_rules` but since they don't have a name
