@@ -55,9 +55,16 @@ export const InputParser: FC<Props> = ({
         )
       },
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      complete: async ({ data }) => {
+      complete: async ({ data: csvRows }) => {
+        if (csvRows.length > importMaxSize) {
+          setErrorMessage(
+            `Maximum number of records exceeded. You are trying to import ${csvRows.length} records, but limit is ${importMaxSize} per task. Please split your file in smaller chunks.`
+          )
+          setIsParsing(false)
+          return
+        }
+
         const parser = parsers[resourceType]
-        const csvRows = data.slice(0, importMaxSize)
         const parsedResources = isMakeSchemaFn(parser)
           ? parser({ hasParentResource }).safeParse(csvRows)
           : parser.safeParse(csvRows)
