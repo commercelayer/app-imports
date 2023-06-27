@@ -25,6 +25,7 @@ const makeSchema = (): ZodTypeAny =>
       reference: z.optional(z.string()),
       reference_origin: z.optional(z.string())
     })
+    .passthrough()
     .superRefine((data, ctx) => {
       if (isFalsy(data.business) && isFalsy(data.first_name)) {
         ctx.addIssue({

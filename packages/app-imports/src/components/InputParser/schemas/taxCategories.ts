@@ -9,6 +9,7 @@ const schema = z
     sku_id: z.optional(z.string().min(1)),
     tax_calculator_id: z.string().min(1)
   })
+  .passthrough()
   .superRefine((data, ctx) => {
     if (isFalsy(data.sku_code) && isFalsy(data.sku_id)) {
       ctx.addIssue({
