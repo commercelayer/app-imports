@@ -6,6 +6,7 @@ import ListPage from './pages/ListPage'
 import NewImportPage from './pages/NewImportPage'
 import { ResourceSelectorPage } from './pages/ResourceSelectorPage'
 import {
+  MetaTags,
   ErrorBoundary,
   TokenProvider,
   PageSkeleton,
@@ -30,6 +31,7 @@ function App(): JSX.Element {
         loadingElement={<PageSkeleton />}
         devMode={isDev}
       >
+        <MetaTags />
         <CoreSdkProvider>
           <Router base={basePath}>
             <Switch>
