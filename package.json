@@ -33,7 +33,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "lerna": "^6.6.2",
-    "npm-check-updates": "^16.10.12"
+    "lerna": "^7.1.4",
+    "npm-check-updates": "^16.10.17"
   }
 }
