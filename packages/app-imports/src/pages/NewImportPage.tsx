@@ -13,8 +13,6 @@ import {
   Button,
   EmptyState,
   InputFeedback,
-  InputToggleBox,
-  Label,
   PageError,
   PageLayout,
   PageSkeleton,
@@ -43,7 +41,6 @@ function NewImportPage(): JSX.Element {
   const [isTouched, setIsTouched] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [apiError, setApiError] = useState<string | undefined>()
-  const [cleanupRecords, setCleanupRecords] = useState(false)
   const [parentResourceId, setParentResourceId] = useState<string | null>()
   const [format, setFormat] = useState<'csv' | 'json'>()
   const [importCreateValue, setImportCreateValue] = useState<
@@ -114,7 +111,6 @@ function NewImportPage(): JSX.Element {
 
       await sdkClient.imports.create({
         resource_type: resourceType,
-        cleanup_records: cleanupRecords,
         parent_resource_id: parentResourceId,
         format,
         inputs:
@@ -205,25 +201,6 @@ function NewImportPage(): JSX.Element {
           />
         </Spacer>
       ) : null}
-
-      <Spacer bottom='14'>
-        <Label gap htmlFor='toggle-cleanup'>
-          More options
-        </Label>
-        <div>
-          <InputToggleBox
-            id='toggle-cleanup'
-            label={`Deletes all the ${showResourceNiceName(
-              resourceType
-            ).toLowerCase()} that are not in the import`}
-            description='Be careful, this action cannot be undone.'
-            checked={cleanupRecords}
-            onChange={() => {
-              setCleanupRecords((p) => !p)
-            }}
-          />
-        </div>
-      </Spacer>
 
       <Spacer bottom='14'>
         <Button
