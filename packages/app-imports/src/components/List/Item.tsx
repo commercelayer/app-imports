@@ -4,7 +4,8 @@ import {
   Text,
   RadialProgress,
   Button,
-  useTokenProvider
+  useTokenProvider,
+  formatResourceName
 } from '@commercelayer/app-elements'
 import { type Import } from '@commercelayer/sdk'
 import { DescriptionLine } from '#components/List/ItemDescriptionLine'
@@ -12,8 +13,8 @@ import { getUiStatus } from '#components/List/utils'
 import { getProgressPercentage } from '#utils/getProgressPercentage'
 import { appRoutes } from '#data/routes'
 import { Link } from 'wouter'
-import { showResourceNiceName } from '#data/resources'
 import { useListContext } from './Provider'
+import { type ListableResourceType } from '@commercelayer/sdk/lib/cjs/api'
 
 interface Props {
   job: Import
@@ -32,7 +33,11 @@ export function Item({ job }: Props): JSX.Element {
       <ListItem tag='a' icon={<TaskIcon job={job} />}>
         <div>
           <Text tag='div' weight='semibold'>
-            {showResourceNiceName(job.resource_type)}
+            {formatResourceName({
+              resource: job.resource_type as ListableResourceType,
+              count: 'plural',
+              format: 'title'
+            })}
           </Text>
           <Text tag='div' size='small' variant='info' weight='medium'>
             <DescriptionLine job={job} />

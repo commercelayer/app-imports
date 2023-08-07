@@ -1,18 +1,4 @@
-import { showResourceNiceName, getParentResourceIfNeeded } from './resources'
-
-describe('showResourceNiceName', () => {
-  test('Should return the full resource name', () => {
-    expect(showResourceNiceName('sku_lists')).toBe('SKU lists')
-  })
-
-  test('Should return the the id name if not found in dictionary', () => {
-    expect(showResourceNiceName('new_resource' as any)).toBe('new_resource')
-  })
-
-  test('Should not break if resource is empty', () => {
-    expect(showResourceNiceName(undefined)).toBe('-')
-  })
-})
+import { getParentResourceIfNeeded } from './resources'
 
 describe('getParentResourceIfNeeded', () => {
   test('Should return the parent resource type', () => {

@@ -2,11 +2,7 @@ import { ImportPreview } from '#components/ImportPreview'
 import { InputCode } from '#components/InputCode'
 import { InputParser } from '#components/InputParser'
 import { ResourceFinder } from '#components/ResourceFinder'
-import {
-  getParentResourceIfNeeded,
-  isAvailableResource,
-  showResourceNiceName
-} from '#data/resources'
+import { getParentResourceIfNeeded, isAvailableResource } from '#data/resources'
 import { appRoutes } from '#data/routes'
 import { validateParentResource } from '#utils/validateParentResource'
 import {
@@ -19,6 +15,7 @@ import {
   Spacer,
   Tab,
   Tabs,
+  formatResourceName,
   useCoreSdkProvider,
   useTokenProvider
 } from '@commercelayer/app-elements'
@@ -137,7 +134,10 @@ function NewImportPage(): JSX.Element {
 
   return (
     <PageLayout
-      title={`Import ${showResourceNiceName(resourceType).toLowerCase()}`}
+      title={`Import ${formatResourceName({
+        resource: resourceType,
+        count: 'plural'
+      })}`}
       mode={mode}
       onGoBack={() => {
         setLocation(appRoutes.selectResource.makePath())
@@ -146,7 +146,11 @@ function NewImportPage(): JSX.Element {
       {parentResource !== false && (
         <Spacer bottom='14'>
           <ResourceFinder
-            label={showResourceNiceName(parentResource)}
+            label={formatResourceName({
+              resource: parentResource,
+              count: 'plural',
+              format: 'title'
+            })}
             placeholder='Type to search parent resource'
             resourceType={parentResource}
             sdkClient={sdkClient}
@@ -216,7 +220,11 @@ function NewImportPage(): JSX.Element {
         >
           {isLoading
             ? 'Importing...'
-            : `Import ${showResourceNiceName(resourceType).toLowerCase()}`}
+            : `Import ${formatResourceName({
+                resource: resourceType,
+                count: 'plural',
+                format: 'lower'
+              })}`}
         </Button>
         {apiError != null ? (
           <InputFeedback variant='danger' message={apiError} />

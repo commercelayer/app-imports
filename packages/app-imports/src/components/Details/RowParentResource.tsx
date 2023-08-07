@@ -1,8 +1,8 @@
-import { ListDetailsItem } from '@commercelayer/app-elements'
 import {
-  getParentResourceIfNeeded,
-  showResourceNiceName
-} from '#data/resources'
+  ListDetailsItem,
+  formatResourceName
+} from '@commercelayer/app-elements'
+import { getParentResourceIfNeeded } from '#data/resources'
 import { type CommerceLayerClient } from '@commercelayer/sdk'
 import { useEffect, useState } from 'react'
 import { useImportDetailsContext } from './Provider'
@@ -68,7 +68,12 @@ export function RowParentResource({ sdkClient }: Props): JSX.Element | null {
     <>
       {data.parent_resource_id != null && data.resource_type != null ? (
         <ListDetailsItem label='Parent resource' isLoading={isLoading}>
-          <div title={showResourceNiceName(parentResourceType)}>
+          <div
+            title={formatResourceName({
+              resource: parentResourceType,
+              count: 'plural'
+            })}
+          >
             {parentResourceName}
           </div>
         </ListDetailsItem>
