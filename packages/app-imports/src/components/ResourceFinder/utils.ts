@@ -35,7 +35,7 @@ export const fetchResources = async ({
     sort: {
       created_at: 'desc'
     },
-    pageSize: 5
+    pageSize: 25
   })
   return adaptApiToSuggestions(fetchedResources)
 }

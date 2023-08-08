@@ -12,7 +12,6 @@ export const csvOrdersTemplate: Array<
   'shipping_country_code_lock',
   'coupon_code',
   'gift_card_code',
-  'gift_card_or_coupon_code',
   'cart_url',
   'return_url',
   'terms_url',

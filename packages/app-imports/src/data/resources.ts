@@ -7,7 +7,7 @@ import {
 type VisibleInUI = boolean
 
 /**
- * To control if a resource should not be visibile int the app UI
+ * To control if a resource should not be visible int the app UI
  */
 const resources: Record<AllowedResourceType, VisibleInUI> = {
   addresses: true,
@@ -30,42 +30,7 @@ const resources: Record<AllowedResourceType, VisibleInUI> = {
 }
 
 /**
- * Resources dictionary
- */
-const resourceNiceName: Record<AllowedResourceType, string> = {
-  addresses: 'Addresses',
-  bundles: 'Bundles',
-  skus: 'SKUs',
-  prices: 'Prices',
-  coupons: 'Coupons',
-  sku_lists: 'SKU lists',
-  sku_options: 'SKU options',
-  customer_subscriptions: 'Customer subscriptions',
-  customers: 'Customers',
-  gift_cards: 'Gift cards',
-  stock_items: 'Stock items',
-  tax_categories: 'Tax categories',
-  shipping_categories: 'Shipping categories',
-  orders: 'Orders',
-  line_items: 'Line items',
-  tags: 'Tags',
-  sku_list_items: 'SKU list items'
-}
-
-/**
- * Parent Resources dictionary (we want singular names)
- */
-const parentResourceNiceName: Record<AllowedParentResource, string> = {
-  markets: 'Market',
-  promotions: 'Promotion',
-  price_lists: 'Price list',
-  stock_locations: 'Stock location',
-  tax_calculators: 'Tax calculator',
-  sku_lists: 'Sku list'
-}
-
-/**
- * Typesafe arry of AllowedResourceType
+ * Typesafe array of AllowedResourceType
  */
 const allResources = Object.keys(resources) as AllowedResourceType[]
 
@@ -81,23 +46,6 @@ export const availableResources = allResources.filter((r) => resources[r])
  */
 export const isAvailableResource = (resourceType: string): boolean =>
   availableResources.includes(resourceType as AllowedResourceType)
-
-/**
- * @param resource - The resource type
- * @returns a string with the full resource name if found in `resourceNiceName` dictionary
- * Example: for `shipping_categories` resource type will return 'Shipping Categories'
- * but for `not_existing_resource` it will return 'not_existing_resource'
- */
-export function showResourceNiceName(resource?: string): string {
-  if (resource == null) {
-    return '-'
-  }
-  return (
-    resourceNiceName[resource as AllowedResourceType] ??
-    parentResourceNiceName[resource as AllowedParentResource] ??
-    resource
-  )
-}
 
 /**
  * To control if a resource has a parent resource to be selected
