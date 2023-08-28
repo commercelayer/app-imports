@@ -27,7 +27,7 @@ export function Item({ job }: Props): JSX.Element {
   const [deleteErrorMessage, setDeleteErrorMessage] = useState<string | null>()
 
   const canDelete =
-    (job.status === 'pending' || job.status === 'in_progress') &&
+    (job.status === 'pending' || job.status === 'interrupted') &&
     canUser('destroy', 'imports')
 
   return (
