@@ -9,5 +9,5 @@ export const initialState: ListImportContextState = {
 export const initialValues: ListImportContextValue = {
   state: initialState,
   changePage: () => undefined,
-  deleteImport: () => undefined
+  deleteImport: async () => undefined
 }

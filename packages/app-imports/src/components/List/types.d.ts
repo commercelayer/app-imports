@@ -5,7 +5,7 @@ declare module 'App' {
   export interface ListImportContextValue {
     state: ListImportContextState
     changePage: (page: number) => void
-    deleteImport: (importId: string) => void
+    deleteImport: (importId: string) => Promise<void>
   }
 
   export interface ListImportContextState {
