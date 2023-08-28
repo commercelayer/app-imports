@@ -55,14 +55,12 @@ export function ListImportProvider({
     dispatch({ type: 'loadData', payload: list })
   }, [state.currentPage])
 
-  const deleteImport = (importId: string): void => {
-    sdkClient.imports
-      .delete(importId)
-      .then(fetchList)
-      .catch(() => {
-        console.error('Import not found')
-      })
-  }
+  const deleteImport: ListImportContextValue['deleteImport'] = useCallback(
+    async (importId: string) => {
+      await sdkClient.imports.delete(importId).then(fetchList)
+    },
+    []
+  )
 
   useEffect(
     function handleChangePageIgnoringFirstRender() {
