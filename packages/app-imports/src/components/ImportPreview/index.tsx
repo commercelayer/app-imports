@@ -1,8 +1,9 @@
 import { TableData, ErrorBoundary } from '@commercelayer/app-elements'
+import type { JsonObject } from 'type-fest'
 
 interface Props {
   title: string
-  data: Array<Record<string, string | Record<string, unknown>>>
+  data: JsonObject[]
   limit: number
 }
 

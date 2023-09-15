@@ -56,7 +56,7 @@ export function ResourceFinder({
       return
     }
     setIsLoading(true)
-    fetchResources({ sdkClient, resourceType })
+    void fetchResources({ sdkClient, resourceType })
       .then(setInitialValues)
       .finally(() => {
         setIsLoading(false)

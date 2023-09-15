@@ -56,11 +56,7 @@ export function RowParentResource({ sdkClient }: Props): JSX.Element | null {
     [parentResourceId, parentResourceType, sdkClient]
   )
 
-  if (
-    data == null ||
-    data.parent_resource_id == null ||
-    parentResourceType === false
-  ) {
+  if (data?.parent_resource_id == null || parentResourceType === false) {
     return null
   }
 
