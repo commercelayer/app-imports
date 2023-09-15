@@ -24,7 +24,7 @@ export function InputCode({
       key={renderKey}
     >
       <InputJson<ImportJsonData>
-        placeholder={placehoder}
+        placeholder={placeholder}
         onDataReady={(validInput) => {
           onDataReady(validInput)
         }}
@@ -35,7 +35,7 @@ export function InputCode({
   )
 }
 
-const placehoder = [
+const placeholder = [
   {
     code: 'ABC',
     name: 'Foo'

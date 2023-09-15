@@ -2,7 +2,6 @@ import { Item } from '#components/List/Item'
 import { ListImportProvider } from '#components/List/Provider'
 import { appRoutes } from '#data/routes'
 import {
-  A,
   Button,
   EmptyState,
   List,
@@ -77,7 +76,7 @@ function ListPage(): JSX.Element {
               title='All Imports'
               actionButton={
                 <Link href={appRoutes.selectResource.makePath()}>
-                  <A>New import</A>
+                  <a>New import</a>
                 </Link>
               }
               pagination={{

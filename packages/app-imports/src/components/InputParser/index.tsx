@@ -126,7 +126,7 @@ export const InputParser: FC<Props> = ({
     <div>
       <Spacer bottom='4'>
         <InputFile
-          label='Select a csv or json to upload'
+          title='Select a csv or json to upload'
           onChange={(e) => {
             if (e.target.files != null && !isParsing) {
               setFile(e.target.files[0])

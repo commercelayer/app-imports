@@ -37,7 +37,6 @@ export function ImportReport(): JSX.Element | null {
 
 function getSourceFileUrl(job?: Import): string | undefined {
   if (
-    job == null ||
     job?.attachment_url == null ||
     job?.processed_count == null ||
     job.processed_count === 0
