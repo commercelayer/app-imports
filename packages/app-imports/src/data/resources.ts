@@ -52,7 +52,6 @@ export const isAvailableResource = (resourceType: string): boolean =>
  */
 const resourcesWithParent: Record<ResourceWithParent, AllowedParentResource> = {
   bundles: 'markets',
-  gift_cards: 'markets',
   orders: 'markets',
   prices: 'price_lists',
   sku_options: 'markets',

@@ -21,7 +21,6 @@ declare module 'App' {
   export type ResourceWithParent =
     | 'bundles'
     | 'coupons'
-    | 'gift_cards'
     | 'orders'
     | 'prices'
     | 'sku_options'
