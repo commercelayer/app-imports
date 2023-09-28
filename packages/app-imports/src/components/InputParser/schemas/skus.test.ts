@@ -58,4 +58,33 @@ describe('Validate skusSchema', () => {
       }
     ])
   })
+
+  test('should require shipping_category_id if shippable', () => {
+    const withShippingCategory = csvSkusSchema.safeParse([
+      {
+        code: 'ABC001',
+        name: 'T-SHIRT',
+        shipping_category_id: 'ABC'
+      }
+    ])
+    const withOutShippingCategory = csvSkusSchema.safeParse([
+      {
+        code: 'ABC001',
+        name: 'T-SHIRT'
+      }
+    ])
+    expect(withShippingCategory.success).toBe(true)
+    expect(withOutShippingCategory.success).toBe(false)
+  })
+
+  test('should NOT require shipping_category_id if NOT shippable', () => {
+    const { success } = csvSkusSchema.safeParse([
+      {
+        code: 'ABC001',
+        name: 'T-SHIRT',
+        do_not_ship: true
+      }
+    ])
+    expect(success).toBe(true)
+  })
 })

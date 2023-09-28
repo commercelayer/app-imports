@@ -1,3 +1,4 @@
+import { isFalsy } from '#utils/isFalsy'
 import { z } from 'zod'
 
 import {
@@ -17,7 +18,7 @@ const schema = z
   .object({
     code: z.string().min(1),
     name: z.string().min(1),
-    shipping_category_id: z.string().min(1),
+    shipping_category_id: z.optional(z.string().min(1)),
     description: z.optional(z.string()),
     image_url: z.optional(z.string().url()),
     pieces_per_pack: z.optional(zodEnforcePositiveInt),
@@ -32,5 +33,13 @@ const schema = z
     reference_origin: z.optional(z.string())
   })
   .passthrough()
-
+  .superRefine((data, ctx) => {
+    if (data.shipping_category_id == null && isFalsy(data.do_not_ship)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['shipping_category_id'],
+        message: 'shipping_category_id is required when SKU is shippable.'
+      })
+    }
+  })
 export const csvSkusSchema = z.array(schema)
