@@ -7,12 +7,12 @@ import { loadEnv } from 'vite'
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const basePath =
-    env.PUBLIC_PROJECT_PATH != null ? `/${env.PUBLIC_PROJECT_PATH}` : ''
+    env.PUBLIC_PROJECT_PATH != null ? `/${env.PUBLIC_PROJECT_PATH}/` : '/'
 
   return {
     plugins: [react()],
     envPrefix: 'PUBLIC_',
-    base: `${basePath}/`,
+    base: basePath,
     build: {
       target: 'esnext'
     },

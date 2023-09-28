@@ -30,6 +30,7 @@ function App(): JSX.Element {
         reauthenticateOnInvalidAuth={!isDev}
         loadingElement={<PageSkeleton />}
         devMode={isDev}
+        organizationSlug={import.meta.env.PUBLIC_SELF_HOSTED_SLUG}
       >
         <MetaTags />
         <CoreSdkProvider>
