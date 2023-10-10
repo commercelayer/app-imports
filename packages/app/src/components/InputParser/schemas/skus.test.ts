@@ -87,4 +87,30 @@ describe('Validate skusSchema', () => {
     ])
     expect(success).toBe(true)
   })
+
+  test('required fields can be omitted when updating by id', () => {
+    const validId = csvSkusSchema.safeParse([
+      {
+        id: 'tencharsid',
+        weight: 200
+      }
+    ])
+    expect(validId.success).toBe(true)
+
+    const invalidId = csvSkusSchema.safeParse([
+      {
+        id: 'tooshort',
+        weight: 200
+      }
+    ])
+    expect(invalidId.success).toBe(false)
+
+    const missingId = csvSkusSchema.safeParse([
+      {
+        weight: 200,
+        shipping_category_id: 'ABC'
+      }
+    ])
+    expect(missingId.success).toBe(false)
+  })
 })

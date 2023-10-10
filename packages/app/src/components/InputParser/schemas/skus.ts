@@ -14,7 +14,7 @@ enum AllowedUnitOfWeightEnum {
   'ounce' = 'oz'
 }
 
-const schema = z
+const createSchema = z
   .object({
     code: z.string().min(1),
     name: z.string().min(1),
@@ -42,4 +42,11 @@ const schema = z
       })
     }
   })
+
+const updateSchema = z.object({
+  id: z.string().length(10)
+})
+
+const schema = z.union([createSchema, updateSchema])
+
 export const csvSkusSchema = z.array(schema)
