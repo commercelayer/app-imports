@@ -64,6 +64,13 @@ export const InputParser: FC<Props> = ({
           return
         }
 
+        if (window.clAppConfig.skipSchemaValidation === true) {
+          onDataReady(csvRows as ImportCreate['inputs'], 'csv')
+          setIsParsing(false)
+          return
+        }
+
+        // this won't run if validation is disabled
         const parser = parsers[resourceType]
         const parsedResources = isMakeSchemaFn(parser)
           ? parser({ hasParentResource }).safeParse(csvRows)

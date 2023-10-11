@@ -1,6 +1,7 @@
 window.clAppConfig = Object.assign(
   {
-    domain: 'commercelayer.io'
+    domain: 'commercelayer.io',
+    skipSchemaValidation: true
   },
   window.clAppConfig
 )
