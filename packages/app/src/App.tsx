@@ -10,7 +10,8 @@ import {
   ErrorBoundary,
   TokenProvider,
   PageSkeleton,
-  CoreSdkProvider
+  CoreSdkProvider,
+  GTMProvider
 } from '@commercelayer/app-elements'
 
 const isDev = Boolean(import.meta.env.DEV)
@@ -32,28 +33,30 @@ function App(): JSX.Element {
         devMode={isDev}
         organizationSlug={import.meta.env.PUBLIC_SELF_HOSTED_SLUG}
       >
-        <MetaTags />
-        <CoreSdkProvider>
-          <Router base={basePath}>
-            <Switch>
-              <Route path={appRoutes.list.path}>
-                <ListPage />
-              </Route>
-              <Route path={appRoutes.selectResource.path}>
-                <ResourceSelectorPage />
-              </Route>
-              <Route path={appRoutes.newImport.path}>
-                <NewImportPage />
-              </Route>
-              <Route path={appRoutes.details.path}>
-                <DetailsPage />
-              </Route>
-              <Route>
-                <ErrorNotFound />
-              </Route>
-            </Switch>
-          </Router>
-        </CoreSdkProvider>
+        <GTMProvider gtmId={window.clAppConfig.gtmId}>
+          <MetaTags />
+          <CoreSdkProvider>
+            <Router base={basePath}>
+              <Switch>
+                <Route path={appRoutes.list.path}>
+                  <ListPage />
+                </Route>
+                <Route path={appRoutes.selectResource.path}>
+                  <ResourceSelectorPage />
+                </Route>
+                <Route path={appRoutes.newImport.path}>
+                  <NewImportPage />
+                </Route>
+                <Route path={appRoutes.details.path}>
+                  <DetailsPage />
+                </Route>
+                <Route>
+                  <ErrorNotFound />
+                </Route>
+              </Switch>
+            </Router>
+          </CoreSdkProvider>
+        </GTMProvider>
       </TokenProvider>
     </ErrorBoundary>
   )
