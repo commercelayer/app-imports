@@ -8,8 +8,8 @@ import {
   isSingleValueSelected
 } from '@commercelayer/app-elements'
 import {
-  type InputSelectProps,
-  type SelectValue
+  type InputSelectValue,
+  type InputSelectProps
 } from '@commercelayer/app-elements/dist/ui/forms/InputSelect'
 
 interface Props {
@@ -48,7 +48,7 @@ export function ResourceFinder({
   onSelect
 }: Props): JSX.Element {
   const [isLoading, setIsLoading] = useState(true)
-  const [initialValues, setInitialValues] = useState<SelectValue[]>([])
+  const [initialValues, setInitialValues] = useState<InputSelectValue[]>([])
   const element = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { type SelectValue } from '@commercelayer/app-elements/dist/ui/forms/InputSelect'
+import { type InputSelectValue } from '@commercelayer/app-elements/dist/ui/forms/InputSelect'
 import { type CommerceLayerClient } from '@commercelayer/sdk'
 import {
   type ListResponse,
@@ -21,7 +21,7 @@ export const fetchResources = async ({
   sdkClient: CommerceLayerClient
   resourceType: AllowedResourceType | AllowedParentResource
   hint?: string
-}): Promise<SelectValue[]> => {
+}): Promise<InputSelectValue[]> => {
   const fetchedResources = await sdkClient[resourceType].list({
     fields: {
       [resourceType]: ['id', 'name']
@@ -48,7 +48,7 @@ export const fetchResources = async ({
  */
 function adaptApiToSuggestions(
   fetchedResources: ListResponse<Resource & { name?: string | null }>
-): SelectValue[] {
+): InputSelectValue[] {
   return fetchedResources.map((r) => {
     const label = 'name' in r && r.name != null ? r.name : r.id
     return {
