@@ -17,6 +17,7 @@ import { csvTaxCategoriesSchema } from './taxCategories'
 import { csvLineItemsSchema } from './lineItems'
 import { csvTagsSchema } from './tags'
 import { csvSkuListItemsSchema } from './skuListItems'
+import { csvCustomerPaymentSourcesSchema } from './customerPaymentSources'
 
 type MakeSchemaFn = ({
   hasParentResource
@@ -35,6 +36,7 @@ export const parsers: Record<AllowedResourceType, SchemaOrMakeSchemaFn> = {
   skus: csvSkusSchema,
   prices: csvPricesSchema,
   coupons: csvCouponsSchema,
+  customer_payment_sources: csvCustomerPaymentSourcesSchema,
   sku_lists: csvSkuListSchema,
   sku_options: csvSkuOptionSchema,
   gift_cards: csvGiftCardsSchema,

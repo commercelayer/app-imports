@@ -16,6 +16,7 @@ import { csvTaxCategoryTemplate } from './taxCategories'
 import { csvLineItemsTemplate } from './lineItems'
 import { csvTagsTemplate } from './tags'
 import { csvSkuListItemsTemplate } from './skuListItems'
+import { csvCustomerPaymentSourcesTemplate } from './customerPaymentSources'
 
 const templates: Record<AllowedResourceType, string[]> = {
   addresses: csvAddressTemplate,
@@ -27,6 +28,7 @@ const templates: Record<AllowedResourceType, string[]> = {
   sku_options: csvSkuOptionTemplate,
   gift_cards: csvGiftCardsTemplate,
   customers: csvCustomersTemplate,
+  customer_payment_sources: csvCustomerPaymentSourcesTemplate,
   customer_subscriptions: csvCustomerSubscriptionsTemplate,
   tax_categories: csvTaxCategoryTemplate,
   stock_items: csvStockItemTemplate,
