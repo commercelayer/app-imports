@@ -8,8 +8,12 @@ export function ErrorNotFound(): JSX.Element {
   return (
     <PageLayout
       title='Imports'
-      onGoBack={() => {
-        setLocation(appRoutes.list.makePath())
+      navigationButton={{
+        label: 'Back',
+        icon: 'arrowLeft',
+        onClick: () => {
+          setLocation(appRoutes.list.makePath())
+        }
       }}
     >
       <EmptyState

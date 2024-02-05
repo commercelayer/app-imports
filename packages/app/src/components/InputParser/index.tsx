@@ -3,7 +3,7 @@ import { type AllowedResourceType } from 'App'
 import { isEmpty } from 'lodash-es'
 import { parse } from 'papaparse'
 import { type FC, useState, useEffect } from 'react'
-import { type ZodIssue } from 'zod'
+import { type ZodIssue, type ZodSchema } from 'zod'
 
 import { adapters } from './adapters'
 import { parsers, isMakeSchemaFn } from './schemas'
@@ -82,7 +82,9 @@ export const InputParser: FC<Props> = ({
           setIsParsing(false)
           return
         }
-        const inputAsJson = adapters[resourceType](parsedResources.data)
+        const inputAsJson = adapters[resourceType](
+          parsedResources.data as ZodSchema[]
+        )
         // we want to keep json around so we can preview data and handle the json to csv conversion later
         onDataReady(inputAsJson, 'csv')
         setIsParsing(false)

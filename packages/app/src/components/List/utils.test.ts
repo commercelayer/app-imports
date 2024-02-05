@@ -29,6 +29,7 @@ describe('getUiStatus', () => {
 
 describe('shouldPoll', () => {
   test('no poll when list is empty', () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     expect(listHasProgressingItems([] as any)).toBe(false)
   })
 

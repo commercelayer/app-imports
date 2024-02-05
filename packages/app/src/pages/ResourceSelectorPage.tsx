@@ -22,8 +22,12 @@ export function ResourceSelectorPage(): JSX.Element {
     <PageLayout
       title='Select type'
       mode={mode}
-      onGoBack={() => {
-        setLocation(appRoutes.list.makePath())
+      navigationButton={{
+        label: 'Imports',
+        icon: 'arrowLeft',
+        onClick: () => {
+          setLocation(appRoutes.list.makePath())
+        }
       }}
     >
       <Spacer bottom='12'>

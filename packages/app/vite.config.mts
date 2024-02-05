@@ -16,11 +16,6 @@ export default defineConfig(({ mode }) => {
     build: {
       target: 'esnext'
     },
-    server: {
-      fs: {
-        strict: false
-      }
-    },
     resolve: {
       alias: {
         '#styles': path.resolve(__dirname, './src/styles'),

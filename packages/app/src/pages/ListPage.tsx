@@ -28,9 +28,13 @@ function ListPage(): JSX.Element {
     <PageLayout
       title='Imports'
       mode={mode}
-      onGoBack={() => {
-        window.location.href =
-          dashboardUrl != null ? `${dashboardUrl}/hub` : '/'
+      navigationButton={{
+        label: 'Hub',
+        icon: 'arrowLeft',
+        onClick: () => {
+          window.location.href =
+            dashboardUrl != null ? `${dashboardUrl}/hub` : '/'
+        }
       }}
     >
       <ListImportProvider sdkClient={sdkClient} pageSize={25}>
