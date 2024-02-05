@@ -8,7 +8,7 @@ interface Props {
 
 export function SuggestionTemplate({ resourceType }: Props): JSX.Element {
   return (
-    <Hint icon='bulb'>
+    <Hint icon='lightbulbFilament'>
       Use our{' '}
       <Button
         type='button'

@@ -5,7 +5,8 @@ import {
   RadialProgress,
   Button,
   useTokenProvider,
-  formatResourceName
+  formatResourceName,
+  StatusIcon
 } from '@commercelayer/app-elements'
 import { type Import, CommerceLayerStatic } from '@commercelayer/sdk'
 import { DescriptionLine } from '#components/List/ItemDescriptionLine'
@@ -90,12 +91,12 @@ function TaskIcon({ job }: { job: Import }): JSX.Element {
   }
 
   if (status === 'danger') {
-    return <Icon gap='large' name='x' background='red' />
+    return <StatusIcon gap='large' name='x' background='red' />
   }
 
   if (status === 'success') {
-    return <Icon gap='large' name='check' background='green' />
+    return <StatusIcon gap='large' name='check' background='green' />
   }
 
-  return <Icon gap='large' name='minus' background='gray' />
+  return <StatusIcon gap='large' name='minus' background='gray' />
 }

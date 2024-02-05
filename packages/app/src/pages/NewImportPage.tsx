@@ -32,7 +32,9 @@ function NewImportPage(): JSX.Element {
   } = useTokenProvider()
   const { sdkClient } = useCoreSdkProvider()
 
-  const [_match, params] = useRoute(appRoutes.newImport.path)
+  const [_match, params] = useRoute<{ resourceType?: AllowedResourceType }>(
+    appRoutes.newImport.path
+  )
   const [_location, setLocation] = useLocation()
 
   const [isTouched, setIsTouched] = useState(false)
@@ -53,8 +55,12 @@ function NewImportPage(): JSX.Element {
       <PageLayout
         title='Imports'
         mode={mode}
-        onGoBack={() => {
-          setLocation(appRoutes.list.makePath())
+        navigationButton={{
+          label: 'Back',
+          icon: 'arrowLeft',
+          onClick: () => {
+            setLocation(appRoutes.list.makePath())
+          }
         }}
       >
         <EmptyState
@@ -69,8 +75,7 @@ function NewImportPage(): JSX.Element {
     )
   }
 
-  const resourceType =
-    params == null ? null : (params.resourceType as AllowedResourceType)
+  const resourceType = params?.resourceType
 
   if (resourceType == null) {
     return <PageError errorName='Missing param' errorDescription='' />
@@ -139,8 +144,12 @@ function NewImportPage(): JSX.Element {
         count: 'plural'
       })}`}
       mode={mode}
-      onGoBack={() => {
-        setLocation(appRoutes.selectResource.makePath())
+      navigationButton={{
+        label: 'Select type',
+        icon: 'arrowLeft',
+        onClick: () => {
+          setLocation(appRoutes.selectResource.makePath())
+        }
       }}
     >
       {parentResource !== false && (

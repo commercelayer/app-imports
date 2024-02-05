@@ -23,15 +23,21 @@ const DetailsPage = (): JSX.Element | null => {
   } = useTokenProvider()
   const { sdkClient } = useCoreSdkProvider()
   const [_, setLocation] = useLocation()
-  const [_match, params] = useRoute(appRoutes.details.path)
+  const [_match, params] = useRoute<{ importId?: string }>(
+    appRoutes.details.path
+  )
   const importId = params == null ? null : params.importId
 
   if (importId == null || !canUser('read', 'imports')) {
     return (
       <PageLayout
         title='Imports'
-        onGoBack={() => {
-          setLocation(appRoutes.list.makePath())
+        navigationButton={{
+          label: 'Back',
+          icon: 'arrowLeft',
+          onClick: () => {
+            setLocation(appRoutes.list.makePath())
+          }
         }}
         mode={mode}
       >
@@ -69,8 +75,12 @@ const DetailsPage = (): JSX.Element | null => {
                 includeTime
               />
             }
-            onGoBack={() => {
-              setLocation(appRoutes.list.makePath())
+            navigationButton={{
+              label: 'Imports',
+              icon: 'arrowLeft',
+              onClick: () => {
+                setLocation(appRoutes.list.makePath())
+              }
             }}
           >
             <Spacer bottom='12'>
