@@ -80,7 +80,7 @@ function ListPage(): JSX.Element {
               title='All Imports'
               actionButton={
                 <Link href={appRoutes.selectResource.makePath()}>
-                  <a>New import</a>
+                  New import
                 </Link>
               }
               pagination={{

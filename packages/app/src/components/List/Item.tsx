@@ -32,7 +32,7 @@ export function Item({ job }: Props): JSX.Element {
     canUser('destroy', 'imports')
 
   return (
-    <Link href={appRoutes.details.makePath(job.id)}>
+    <Link href={appRoutes.details.makePath(job.id)} asChild>
       <ListItem tag='a' icon={<TaskIcon job={job} />}>
         <div>
           <Text tag='div' weight='semibold'>
