@@ -151,6 +151,7 @@ function NewImportPage(): JSX.Element {
           setLocation(appRoutes.selectResource.makePath())
         }
       }}
+      overlay
     >
       {parentResource !== false && (
         <Spacer bottom='14'>
