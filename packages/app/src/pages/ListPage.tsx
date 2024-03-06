@@ -4,8 +4,8 @@ import { appRoutes } from '#data/routes'
 import {
   Button,
   EmptyState,
+  HomePageLayout,
   List,
-  PageLayout,
   PageSkeleton,
   useCoreSdkProvider,
   useTokenProvider
@@ -13,11 +13,7 @@ import {
 import { Link } from 'wouter'
 
 function ListPage(): JSX.Element {
-  const {
-    dashboardUrl,
-    settings: { mode },
-    canUser
-  } = useTokenProvider()
+  const { canUser } = useTokenProvider()
   const { sdkClient } = useCoreSdkProvider()
 
   if (sdkClient == null) {
@@ -25,18 +21,7 @@ function ListPage(): JSX.Element {
   }
 
   return (
-    <PageLayout
-      title='Imports'
-      mode={mode}
-      navigationButton={{
-        label: 'Hub',
-        icon: 'arrowLeft',
-        onClick: () => {
-          window.location.href =
-            dashboardUrl != null ? `${dashboardUrl}/hub` : '/'
-        }
-      }}
-    >
+    <HomePageLayout title='Imports'>
       <ListImportProvider sdkClient={sdkClient} pageSize={25}>
         {({ state, changePage }) => {
           const { isLoading, currentPage, list } = state
@@ -98,7 +83,7 @@ function ListPage(): JSX.Element {
           )
         }}
       </ListImportProvider>
-    </PageLayout>
+    </HomePageLayout>
   )
 }
 

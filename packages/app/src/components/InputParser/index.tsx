@@ -1,6 +1,6 @@
 import { type ImportCreate } from '@commercelayer/sdk'
 import { type AllowedResourceType } from 'App'
-import { isEmpty } from 'lodash-es'
+import isEmpty from 'lodash/isEmpty'
 import { parse } from 'papaparse'
 import { type FC, useState, useEffect } from 'react'
 import { type ZodIssue, type ZodSchema } from 'zod'
@@ -11,6 +11,7 @@ import { SuggestionTemplate } from './SuggestionTemplate'
 import { InputFile, Spacer, Text } from '@commercelayer/app-elements'
 
 const importMaxSize = 10_000
+const skipSchemaValidation = true
 
 interface Props {
   hasParentResource?: boolean
@@ -64,7 +65,7 @@ export const InputParser: FC<Props> = ({
           return
         }
 
-        if (window.clAppConfig.skipSchemaValidation === true) {
+        if (skipSchemaValidation) {
           onDataReady(csvRows as ImportCreate['inputs'], 'csv')
           setIsParsing(false)
           return
