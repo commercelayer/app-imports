@@ -38,7 +38,7 @@ export function ResourceSelectorPage(): JSX.Element {
               href={appRoutes.newImport.makePath(resource)}
               asChild
             >
-              <ListItem tag='a'>
+              <ListItem>
                 <Text weight='semibold'>
                   {formatResourceName({
                     resource,

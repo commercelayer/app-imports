@@ -33,7 +33,7 @@ export function Item({ job }: Props): JSX.Element {
 
   return (
     <Link href={appRoutes.details.makePath(job.id)} asChild>
-      <ListItem tag='a' icon={<TaskIcon job={job} />}>
+      <ListItem icon={<TaskIcon job={job} />}>
         <div>
           <Text tag='div' weight='semibold'>
             {formatResourceName({
