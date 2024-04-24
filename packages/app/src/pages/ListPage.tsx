@@ -5,8 +5,10 @@ import {
   Button,
   EmptyState,
   HomePageLayout,
+  Icon,
   List,
   PageSkeleton,
+  Spacer,
   useCoreSdkProvider,
   useTokenProvider
 } from '@commercelayer/app-elements'
@@ -22,67 +24,77 @@ function ListPage(): JSX.Element {
 
   return (
     <HomePageLayout title='Imports'>
-      <ListImportProvider sdkClient={sdkClient} pageSize={25}>
-        {({ state, changePage }) => {
-          const { isLoading, currentPage, list } = state
+      <Spacer top='14'>
+        <ListImportProvider sdkClient={sdkClient} pageSize={25}>
+          {({ state, changePage }) => {
+            const { isLoading, currentPage, list } = state
 
-          if (isLoading) {
-            return <List isLoading />
-          }
+            if (isLoading) {
+              return <List isLoading />
+            }
 
-          if (list == null) {
+            if (list == null) {
+              return (
+                <div>
+                  <EmptyState title='Unable to load list' />
+                </div>
+              )
+            }
+
+            if (list.length === 0) {
+              return (
+                <div>
+                  <EmptyState
+                    title='No imports yet!'
+                    description='Create your first import'
+                    action={
+                      canUser('create', 'imports') ? (
+                        <Link href={appRoutes.selectResource.makePath()}>
+                          <Button variant='primary'>New import</Button>
+                        </Link>
+                      ) : undefined
+                    }
+                  />
+                </div>
+              )
+            }
+
+            const isRefetching = currentPage !== list.meta.currentPage
+            const { recordCount, recordsPerPage, pageCount } = list.meta
+
             return (
-              <div>
-                <EmptyState title='Unable to load list' />
-              </div>
+              <List
+                isDisabled={isRefetching}
+                title='All Imports'
+                actionButton={
+                  <Link href={appRoutes.selectResource.makePath()} asChild>
+                    <Button
+                      variant='secondary'
+                      size='mini'
+                      alignItems='center'
+                      aria-label='Add import'
+                    >
+                      <Icon name='plus' />
+                      New
+                    </Button>
+                  </Link>
+                }
+                pagination={{
+                  recordsPerPage,
+                  recordCount,
+                  currentPage,
+                  onChangePageRequest: changePage,
+                  pageCount
+                }}
+              >
+                {list.map((job) => (
+                  <Item key={job.id} job={job} />
+                ))}
+              </List>
             )
-          }
-
-          if (list.length === 0) {
-            return (
-              <div>
-                <EmptyState
-                  title='No imports yet!'
-                  description='Create your first import'
-                  action={
-                    canUser('create', 'imports') ? (
-                      <Link href={appRoutes.selectResource.makePath()}>
-                        <Button variant='primary'>New import</Button>
-                      </Link>
-                    ) : undefined
-                  }
-                />
-              </div>
-            )
-          }
-
-          const isRefetching = currentPage !== list.meta.currentPage
-          const { recordCount, recordsPerPage, pageCount } = list.meta
-
-          return (
-            <List
-              isDisabled={isRefetching}
-              title='All Imports'
-              actionButton={
-                <Link href={appRoutes.selectResource.makePath()}>
-                  New import
-                </Link>
-              }
-              pagination={{
-                recordsPerPage,
-                recordCount,
-                currentPage,
-                onChangePageRequest: changePage,
-                pageCount
-              }}
-            >
-              {list.map((job) => (
-                <Item key={job.id} job={job} />
-              ))}
-            </List>
-          )
-        }}
-      </ListImportProvider>
+          }}
+        </ListImportProvider>
+      </Spacer>
     </HomePageLayout>
   )
 }
