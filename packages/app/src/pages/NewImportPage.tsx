@@ -20,11 +20,16 @@ import {
   useCoreSdkProvider,
   useTokenProvider
 } from '@commercelayer/app-elements'
-import { CommerceLayerStatic, type ImportCreate } from '@commercelayer/sdk'
+import {
+  CommerceLayer,
+  CommerceLayerStatic,
+  type ImportCreate
+} from '@commercelayer/sdk'
 import { type AllowedResourceType } from 'App'
 import { unparse } from 'papaparse'
 import { useState } from 'react'
 import { Link, useLocation, useRoute } from 'wouter'
+import { authenticate } from '@commercelayer/js-auth'
 
 function NewImportPage(): JSX.Element {
   const {
@@ -33,7 +38,6 @@ function NewImportPage(): JSX.Element {
     user
   } = useTokenProvider()
   const { sdkClient } = useCoreSdkProvider()
-
   const [_match, params] = useRoute<{ resourceType?: AllowedResourceType }>(
     appRoutes.newImport.path
   )
@@ -102,7 +106,23 @@ function NewImportPage(): JSX.Element {
       throw new Error(`No hay valores por importar`)
     }
 
-    const list = await sdkClient.shipping_categories.list({
+    const auth = await authenticate('client_credentials', {
+      clientId:
+        (mode === 'live'
+          ? import.meta.env.PUBLIC_LIVE_READ_CLIENT_ID
+          : import.meta.env.PUBLIC_TEST_READ_CLIENT_ID) ?? '',
+      clientSecret:
+        mode === 'live'
+          ? import.meta.env.PUBLIC_LIVE_READ_CLIENT_SECRET
+          : import.meta.env.PUBLIC_TEST_READ_CLIENT_SECRET
+    })
+
+    const integrationClient = CommerceLayer({
+      organization: 'vanti-poc',
+      accessToken: auth.accessToken
+    })
+
+    const list = await integrationClient.shipping_categories.list({
       sort: { created_at: 'desc' },
       filters: {
         metadata_jcont: {
@@ -143,7 +163,7 @@ function NewImportPage(): JSX.Element {
       for (const batch of batches) {
         const skuCodeString = batch.join(',')
         await sleep(30)
-        const skuBatch = await sdkClient.skus.list({
+        const skuBatch = await integrationClient.skus.list({
           filters: { code_in: skuCodeString },
           include: ['shipping_category'],
           pageSize: 25
