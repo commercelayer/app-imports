@@ -4,6 +4,7 @@ import { InputParser } from '#components/InputParser'
 import { ResourceFinder } from '#components/ResourceFinder'
 import { getParentResourceIfNeeded, isAvailableResource } from '#data/resources'
 import { appRoutes } from '#data/routes'
+import { sleep } from '#utils/sleep'
 import { validateParentResource } from '#utils/validateParentResource'
 import {
   Button,
@@ -28,7 +29,8 @@ import { Link, useLocation, useRoute } from 'wouter'
 function NewImportPage(): JSX.Element {
   const {
     canUser,
-    settings: { mode }
+    settings: { mode },
+    user
   } = useTokenProvider()
   const { sdkClient } = useCoreSdkProvider()
 
@@ -95,6 +97,75 @@ function NewImportPage(): JSX.Element {
     )
   }
 
+  async function validateShippingCategory(): Promise<void> {
+    if (importCreateValue == null) {
+      throw new Error(`No hay valores por importar`)
+    }
+
+    const list = await sdkClient.shipping_categories.list({
+      sort: { created_at: 'desc' },
+      filters: {
+        metadata_jcont: {
+          domain: user?.email?.split('@')?.[1] ?? ''
+        }
+      }
+    })
+
+    const shippingCategoryId = list?.[0]?.id ?? null
+
+    if (shippingCategoryId === null || shippingCategoryId === undefined) {
+      throw new Error(
+        'No cuenta con los permisos necesarios para realizar la importación, por favor comuníquese con el administrador.'
+      )
+    }
+
+    const shippingCategoryName = list?.[0]?.name ?? null
+
+    if (resourceType === 'skus') {
+      if (
+        importCreateValue.filter(
+          (sku: any) => sku?.shipping_category_id !== shippingCategoryId
+        ).length > 0
+      ) {
+        throw new Error(
+          `Unicamente puede importar SKUS con el shipping category: ${shippingCategoryName}`
+        )
+      }
+    } else if (resourceType === 'prices' || resourceType === 'stock_items') {
+      const uniqueSkuCodes = [
+        ...new Set(importCreateValue.map((item) => item.sku_code))
+      ]
+      const batches = []
+      for (let i = 0; i < uniqueSkuCodes.length; i += 25) {
+        batches.push(uniqueSkuCodes.slice(i, i + 25))
+      }
+
+      for (const batch of batches) {
+        const skuCodeString = batch.join(',')
+        await sleep(30)
+        const skuBatch = await sdkClient.skus.list({
+          filters: { code_in: skuCodeString },
+          include: ['shipping_category'],
+          pageSize: 25
+        })
+
+        if (
+          skuBatch.filter(
+            (price: any) => price?.shipping_category?.id !== shippingCategoryId
+          ).length > 0
+        ) {
+          throw new Error(
+            `Unicamente puede importar ${formatResourceName({
+              resource: resourceType,
+              count: 'plural',
+              format: 'lower'
+            })} de SKUS con el shipping category: ${shippingCategoryName}`
+          )
+        }
+      }
+    }
+  }
+
   const createImportTask = async (
     selectedParentResourceId?: string
   ): Promise<void> => {
@@ -111,6 +182,8 @@ function NewImportPage(): JSX.Element {
         parentResourceId: selectedParentResourceId
       })
 
+      await validateShippingCategory()
+
       await sdkClient.imports.create({
         resource_type: resourceType,
         parent_resource_id: parentResourceId,
@@ -119,13 +192,15 @@ function NewImportPage(): JSX.Element {
           format === 'csv'
             ? // This forced cast need to be removed once sdk updates input type to accept string values
               (unparse(importCreateValue) as unknown as object[])
-            : importCreateValue
+            : importCreateValue,
+        metadata: { email: user?.email ?? '' }
       })
+
       setLocation(appRoutes.list.makePath())
     } catch (e) {
       const errorMessage = CommerceLayerStatic.isApiError(e)
         ? e.errors.map(({ detail }) => detail).join(', ')
-        : 'Could not create import'
+        : e?.toString()
       setApiError(errorMessage)
       setIsLoading(false)
     }

@@ -13,6 +13,8 @@ import {
 
 import { initialValues, initialState } from './data'
 import { reducer } from './reducer'
+import { type TokenProviderAuthUser } from '@commercelayer/app-elements/dist/providers/TokenProvider/types'
+import { useTokenProvider } from '@commercelayer/app-elements'
 
 interface ListImportProviderProps {
   /**
@@ -39,6 +41,7 @@ export function ListImportProvider({
   pageSize,
   sdkClient
 }: ListImportProviderProps): JSX.Element {
+  const { user } = useTokenProvider()
   const [state, dispatch] = useReducer(reducer, initialState)
   const intervalId = useRef<number | null>(null)
 
@@ -50,7 +53,8 @@ export function ListImportProvider({
     const list = await getAllImports({
       cl: sdkClient,
       state,
-      pageSize
+      pageSize,
+      user
     })
     dispatch({ type: 'loadData', payload: list })
   }, [state.currentPage])
@@ -107,15 +111,20 @@ export function ListImportProvider({
 const getAllImports = async ({
   cl,
   state,
-  pageSize
+  pageSize,
+  user
 }: {
   cl: CommerceLayerClient
   state: ListImportContextState
   pageSize: number
+  user: TokenProviderAuthUser | null
 }): Promise<ListResponse<Import>> => {
   return await cl.imports.list({
     pageNumber: state.currentPage,
     pageSize,
-    sort: { created_at: 'desc' }
+    sort: { created_at: 'desc' },
+    filters: {
+      metadata_jcont: { email: user?.email ?? '' }
+    }
   })
 }
