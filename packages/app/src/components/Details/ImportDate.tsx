@@ -17,7 +17,8 @@ interface Props extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 export const ImportDate = withSkeletonTemplate<Props>(
-  ({ atType, prefixText, includeTime, ...props }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  ({ atType, prefixText, includeTime, isLoading, delayMs, ...props }) => {
     const {
       state: { data }
     } = useImportDetailsContext()

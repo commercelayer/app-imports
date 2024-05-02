@@ -12,7 +12,6 @@ import {
   PageLayout,
   Spacer,
   EmptyState,
-  useCoreSdkProvider,
   SkeletonTemplate
 } from '@commercelayer/app-elements'
 
@@ -21,7 +20,6 @@ const DetailsPage = (): JSX.Element | null => {
     canUser,
     settings: { mode }
   } = useTokenProvider()
-  const { sdkClient } = useCoreSdkProvider()
   const [_, setLocation] = useLocation()
   const [_match, params] = useRoute<{ importId?: string }>(
     appRoutes.details.path
@@ -54,7 +52,7 @@ const DetailsPage = (): JSX.Element | null => {
   }
 
   return (
-    <ImportDetailsProvider sdkClient={sdkClient} importId={importId}>
+    <ImportDetailsProvider importId={importId}>
       {({ state: { isLoading, isNotFound } }) =>
         isNotFound ? (
           <ErrorNotFound />

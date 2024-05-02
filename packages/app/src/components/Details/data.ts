@@ -2,7 +2,7 @@ import {
   type ImportDetailsContextState,
   type ImportDetailsContextValue
 } from 'App'
-import { makeImport } from 'src/mocks'
+import { makeImport } from '#mocks'
 
 export const initialState: ImportDetailsContextState = {
   isLoading: true,
