@@ -8,7 +8,7 @@ declare module 'App' {
   }
 
   export interface ImportDetailsContextState {
-    data?: Import
+    data: Import
     isLoading: boolean
     isDeleting: boolean
     isPolling: boolean

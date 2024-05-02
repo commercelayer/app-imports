@@ -1,10 +1,13 @@
 import { useImportDetailsContext } from '#components/Details/Provider'
-import { formatResourceName } from '@commercelayer/app-elements'
+import {
+  formatResourceName,
+  withSkeletonTemplate
+} from '@commercelayer/app-elements'
 import { type ListableResourceType } from '@commercelayer/sdk/lib/cjs/api'
 
 interface Props extends React.HTMLAttributes<HTMLSpanElement> {}
 
-export function ImportedResourceType(props: Props): JSX.Element | null {
+export const ImportedResourceType = withSkeletonTemplate<Props>((props) => {
   const {
     state: { data }
   } = useImportDetailsContext()
@@ -24,4 +27,4 @@ export function ImportedResourceType(props: Props): JSX.Element | null {
         : '-'}
     </span>
   )
-}
+})

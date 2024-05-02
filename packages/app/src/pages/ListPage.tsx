@@ -7,7 +7,6 @@ import {
   HomePageLayout,
   Icon,
   List,
-  PageSkeleton,
   Spacer,
   useCoreSdkProvider,
   useTokenProvider
@@ -17,10 +16,6 @@ import { Link } from 'wouter'
 function ListPage(): JSX.Element {
   const { canUser } = useTokenProvider()
   const { sdkClient } = useCoreSdkProvider()
-
-  if (sdkClient == null) {
-    return <PageSkeleton />
-  }
 
   return (
     <HomePageLayout title='Imports'>

@@ -1,20 +1,17 @@
 import {
   ListDetailsItem,
-  formatResourceName
+  formatResourceName,
+  useCoreSdkProvider
 } from '@commercelayer/app-elements'
 import { getParentResourceIfNeeded } from '#data/resources'
-import { type CommerceLayerClient } from '@commercelayer/sdk'
 import { useEffect, useState } from 'react'
 import { useImportDetailsContext } from './Provider'
 
-interface Props {
-  sdkClient: CommerceLayerClient
-}
-
-export function RowParentResource({ sdkClient }: Props): JSX.Element | null {
+export function RowParentResource(): JSX.Element | null {
   const {
     state: { data }
   } = useImportDetailsContext()
+  const { sdkClient } = useCoreSdkProvider()
 
   const [isLoading, setIsLoading] = useState(true)
   const [parentResourceName, setParentResourceName] = useState('')
@@ -30,10 +27,7 @@ export function RowParentResource({ sdkClient }: Props): JSX.Element | null {
         return
       }
 
-      const canFetch =
-        sdkClient != null &&
-        parentResourceType != null &&
-        parentResourceType != null
+      const canFetch = parentResourceType != null && parentResourceType != null
 
       if (canFetch) {
         sdkClient[parentResourceType]

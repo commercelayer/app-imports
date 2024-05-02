@@ -9,11 +9,11 @@ import { ImportDetails } from '#components/Details/ImportDetails'
 import {
   Button,
   useTokenProvider,
-  PageSkeleton,
   PageLayout,
   Spacer,
   EmptyState,
-  useCoreSdkProvider
+  useCoreSdkProvider,
+  SkeletonTemplate
 } from '@commercelayer/app-elements'
 
 const DetailsPage = (): JSX.Element | null => {
@@ -53,44 +53,40 @@ const DetailsPage = (): JSX.Element | null => {
     )
   }
 
-  if (sdkClient == null) {
-    return <PageSkeleton layout='details' hasHeaderDescription />
-  }
-
   return (
     <ImportDetailsProvider sdkClient={sdkClient} importId={importId}>
-      {({ state: { isLoading, data } }) =>
-        isLoading ? (
-          <PageSkeleton layout='details' hasHeaderDescription />
-        ) : data == null ? (
+      {({ state: { isLoading, isNotFound } }) =>
+        isNotFound ? (
           <ErrorNotFound />
         ) : (
-          <PageLayout
-            title={<ImportedResourceType />}
-            mode={mode}
-            description={
-              <ImportDate
-                atType='created_at'
-                prefixText='Imported on '
-                includeTime
-              />
-            }
-            navigationButton={{
-              label: 'Imports',
-              icon: 'arrowLeft',
-              onClick: () => {
-                setLocation(appRoutes.list.makePath())
+          <SkeletonTemplate isLoading={isLoading}>
+            <PageLayout
+              title={<ImportedResourceType />}
+              mode={mode}
+              description={
+                <ImportDate
+                  atType='created_at'
+                  prefixText='Imported on '
+                  includeTime
+                />
               }
-            }}
-          >
-            <Spacer bottom='12'>
-              <ImportReport />
-            </Spacer>
+              navigationButton={{
+                label: 'Imports',
+                icon: 'arrowLeft',
+                onClick: () => {
+                  setLocation(appRoutes.list.makePath())
+                }
+              }}
+            >
+              <Spacer bottom='12'>
+                <ImportReport />
+              </Spacer>
 
-            <Spacer bottom='12'>
-              <ImportDetails sdkClient={sdkClient} />
-            </Spacer>
-          </PageLayout>
+              <Spacer bottom='12'>
+                <ImportDetails />
+              </Spacer>
+            </PageLayout>
+          </SkeletonTemplate>
         )
       }
     </ImportDetailsProvider>

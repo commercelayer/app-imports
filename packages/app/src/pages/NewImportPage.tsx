@@ -11,7 +11,6 @@ import {
   InputFeedback,
   PageError,
   PageLayout,
-  PageSkeleton,
   Spacer,
   Tab,
   Tabs,
@@ -45,10 +44,6 @@ function NewImportPage(): JSX.Element {
   const [importCreateValue, setImportCreateValue] = useState<
     ImportCreate['inputs'] | undefined
   >(undefined)
-
-  if (sdkClient == null) {
-    return <PageSkeleton />
-  }
 
   if (!canUser('create', 'imports')) {
     return (

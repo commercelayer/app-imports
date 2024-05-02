@@ -1,21 +1,18 @@
 import { type Import } from '@commercelayer/sdk'
 import { ImportCount } from './ImportCount'
 import { useImportDetailsContext } from './Provider'
-import { Report } from '@commercelayer/app-elements'
+import { Report, withSkeletonTemplate } from '@commercelayer/app-elements'
 
-export function ImportReport(): JSX.Element | null {
+export const ImportReport = withSkeletonTemplate(({ isLoading }) => {
   const {
     state: { data }
   } = useImportDetailsContext()
-
-  if (data == null) {
-    return null
-  }
 
   const errorJsonToDownload = getJsonLogToDownload(data, 'errors_log')
 
   return (
     <Report
+      isLoading={isLoading}
       items={[
         {
           label: 'Record imported',
@@ -33,7 +30,7 @@ export function ImportReport(): JSX.Element | null {
       ]}
     />
   )
-}
+})
 
 function getSourceFileUrl(job?: Import): string | undefined {
   if (
