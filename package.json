@@ -33,9 +33,10 @@
   ],
   "devDependencies": {
     "lerna": "^8.1.2",
-    "npm-check-updates": "^16.14.15"
+    "npm-check-updates": "^16.14.20"
   },
   "resolutions": {
-    "ip": "^2.0.1"
+    "ip": "^2.0.1",
+    "tar": "^6.2.1"
   }
 }

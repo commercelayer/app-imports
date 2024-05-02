@@ -1,4 +1,4 @@
-import { type CommerceLayerClient, type Import } from '@commercelayer/sdk'
+import { type Import } from '@commercelayer/sdk'
 import { type ImportDetailsContextValue } from 'App'
 import {
   createContext,
@@ -11,10 +11,10 @@ import {
 } from 'react'
 import { initialState, initialValues } from './data'
 import { reducer } from './reducer'
+import { useCoreSdkProvider } from '@commercelayer/app-elements'
 
 interface ImportDetailsProviderProps {
   importId: string
-  sdkClient: CommerceLayerClient
   children: ((props: ImportDetailsContextValue) => ReactNode) | ReactNode
 }
 
@@ -25,10 +25,10 @@ export const useImportDetailsContext = (): ImportDetailsContextValue =>
   useContext(Context)
 
 export function ImportDetailsProvider({
-  sdkClient,
   importId,
   children
 }: ImportDetailsProviderProps): JSX.Element {
+  const { sdkClient } = useCoreSdkProvider()
   const [state, dispatch] = useReducer(reducer, initialState)
   const intervalId = useRef<number | null>(null)
 

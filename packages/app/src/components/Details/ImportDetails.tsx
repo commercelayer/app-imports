@@ -2,18 +2,14 @@ import {
   ListDetailsItem,
   ListDetails,
   formatDate,
-  useTokenProvider
+  useTokenProvider,
+  withSkeletonTemplate
 } from '@commercelayer/app-elements'
-import { type CommerceLayerClient } from '@commercelayer/sdk'
 import { useImportDetailsContext } from './Provider'
 import { RowParentResource } from './RowParentResource'
 import { StatusBadge } from './StatusBadge'
 
-interface Props {
-  sdkClient: CommerceLayerClient
-}
-
-export function ImportDetails({ sdkClient }: Props): JSX.Element | null {
+export const ImportDetails = withSkeletonTemplate(({ isLoading }) => {
   const {
     state: { data }
   } = useImportDetailsContext()
@@ -25,8 +21,8 @@ export function ImportDetails({ sdkClient }: Props): JSX.Element | null {
   }
 
   return (
-    <ListDetails title='Details'>
-      <RowParentResource sdkClient={sdkClient} />
+    <ListDetails title='Details' isLoading={isLoading}>
+      <RowParentResource />
       {data.status != null ? (
         <ListDetailsItem label='Status'>
           <StatusBadge job={data} />
@@ -52,4 +48,4 @@ export function ImportDetails({ sdkClient }: Props): JSX.Element | null {
       ) : null}
     </ListDetails>
   )
-}
+})
