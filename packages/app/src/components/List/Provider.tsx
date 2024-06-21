@@ -1,5 +1,9 @@
-import { type CommerceLayerClient, type Import } from '@commercelayer/sdk'
-import { type ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
+import {
+  type QueryParamsList,
+  type CommerceLayerClient,
+  type Import,
+  type ListResponse
+} from '@commercelayer/sdk'
 import { type ListImportContextValue, type ListImportContextState } from 'App'
 import {
   createContext,
@@ -115,7 +119,7 @@ const getAllImports = async ({
 }): Promise<ListResponse<Import>> => {
   return await cl.imports.list({
     pageNumber: state.currentPage,
-    pageSize,
+    pageSize: pageSize as QueryParamsList<Import>['pageSize'],
     sort: { created_at: 'desc' }
   })
 }

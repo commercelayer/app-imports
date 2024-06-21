@@ -8,14 +8,17 @@ import {
   formatResourceName,
   StatusIcon
 } from '@commercelayer/app-elements'
-import { type Import, CommerceLayerStatic } from '@commercelayer/sdk'
+import {
+  type Import,
+  CommerceLayerStatic,
+  type ListableResourceType
+} from '@commercelayer/sdk'
 import { DescriptionLine } from '#components/List/ItemDescriptionLine'
 import { getUiStatus } from '#components/List/utils'
 import { getProgressPercentage } from '#utils/getProgressPercentage'
 import { appRoutes } from '#data/routes'
 import { Link } from 'wouter'
 import { useListContext } from './Provider'
-import { type ListableResourceType } from '@commercelayer/sdk/lib/cjs/api'
 import { useState } from 'react'
 
 interface Props {

@@ -41,6 +41,7 @@ async function fetchPromotionWithCouponPromotionRule(
   return await sdkClient.promotions.retrieve(promotionId, {
     fields: {
       promotions: ['id', 'name', 'coupon_codes_promotion_rule'],
+      // @ts-expect-error this is a valid field
       coupon_codes_promotion_rule: ['id']
     },
     include: ['coupon_codes_promotion_rule']

@@ -1,5 +1,4 @@
-import { type Import } from '@commercelayer/sdk'
-import { type ListResponse } from '@commercelayer/sdk/lib/cjs/resource'
+import { type Import, type ListResponse } from '@commercelayer/sdk'
 import { getUiStatus, listHasProgressingItems } from './utils'
 
 // getUiStatus

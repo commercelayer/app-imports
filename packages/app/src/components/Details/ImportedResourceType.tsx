@@ -3,7 +3,7 @@ import {
   formatResourceName,
   withSkeletonTemplate
 } from '@commercelayer/app-elements'
-import { type ListableResourceType } from '@commercelayer/sdk/lib/cjs/api'
+import type { ListableResourceType } from '@commercelayer/sdk'
 
 interface Props extends React.HTMLAttributes<HTMLSpanElement> {}
 
