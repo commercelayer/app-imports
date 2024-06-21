@@ -54,7 +54,8 @@
     "*.config.cjs",
     ".eslintrc.cjs",
     "@typing/**/*.d.ts",
-    "public/config*.js"
+    "public/config*.js",
+    "vite.config.mts"
   ],
   "references": [
     {
