@@ -12,7 +12,7 @@ import {
   type InputSelectProps
 } from '@commercelayer/app-elements/dist/ui/forms/InputSelect'
 
-interface Props {
+interface Props extends Pick<InputSelectProps, 'feedback' | 'hint'> {
   /**
    * Text to show above the input
    */
@@ -33,10 +33,6 @@ interface Props {
    * callback function fired when the resource is selected from the list
    */
   onSelect?: (resourceId: string | null) => void
-  /**
-   * Validation feedback
-   */
-  feedback?: InputSelectProps['feedback']
 }
 
 export function ResourceFinder({
@@ -45,6 +41,7 @@ export function ResourceFinder({
   resourceType,
   sdkClient,
   feedback,
+  hint,
   onSelect
 }: Props): JSX.Element {
   const [isLoading, setIsLoading] = useState(true)
@@ -85,6 +82,7 @@ export function ResourceFinder({
         initialValues={initialValues}
         isClearable
         feedback={feedback}
+        hint={hint}
         placeholder={placeholder}
         isLoading={isLoading}
         onSelect={(selected) => {

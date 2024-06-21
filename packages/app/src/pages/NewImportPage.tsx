@@ -36,7 +36,6 @@ function NewImportPage(): JSX.Element {
   )
   const [_location, setLocation] = useLocation()
 
-  const [isTouched, setIsTouched] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [apiError, setApiError] = useState<string | undefined>()
   const [parentResourceId, setParentResourceId] = useState<string | null>()
@@ -128,9 +127,7 @@ function NewImportPage(): JSX.Element {
 
   const parentResource = getParentResourceIfNeeded(resourceType)
   const canCreateImport =
-    importCreateValue != null &&
-    importCreateValue.length > 0 &&
-    (parentResourceId != null || parentResource === false)
+    importCreateValue != null && importCreateValue.length > 0
 
   return (
     <PageLayout
@@ -160,14 +157,9 @@ function NewImportPage(): JSX.Element {
             resourceType={parentResource}
             sdkClient={sdkClient}
             onSelect={setParentResourceId}
-            feedback={
-              parentResourceId == null && isTouched
-                ? {
-                    message: 'Please select a parent resource',
-                    variant: 'danger'
-                  }
-                : undefined
-            }
+            hint={{
+              text: 'Required when creating new records. Can also be specified in the import data, for each single record.'
+            }}
           />
         </Spacer>
       )}
@@ -215,7 +207,6 @@ function NewImportPage(): JSX.Element {
         <Button
           variant='primary'
           onClick={() => {
-            setIsTouched(true)
             if (!canCreateImport) {
               return
             }
