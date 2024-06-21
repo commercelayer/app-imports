@@ -1,9 +1,9 @@
 import { type InputSelectValue } from '@commercelayer/app-elements/dist/ui/forms/InputSelect'
-import { type CommerceLayerClient } from '@commercelayer/sdk'
-import {
-  type ListResponse,
-  type Resource
-} from '@commercelayer/sdk/lib/cjs/resource'
+import type {
+  CommerceLayerClient,
+  ListResponse,
+  Resource
+} from '@commercelayer/sdk'
 import { type AllowedParentResource, type AllowedResourceType } from 'App'
 
 /**
@@ -22,20 +22,19 @@ export const fetchResources = async ({
   resourceType: AllowedResourceType | AllowedParentResource
   hint?: string
 }): Promise<InputSelectValue[]> => {
+  // @ts-expect-error Expression produces a union type that is too complex to represent
   const fetchedResources = await sdkClient[resourceType].list({
-    fields: {
-      [resourceType]: ['id', 'name']
-    },
     filters:
       hint != null
         ? {
             name_cont: hint
           }
         : undefined,
+    pageSize: 25,
+    // @ts-expect-error Expression produces a union type that is too complex to represent
     sort: {
       created_at: 'desc'
-    },
-    pageSize: 25
+    }
   })
   return adaptApiToSuggestions(fetchedResources)
 }

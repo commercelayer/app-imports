@@ -8,10 +8,9 @@ import { defineConfig } from 'vitest/config'
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  const basePath =
-    isEmpty(env.PUBLIC_PROJECT_PATH) === true
-      ? '/'
-      : `/${env.PUBLIC_PROJECT_PATH}/`
+  const basePath = isEmpty(env.PUBLIC_PROJECT_PATH)
+    ? '/'
+    : `/${env.PUBLIC_PROJECT_PATH}/`
 
   return {
     plugins: [react(), tsconfigPaths()],
