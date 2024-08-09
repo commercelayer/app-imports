@@ -28,7 +28,7 @@ export function ImportDetails({ sdkClient }: Props): JSX.Element | null {
     <ListDetails title='Details'>
       <RowParentResource sdkClient={sdkClient} />
       {data.status != null ? (
-        <ListDetailsItem label='Status'>
+        <ListDetailsItem label='Estado'>
           <StatusBadge job={data} />
         </ListDetailsItem>
       ) : null}
@@ -42,7 +42,7 @@ export function ImportDetails({ sdkClient }: Props): JSX.Element | null {
         </ListDetailsItem>
       ) : null}
       {data.updated_at != null && data.completed_at == null ? (
-        <ListDetailsItem label='Last update'>
+        <ListDetailsItem label='Última actualización'>
           {formatDate({
             isoDate: data.updated_at,
             format: 'fullWithSeconds',

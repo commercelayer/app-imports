@@ -30,35 +30,35 @@ function getUiStatusVariant(
   if (apiStatus === 'in_progress') {
     return {
       variant: 'primary',
-      label: 'in progress'
+      label: 'en progreso'
     }
   }
 
   if (apiStatus === 'interrupted') {
     return {
       variant: 'danger',
-      label: 'interrupted'
+      label: 'interrumpida'
     }
   }
 
   if (apiStatus === 'completed' && errorsCount != null) {
     return {
       variant: 'warning',
-      label: 'completed with errors'
+      label: 'completada con errores'
     }
   }
 
   if (apiStatus === 'completed') {
     return {
       variant: 'success',
-      label: 'completed'
+      label: 'completada'
     }
   }
 
   if (apiStatus === 'pending') {
     return {
       variant: 'secondary',
-      label: 'pending'
+      label: 'pendiente'
     }
   }
 

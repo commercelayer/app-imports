@@ -21,7 +21,7 @@ function ListPage(): JSX.Element {
   }
 
   return (
-    <HomePageLayout title='Imports'>
+    <HomePageLayout title='Importaciones'>
       <ListImportProvider sdkClient={sdkClient} pageSize={25}>
         {({ state, changePage }) => {
           const { isLoading, currentPage, list } = state
@@ -47,7 +47,7 @@ function ListPage(): JSX.Element {
                   action={
                     canUser('create', 'imports') ? (
                       <Link href={appRoutes.selectResource.makePath()}>
-                        <Button variant='primary'>New import</Button>
+                        <Button variant='primary'>Nueva importación</Button>
                       </Link>
                     ) : undefined
                   }
@@ -62,10 +62,10 @@ function ListPage(): JSX.Element {
           return (
             <List
               isDisabled={isRefetching}
-              title='All Imports'
+              title='Todas las importaciones'
               actionButton={
                 <Link href={appRoutes.selectResource.makePath()}>
-                  New import
+                  Nueva importación
                 </Link>
               }
               pagination={{

@@ -18,17 +18,17 @@ export function ImportReport(): JSX.Element | null {
     <Report
       items={[
         {
-          label: 'Record imported',
+          label: 'Filas importadas',
           count: <ImportCount type='processed_count' />,
           linkUrl: getSourceFileUrl(data),
-          linkLabel: 'Download file'
+          linkLabel: 'Descargar archivo'
         },
         {
-          label: 'Errors',
+          label: 'Errores',
           count: <ImportCount type='errors_count' />,
           downloadJsonAsFile: errorJsonToDownload?.json,
           downloadJsonFilename: errorJsonToDownload?.filename,
-          linkLabel: 'View logs'
+          linkLabel: 'Descargar logs'
         }
       ]}
     />

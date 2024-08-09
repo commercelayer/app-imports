@@ -23,7 +23,7 @@ export function ResourceSelectorPage(): JSX.Element {
       title='Select type'
       mode={mode}
       navigationButton={{
-        label: 'Imports',
+        label: 'Importaciones',
         icon: 'arrowLeft',
         onClick: () => {
           setLocation(appRoutes.list.makePath())

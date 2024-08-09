@@ -17,27 +17,27 @@ export function DescriptionLine({ job }: Props): JSX.Element {
   return (
     <>
       {job.status === 'pending' ? (
-        <div>Pending</div>
+        <div>Pendiente</div>
       ) : job.status === 'in_progress' ? (
         percentage.value === 100 ? (
           // import job remains few seconds at 100% with status in_progress
-          <span>Finalizing...</span>
+          <span>Finalizando...</span>
         ) : (
           percentage.formatted
         )
       ) : job.status === 'interrupted' ? (
         <div>
-          Import failed on{' '}
+          Importación falló{' '}
           {formatDate({ isoDate: job.updated_at, timezone: user?.timezone })}
         </div>
       ) : job.status === 'completed' ? (
         errorsCount != null ? (
           <div>
-            Imported with {errorsCount} error{errorsCount > 1 ? 's' : ''}
+            Importada con {errorsCount} {errorsCount > 1 ? 'errores' : 'un error'}
           </div>
         ) : (
           <div>
-            Imported on{' '}
+            Importada el{' '}
             {job.completed_at != null &&
               formatDate({
                 isoDate: job.completed_at,

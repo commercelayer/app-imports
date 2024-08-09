@@ -2,7 +2,6 @@ const path = require('path')
 
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
-  extends: ['@commercelayer/eslint-config-ts-react'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: path.resolve(__dirname, 'tsconfig.json'),
@@ -13,7 +12,7 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
-    '@typescript-eslint/no-unused-vars': [
+    'no-unused-vars': [
       'error',
       {
         // requried for react hooks
