@@ -69,7 +69,7 @@ export function Item({ job }: Props): JSX.Element {
                 })
               }}
             >
-              Cancel
+              Cancelar
             </Button>
           </div>
         ) : (

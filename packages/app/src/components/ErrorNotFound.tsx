@@ -7,7 +7,7 @@ export function ErrorNotFound(): JSX.Element {
 
   return (
     <PageLayout
-      title='Imports'
+      title='Importaciones'
       navigationButton={{
         label: 'Back',
         icon: 'arrowLeft',

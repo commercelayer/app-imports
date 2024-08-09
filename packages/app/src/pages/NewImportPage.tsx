@@ -59,7 +59,7 @@ function NewImportPage(): JSX.Element {
   if (!canUser('create', 'imports')) {
     return (
       <PageLayout
-        title='Imports'
+        title='Importaciones'
         mode={mode}
         navigationButton={{
           label: 'Back',
@@ -102,8 +102,15 @@ function NewImportPage(): JSX.Element {
   }
 
   async function validateShippingCategory(): Promise<void> {
+    const userDomain = user?.email?.split('@')?.[1];
+
     if (importCreateValue == null) {
       throw new Error(`No hay valores por importar`)
+    }
+
+    // Allow the Vanti and Aplyca users to import SKUs with any shipping category
+    if(userDomain == "grupovanti.com" || userDomain == "aplyca.com") {
+      return;
     }
 
     const auth = await authenticate('client_credentials', {
@@ -126,7 +133,7 @@ function NewImportPage(): JSX.Element {
       sort: { created_at: 'desc' },
       filters: {
         metadata_jcont: {
-          domain: user?.email?.split('@')?.[1] ?? ''
+          domain: userDomain ?? ''
         }
       }
     })
@@ -195,6 +202,7 @@ function NewImportPage(): JSX.Element {
 
     setApiError(undefined)
     setIsLoading(true)
+
     try {
       const parentResourceId = await validateParentResource({
         sdkClient,
