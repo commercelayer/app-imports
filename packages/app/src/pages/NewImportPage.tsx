@@ -1,5 +1,4 @@
 import { ImportPreview } from '#components/ImportPreview'
-import { InputCode } from '#components/InputCode'
 import { InputParser } from '#components/InputParser'
 import { ResourceFinder } from '#components/ResourceFinder'
 import { getParentResourceIfNeeded, isAvailableResource } from '#data/resources'
@@ -14,8 +13,6 @@ import {
   PageLayout,
   PageSkeleton,
   Spacer,
-  Tab,
-  Tabs,
   formatResourceName,
   useCoreSdkProvider,
   useTokenProvider
@@ -281,32 +278,17 @@ function NewImportPage(): JSX.Element {
       )}
 
       <Spacer bottom='14'>
-        <Tabs id='tab-import-input' keepAlive>
-          <Tab name='Upload file'>
-            <InputParser
-              resourceType={resourceType}
-              onDataReady={(input, format) => {
-                setImportCreateValue(input)
-                setFormat(format)
-              }}
-              onDataResetRequest={() => {
-                setImportCreateValue(undefined)
-              }}
-              hasParentResource={Boolean(parentResource)}
-            />
-          </Tab>
-          <Tab name='Paste code'>
-            <InputCode
-              onDataReady={(input) => {
-                setImportCreateValue(input)
-                setFormat('json')
-              }}
-              onDataResetRequest={() => {
-                setImportCreateValue(undefined)
-              }}
-            />
-          </Tab>
-        </Tabs>
+        <InputParser
+          resourceType={resourceType}
+          onDataReady={(input, format) => {
+            setImportCreateValue(input)
+            setFormat(format)
+          }}
+          onDataResetRequest={() => {
+            setImportCreateValue(undefined)
+          }}
+          hasParentResource={Boolean(parentResource)}
+        />
       </Spacer>
 
       {importCreateValue != null && importCreateValue.length > 0 ? (
