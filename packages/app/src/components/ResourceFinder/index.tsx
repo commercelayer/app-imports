@@ -5,7 +5,8 @@ import { fetchResources } from './utils'
 import {
   InputSelect,
   Label,
-  isSingleValueSelected
+  isSingleValueSelected,
+  useTokenProvider
 } from '@commercelayer/app-elements'
 import {
   type InputSelectValue,
@@ -50,14 +51,26 @@ export function ResourceFinder({
   const [isLoading, setIsLoading] = useState(true)
   const [initialValues, setInitialValues] = useState<InputSelectValue[]>([])
   const element = useRef<HTMLDivElement>(null)
+  const {
+    user
+  } = useTokenProvider()
 
   useEffect(() => {
-    if (resourceType == null) {
+    const userDomain = user?.email?.split('@')?.[1];
+    if (resourceType == null || userDomain == null) {
       return
     }
+
     setIsLoading(true)
     void fetchResources({ sdkClient, resourceType })
-      .then(setInitialValues)
+      .then((values: any) => {
+        if(userDomain !== 'aplyca.com' && userDomain !== 'grupovanti.com') {
+          values = values.filter((value: any) => {
+            return value.value !== "AlnOyCKnXL" && value.value !== "YkXQaCbmxl"
+          })
+        }
+        setInitialValues(values)
+      })
       .finally(() => {
         setIsLoading(false)
       })

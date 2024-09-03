@@ -239,7 +239,7 @@ function NewImportPage(): JSX.Element {
 
   return (
     <PageLayout
-      title={`Import ${formatResourceName({
+      title={`Importar ${formatResourceName({
         resource: resourceType,
         count: 'plural'
       })}`}
@@ -315,7 +315,7 @@ function NewImportPage(): JSX.Element {
         >
           {isLoading
             ? 'Importing...'
-            : `Import ${formatResourceName({
+            : `Importar ${formatResourceName({
                 resource: resourceType,
                 count: 'plural',
                 format: 'lower'

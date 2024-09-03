@@ -9,7 +9,7 @@ interface Props {
 export function SuggestionTemplate({ resourceType }: Props): JSX.Element {
   return (
     <Hint icon='lightbulbFilament'>
-      Use our{' '}
+      Usa nuestra{' '}
       <Button
         type='button'
         variant='link'
@@ -19,9 +19,9 @@ export function SuggestionTemplate({ resourceType }: Props): JSX.Element {
           })
         }}
       >
-        CSV template
+        Plantilla CSV
       </Button>{' '}
-      to avoid formatting errors.
+      para evitar errores de formato.
     </Hint>
   )
 }

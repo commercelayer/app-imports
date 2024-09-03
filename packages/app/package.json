@@ -26,7 +26,7 @@
     "lint:fix": "eslint src --fix --ext .ts,.tsx",
     "test": "pnpm run lint && vitest run",
     "test:watch": "vitest",
-    "prepare": "touch ./public/config.local.js"
+    "prepare": "echo. > ./public/config.local.js"
   },
   "dependencies": {
     "@commercelayer/app-elements": "^1.16.0",

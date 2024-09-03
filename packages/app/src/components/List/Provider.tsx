@@ -119,11 +119,13 @@ const getAllImports = async ({
   pageSize: number
   user: TokenProviderAuthUser | null
 }): Promise<ListResponse<Import>> => {
+  const userDomain = user?.email?.split('@')?.[1];
+  const isAdmin = userDomain === 'aplyca.com' || userDomain === 'grupovanti.com';
   return await cl.imports.list({
     pageNumber: state.currentPage,
     pageSize,
     sort: { created_at: 'desc' },
-    filters: {
+    filters: isAdmin ? {} : {
       metadata_jcont: { email: user?.email ?? '' }
     }
   })

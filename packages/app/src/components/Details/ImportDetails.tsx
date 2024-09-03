@@ -25,7 +25,7 @@ export function ImportDetails({ sdkClient }: Props): JSX.Element | null {
   }
 
   return (
-    <ListDetails title='Details'>
+    <ListDetails title='Detalles'>
       <RowParentResource sdkClient={sdkClient} />
       {data.status != null ? (
         <ListDetailsItem label='Estado'>
